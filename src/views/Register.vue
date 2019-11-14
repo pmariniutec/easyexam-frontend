@@ -117,8 +117,13 @@ export default {
 
 		// TODO: Validation
 		register () {
-			this.createAccount(this.inputData)
-				.then(() => this.$router.push({ name: 'complete-profile' }))
+			this.error = null
+			const { firstName, lastName, email, password } = this.inputData
+			authService.createAccount(firstName, lastName, email, password)
+				.then(() => this.$router.push({ name: 'complete-profile' })
+					.catch(() => {
+							console.log("Error, lol.")
+					}))
 		}
 	}
 }

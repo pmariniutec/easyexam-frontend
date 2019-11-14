@@ -2,7 +2,7 @@ import session from './session'
 
 const authService = {
 	login (email, password) {
-		return session.post('/login/', { email, password })
+		return session.post('/auth/login/', {email, password})
 	},
 
 	logout () {
