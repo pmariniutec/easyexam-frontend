@@ -8,6 +8,16 @@
 			align="center"
 			justify="center"
 		>
+			<RegisterBackground 
+			height="1263.18" width="1506" fill='#fd7576'
+			viewBox='425 -125 800 1263.184' style="
+			padding: 0 0;
+			overflow: inherit;
+			transform: scale(0.8);
+			transform-origin: right;
+			position: fixed;
+			top: -311px;
+			right: -48%;"/>
 			<v-col
 				cols="12"
 				sm="12"
@@ -99,6 +109,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import RegisterBackground from '@/components/RegisterBackground'
 import authService from '@/services/auth'
 
 export default {
@@ -115,7 +126,9 @@ export default {
 			role: ['ROLE_STUDENT']
 		}
 	},
-
+	components: {
+		RegisterBackground
+	},
 	methods: {
 		...mapActions('auth', ['createAccount']),
 
