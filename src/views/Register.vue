@@ -110,7 +110,6 @@
 <script>
 import { mapActions } from 'vuex'
 import RegisterBackground from '@/components/RegisterBackground'
-import authService from '@/services/auth'
 
 export default {
 	name: 'Register',
@@ -136,8 +135,10 @@ export default {
 		register () {
 			this.error = null
 			const { firstName, lastName, email, password } = this.inputData
+			const payload =  {...this.inputData, role: this.role }
+			console.log(payload)
 			// TODO: add field in database for lastname
-			authService.createAccount(firstName + ' ' + lastName, email, password, this.role)
+			this.createAccount(payload)
 				.then(() => this.$router.push('/login'))
 				.catch(() => {
 					console.log('Error, lol.')
