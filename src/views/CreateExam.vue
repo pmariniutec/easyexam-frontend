@@ -1,9 +1,8 @@
 <template>
 	<v-container
 		class="fill-height"
-	  fluid
+		fluid
 	>
-
 		<v-col
 			class="fill-height"
 			cols="15"
@@ -31,10 +30,10 @@
 			</v-row>
 			<br>
 			<div class="question">
-				<div class="question-title"> 
+				<div class="question-title">
 					Question1
 				</div>
-				<div> 
+				<div>
 					Hola que tal me llamo jorge mucho gusto. Hola que tal me llamo jorge mucho gusto.
 				</div>
 			</div>
@@ -59,7 +58,7 @@
 			<v-row>
 				Course
 			</v-row>
-			<v-row 
+			<v-row
 				class="score"
 			>
 				Introduction to Computer Science
@@ -76,13 +75,11 @@
 				<span
 					class="tag"
 				>
-				tag1
+					tag1
 				</span>
 			</v-row>
 		</v-col>
-
 	</v-container>
-
 </template>
 
 <script>
