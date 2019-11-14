@@ -99,6 +99,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import authService from '@/services/auth'
 
 export default {
 	name: 'Register',
@@ -110,7 +111,8 @@ export default {
 				email: '',
 				password: ''
 			},
-			valid: null
+			valid: null,
+			role: ['ROLE_STUDENT']
 		}
 	},
 
@@ -121,11 +123,12 @@ export default {
 		register () {
 			this.error = null
 			const { firstName, lastName, email, password } = this.inputData
-			authService.createAccount(firstName, lastName, email, password)
-				.then(() => this.$router.push({ name: 'complete-profile' })
-					.catch(() => {
-							console.log("Error, lol.")
-					}))
+			// TODO: add field in database for lastname
+			authService.createAccount(firstName + ' ' + lastName, email, password, this.role)
+				.then(() => this.$router.push('/login'))
+				.catch(() => {
+					console.log('Error, lol.')
+				})
 		}
 	}
 }
