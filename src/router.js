@@ -65,11 +65,6 @@ const router = new Router({
 			name: 'logout',
 			beforeEnter: redirectLogout
 		},
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: Dashboard,
-    },
 		{
 			path: '/dashboard',
 			name: 'dashboard',
