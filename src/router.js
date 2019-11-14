@@ -8,6 +8,7 @@ import Register from './views/Register'
 import CreateExam from './views/CreateExam'
 import Profile from './views/Profile'
 import Dashboard from './views/Dashboard'
+import ViewExam from './views/ViewExam'
 
 Vue.use(Router)
 
@@ -67,12 +68,19 @@ const router = new Router({
 		{
 			path: '/dashboard',
 			name: 'dashboard',
+            component: Dashboard,
 			beforeEnter: requireAuth
 		},
 		{
 			path: '/profile',
 			name: 'profile',
+            component: Profile,
 			beforeEnter: requireAuth
+		},
+		{
+			path: '/exams',
+			name: 'exams',
+            component: ViewExam
 		}
 	]
 })
