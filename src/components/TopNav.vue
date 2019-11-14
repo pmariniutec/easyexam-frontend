@@ -3,8 +3,7 @@
 		<router-link
 			:to="{ name: 'home' }"
 			class="main-logo"
-		>
-		</router-link>
+		/>
 		<v-spacer />
 		<v-toolbar-items class="hidden-sm-and-down">
 			<v-btn
