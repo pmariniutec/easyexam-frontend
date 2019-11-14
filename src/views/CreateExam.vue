@@ -82,6 +82,7 @@
 		</v-col>
 
 	</v-container>
+
 </template>
 
 <script>

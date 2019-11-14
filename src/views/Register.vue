@@ -1,4 +1,5 @@
-<template>
+<template>  
+
 	<v-container
 		class="fill-height"
 		fluid
@@ -7,6 +8,16 @@
 			align="center"
 			justify="center"
 		>
+			<RegisterBackground 
+			height="1263.18" width="1506" fill='#fd7576'
+			viewBox='425 -125 800 1263.184' style="
+			padding: 0 0;
+			overflow: inherit;
+			transform: scale(0.8);
+			transform-origin: right;
+			position: fixed;
+			top: -311px;
+			right: -48%;"/>
 			<v-col
 				cols="12"
 				sm="12"
@@ -93,10 +104,12 @@
 			</v-col>
 		</v-row>
 	</v-container>
+
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import RegisterBackground from '@/components/RegisterBackground'
 
 export default {
 	name: 'Register',
@@ -108,17 +121,28 @@ export default {
 				email: '',
 				password: ''
 			},
-			valid: null
+			valid: null,
+			role: ['ROLE_STUDENT']
 		}
 	},
-
+	components: {
+		RegisterBackground
+	},
 	methods: {
 		...mapActions('auth', ['createAccount']),
 
 		// TODO: Validation
 		register () {
-			this.createAccount(this.inputData)
-				.then(() => this.$router.push({ name: 'complete-profile' }))
+			this.error = null
+			const { firstName, lastName, email, password } = this.inputData
+			const payload =  {...this.inputData, role: this.role }
+			console.log(payload)
+			// TODO: add field in database for lastname
+			this.createAccount(payload)
+				.then(() => this.$router.push('/login'))
+				.catch(() => {
+					console.log('Error, lol.')
+				})
 		}
 	}
 }

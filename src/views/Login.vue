@@ -1,8 +1,19 @@
-<template>
+<template> 
+
 	<v-container
 		class="fill-height"
 		fluid
 	>
+		<LoginBackground 
+		height="1263.18" width="1506" fill='#4DB8DE'
+		viewBox='425 -125 800 1263.184' style="
+		padding: 0 0;
+		overflow: inherit;
+		transform: scale(0.8);
+		transform-origin: left;
+		position: fixed;
+		top: -125px;
+		left: -14%;" />
 		<v-row
 			align="center"
 			justify="center"
@@ -85,14 +96,15 @@
 			</v-col>
 		</v-row>
 	</v-container>
+
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import LoginBackground from '@/components/LoginBackground'
 
 export default {
 	name: 'Login',
-
 	data () {
 		return {
 			inputData: {
@@ -109,17 +121,19 @@ export default {
 			}
 		}
 	},
+	components: {
+		LoginBackground
+	},
 
 	methods: {
 		...mapActions('auth', ['login']),
 
 		userLogin () {
 			this.error = null
-			const { email, password } = this.inputData
-
-			this.login({ email, password })
-				.then(() => this.$router.push('/profile'))
+			this.login(this.inputData)
+				.then(() => this.$router.push('/dashboard'))
 				.catch(() => {
+					console.log("Invalid credentials.")
 					this.error = 'Invalid Credentials'
 				})
 		},

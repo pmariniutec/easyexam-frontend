@@ -1,33 +1,33 @@
 <template>
-	<v-container>
-    Dashboard
+	<v-container
+    align-center 
+    d-flex 
+    fluid 
+    class="pa-0 dashboard-container"
+  >
+    <SideBar/>
+    <SearchBar/>
 	</v-container>
 </template>
 
 <script>
+import SideBar from '@/components/SideBar'
+import SearchBar from '@/components/SearchBar'
+
 export default {
 	name: 'Dashboard',
+  components: {
+    SideBar,
+    SearchBar
+  },
 	data () { return {} },
 	methods: {}
 }
 </script>
 
 <style scoped>
-	.v-card__actions {
-		justify-content: center;
-	}
-	.v-application a {
-		color: #000;
-		text-decoration: none;
-		font-size: 1.2rem;
-	}
-	.register-form .col {
-		padding-top: 0;
-	}
-	.facebook-register {
-		color: blue;
-	}
-	.google-register {
-		color: green;
-	}
+  .dashboard-container {
+    height: 100%;
+    background-color: #F3F3F6;
+  }
 </style>
