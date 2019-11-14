@@ -102,7 +102,6 @@
 <script>
 import { mapActions } from 'vuex'
 import LoginBackground from '@/components/LoginBackground'
-import authService from '@/services/auth'
 
 export default {
 	name: 'Login',
@@ -131,8 +130,7 @@ export default {
 
 		userLogin () {
 			this.error = null
-			const { email, password } = this.inputData
-			authService.login(email, password)
+			this.login(this.inputData)
 				.then(() => this.$router.push('/dashboard'))
 				.catch(() => {
 					this.error = 'Invalid Credentials'

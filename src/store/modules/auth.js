@@ -63,9 +63,9 @@ const actions = {
 			commit(REMOVE_TOKEN)
 		}
 	},
-	createAccount ({ commit }, { firstName, lastName, email, password }) {
+	createAccount ({ commit }, { firstName, lastName, email, password, role}) {
 		commit(REGISTRATION_BEGIN)
-		return authService.createAccount(firstName, lastName, email, password)
+		return authService.createAccount(firstName, lastName, email, password, role)
 			.then((response) => {
 				commit(REGISTRATION_SUCCESS)
 				commit(SET_TOKEN, response.data.key)
