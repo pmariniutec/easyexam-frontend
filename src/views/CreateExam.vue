@@ -7,15 +7,37 @@
 		<v-col
 			class="fill-height"
 			cols="15"
-			sm="11"
-			lg="10"
-			md="10"
+			sm="10"
+			lg="7"
+			md="7"
 		>
 			<v-row
-				class="exam-preview-title"
+				class="section-title"
 			>
 				New Exam
 			</v-row>
+		</v-col>
+		<v-col
+			class="fill-height"
+			cols="3"
+			sm="1"
+			lg="3"
+			md="3"
+		>
+			<v-row
+				class="section-title"
+			>
+				Suggested Questions
+			</v-row>
+			<br>
+			<div class="question">
+				<div class="question-title"> 
+					Question1
+				</div>
+				<div> 
+					Hola que tal me llamo jorge mucho gusto. Hola que tal me llamo jorge mucho gusto.
+				</div>
+			</div>
 		</v-col>
 		<v-col
 			class="right-bar fill-height"
@@ -79,10 +101,11 @@ export default {
 	flex-flow: row nowrap;
 	align-items: center;
 }
-.exam-preview-title{
-	padding: 30px;
+.section-title{
+	padding: 20px;
 	font-size: 20px;
 	font-weight: bold;
+	color: #23246E;
 }
 .v-chip.white {
 	color: #fff;
@@ -102,5 +125,17 @@ export default {
 	color: #fff;
 	padding: 5px 10px;
 	margin: 5px;
+}
+.question{
+	background: #fff;
+	border-radius: 10px;
+	padding: 10px;
+	width: 90%;
+	font-size: 12px;
+}
+.question-title{
+	color: #23246E;
+	font-weight: bold;
+	font-size: 14px;
 }
 </style>
