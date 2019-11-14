@@ -5,6 +5,7 @@ import store from './store/store'
 import Home from './views/Home'
 import Login from './views/Login'
 import Register from './views/Register'
+import Dashboard from './views/Dashboard'
 
 Vue.use(Router)
 
@@ -61,6 +62,11 @@ const router = new Router({
 			name: 'logout',
 			beforeEnter: redirectLogout
 		},
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard,
+    },
 	]
 })
 
