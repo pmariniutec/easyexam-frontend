@@ -1,7 +1,7 @@
 <template>
-	<v-container>
-		Create Exam
-	</v-container>
+    <v-container>
+        Create Exam
+    </v-container>
 </template>
 
 <script>

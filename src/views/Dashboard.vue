@@ -1,6 +1,7 @@
 <template>
-	<v-container>
-    Dashboard
+	<v-container
+    align-center d-flex fluid class="pa-0 dashboard-container"
+  >
 	</v-container>
 </template>
 
@@ -13,6 +14,10 @@ export default {
 </script>
 
 <style scoped>
+  .dashboard-container {
+    height: 100%;
+    background-color: #F3F3F6;
+  }
 	.v-card__actions {
 		justify-content: center;
 	}

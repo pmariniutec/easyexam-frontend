@@ -8,13 +8,6 @@
 		<v-spacer />
 		<v-toolbar-items class="hidden-sm-and-down">
 			<v-btn
-				text
-				:to="{ name: 'create-exam' }"
-				rounded
-			>
-				Create Exam
-			</v-btn>
-			<v-btn
 				v-if="!isAuthenticated"
 				text
 				:to="{ name: 'login' }"
