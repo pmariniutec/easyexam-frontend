@@ -1,4 +1,5 @@
-<template>
+<template> 
+
 	<v-container
 		class="fill-height"
 		fluid
@@ -85,6 +86,7 @@
 			</v-col>
 		</v-row>
 	</v-container>
+
 </template>
 
 <script>
@@ -92,7 +94,6 @@ import { mapActions } from 'vuex'
 
 export default {
 	name: 'Login',
-
 	data () {
 		return {
 			inputData: {

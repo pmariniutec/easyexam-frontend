@@ -1,40 +1,26 @@
 <template>
 	<v-app>
-		<TopNav />
 
-		<v-content>
+    <v-content>
 			<router-view />
 		</v-content>
 
-		<Footer />
+    <SideBar v-if="!isAuthenticated" />
+
 	</v-app>
 </template>
 
 <script>
-import TopNav from '@/components/TopNav'
-import Footer from '@/components/Footer'
+import SideBar from '@/components/SideBar'
 
 export default {
 	name: 'App',
-
-	components: {
-		TopNav,
-		Footer
-	},
-
-	data () {
-		return {
-
-		}
-	},
-
-	created () {
-
-	},
-
-	mounted () {
-
-	}
+  components: {
+    SideBar
+  },
+	data () { return {} },
+	created () {},
+	mounted () {}
 }
 </script>
 
