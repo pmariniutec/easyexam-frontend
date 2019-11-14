@@ -5,7 +5,6 @@ import store from './store/store'
 import Home from './views/Home'
 import Login from './views/Login'
 import Register from './views/Register'
-import CreateExam from './views/CreateExam'
 
 Vue.use(Router)
 
@@ -62,12 +61,6 @@ const router = new Router({
 			name: 'logout',
 			beforeEnter: redirectLogout
 		},
-		{
-			path: '/create-exam',
-			name: 'create-exam',
-			component: CreateExam,
-			beforeEnter: requireAuth
-		}
 	]
 })
 

@@ -100,12 +100,6 @@ export default {
 
 	data () {
 		return {
-			landingMain: require('@/assets/images/landing_main.png'),
-			features: [
-				{ image: require('@/assets/images/1y4.png'), title: 'Sigue tu progreso', desc: 'Sabrás en que nivel te encuentras y cuanto te falta para el nivel indicado' },
-				{ image: require('@/assets/images/2.png'), title: 'Aprende a tu ritmo', desc: 'Sabrás en que te equivocas, porqué y que hacer para mejorar' },
-				{ image: require('@/assets/images/3.png'), title: 'Disponible siempre', desc: 'Donde y cuando quieras' }
-			]
 		}
 	},
 
