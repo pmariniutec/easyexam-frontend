@@ -5,6 +5,9 @@ import store from './store/store'
 import Home from './views/Home'
 import Login from './views/Login'
 import Register from './views/Register'
+import CreateExam from './views/CreateExam'
+import Profile from './views/Profile'
+import Dashboard from './views/Dashboard'
 
 Vue.use(Router)
 
@@ -61,6 +64,16 @@ const router = new Router({
 			name: 'logout',
 			beforeEnter: redirectLogout
 		},
+		{
+			path: '/dashboard',
+			name: 'dashboard',
+			beforeEnter: requireAuth
+		},
+		{
+			path: '/profile',
+			name: 'profile',
+			beforeEnter: requireAuth
+		}
 	]
 })
 
