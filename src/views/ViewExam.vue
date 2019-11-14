@@ -21,7 +21,23 @@
               <h2>Date Created</h2>
             </v-col>
         </v-row>
-        <div v-for="{name, rating, number, date_edit, date_create} in exam_info">
+
+        <vue-context ref="menu">
+                <li>
+                    <a href="#" @click.prevent="onClick($event.target.innerText)">Preview</a>
+                </li>
+                <li>
+                    <a href="#" @click.prevent="onClick($event.target.innerText)">Download</a>
+                </li>
+                <li>
+                    <a href="#" @click.prevent="onClick($event.target.innerText)">Edit Name</a>
+                </li>
+                <li>
+                    <a href="#" @click.prevent="onClick($event.target.innerText)">Delete</a>
+                </li>
+        </vue-context>
+
+        <div v-for="{name, rating, number, date_edit, date_create} in exam_info" @contextmenu.prevent.stop="$refs.menu.open">
 	        <v-row>
                 <v-col class="text-center">
                   {{name}} 
@@ -54,22 +70,25 @@
 
 </template>
 
+
 <script>
 
+import { VueContext } from 'vue-context';
 
 export default {
 	name: 'ViewExam',
 
-	data() {
+	data () {
         return {
             exam_info: []
-        };
+        }
 	},
-
 	computed: {
+
 	},
-
-
+    components: {
+       VueContext 
+    },
 	methods: {
         addFind: function () {
             this.exam_info.push({ name: 'hola', rating: 2.5, number: 10, date_edit: '10/10/10', date_create: '10/10/10' } )
@@ -79,6 +98,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~vue-context/dist/css/vue-context.css';
 .container {
     display: grid;
     grid-template-row: 20%  20%  20%  20%  20%;
