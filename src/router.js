@@ -73,7 +73,14 @@ const router = new Router({
 			path: '/profile',
 			name: 'profile',
 			beforeEnter: requireAuth
+		},
+		{
+			path: '/createExam',
+			name: 'createExam',
+			component: CreateExam,
+			//beforeEnter: requireAuth
 		}
+
 	]
 })
 
