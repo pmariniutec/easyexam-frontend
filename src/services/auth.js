@@ -2,15 +2,15 @@ import session from './session'
 
 const authService = {
 	login (email, password) {
-		return session.post('/login/', { email, password })
+		return session.post('/auth/login/', {email, password})
 	},
 
 	logout () {
 		return session.post('/logout/', {})
 	},
 
-	createAccount (firstName, lastName, email, password) {
-		return session.post('/register/', { first_name: firstName, last_name: lastName, email, password })
+	createAccount(name, email, password, role) {
+		return session.post('/auth/register/', {name, email, password, role})
 	},
 
 	changeAccountPassword (password1, password2) {
