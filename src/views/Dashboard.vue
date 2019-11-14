@@ -7,18 +7,21 @@
   >
     <SideBar/>
     <SearchBar/>
-	</v-container>
+    <CreateExamDialog/>
+  </v-container>
 </template>
 
 <script>
 import SideBar from '@/components/SideBar'
 import SearchBar from '@/components/SearchBar'
+import CreateExamDialog from '@/components/CreateExamDialog'
 
 export default {
 	name: 'Dashboard',
   components: {
     SideBar,
-    SearchBar
+    SearchBar,
+    CreateExamDialog
   },
 	data () { return {} },
 	methods: {}
