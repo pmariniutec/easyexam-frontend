@@ -1,38 +1,39 @@
 <template>
-  <div class="searchbar">
-    <v-row>
-      <v-col
-        cols="12"
-        sm="1"
-        md="1"
-        lg="1"
-      >
-        <IconSearch class='icon-search'/>
-      </v-col>
-      <v-col
-        cols="12"
-        sm="8"
-        md="8"
-        lg="8"
-      >
-       <input v-model="message" placeholder="search..">
-      </v-col>
-      <v-col
-        cols="12"
-        sm="1"
-        md="1"
-        lg="1"
-      >
-      </v-col>
-      <v-col
-        cols="12"
-        sm="2"
-        md="2"
-        lg="2"
-      >
-      </v-col>
-    </v-row>
-  </div>
+	<div class="searchbar">
+		<v-row>
+			<v-col
+				cols="12"
+				sm="1"
+				md="1"
+				lg="1"
+			>
+				<IconSearch class="icon-search" />
+			</v-col>
+			<v-col
+				cols="12"
+				sm="8"
+				md="8"
+				lg="8"
+			>
+				<input
+					v-model="message"
+					placeholder="search.."
+				>
+			</v-col>
+			<v-col
+				cols="12"
+				sm="1"
+				md="1"
+				lg="1"
+			/>
+			<v-col
+				cols="12"
+				sm="2"
+				md="2"
+				lg="2"
+			/>
+		</v-row>
+	</div>
 </template>
 
 <script>
@@ -40,14 +41,14 @@ import IconSearch from '@/components/icons/IconSearch'
 
 export default {
 	name: 'SearchBar',
-  components: {
-    IconSearch
-  },
+	components: {
+		IconSearch
+	},
 	data () {
-    return {
-      initial: 'Initial value',
-    } 
-  },
+		return {
+			initial: 'Initial value'
+		}
+	},
 	computed: {}
 }
 </script>
@@ -70,4 +71,3 @@ export default {
   margin-top: 10px;
 }
 </style>
-
