@@ -42,7 +42,7 @@ const actions = {
 	login ({ commit }, { email, password }) {
 		commit(LOGIN_BEGIN)
 		return authService.login(email, password)
-			.then(({ data }) => commit(SET_TOKEN, data.key))
+			.then(({data}) => commit(SET_TOKEN, data.accessToken))
 			.then(() => commit(LOGIN_SUCCESS))
 			.catch(() => commit(LOGIN_FAILURE))
 	},
