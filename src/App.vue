@@ -12,12 +12,14 @@
 
 <script>
 import SideBar from '@/components/SideBar'
+import TopNav from '@/components/TopNav'
 
 export default {
 	name: 'App',
-  components: {
-    SideBar
-  },
+	components: {
+		SideBar,
+		TopNav
+	},
 	data () { return {} },
 	created () {},
 	mounted () {}

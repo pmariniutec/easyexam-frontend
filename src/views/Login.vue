@@ -133,6 +133,7 @@ export default {
 			this.login(this.inputData)
 				.then(() => this.$router.push('/dashboard'))
 				.catch(() => {
+					console.log("Invalid credentials.")
 					this.error = 'Invalid Credentials'
 				})
 		},

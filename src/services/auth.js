@@ -10,8 +10,7 @@ const authService = {
 	},
 
 	createAccount(firstName, lastName, email, password, role) {
-		let name = firstName + ' ' + lastName
-		return session.post('/auth/register/', {name, email, password, role})
+		return session.post('/auth/register/', {firstName, lastName, email, password, role})
 	},
 
 	changeAccountPassword (password1, password2) {
