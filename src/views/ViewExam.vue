@@ -1,5 +1,5 @@
 <template>
-	<v-container>
+	<v-card shaped hover elevation="10" width="900" min-height="100" class="mx-auto">
 		<v-row>
 			<v-col class="text-center">
 				<h2>Name</h2>
@@ -22,87 +22,31 @@
 			</v-col>
 		</v-row>
 
-		<vue-context ref="menu">
-			<li>
-				<a
-					href="#"
-					@click.prevent="onClick($event.target.innerText)"
-				>Preview</a>
-			</li>
-			<li>
-				<a
-					href="#"
-					@click.prevent="onClick($event.target.innerText)"
-				>Download</a>
-			</li>
-			<li>
-				<a
-					href="#"
-					@click.prevent="onClick($event.target.innerText)"
-				>Edit Name</a>
-			</li>
-			<li>
-				<a
-					href="#"
-					@click.prevent="onClick($event.target.innerText)"
-				>Delete</a>
-			</li>
-		</vue-context>
+        <div v-for="data in exams_data">
+            <ExamComponent :exam_info="data"/>        
+        </div>
 
-		<div
-			v-for="{name, rating, number, date_edit, date_create} in exam_info"
-			@contextmenu.prevent.stop="$refs.menu.open"
-		>
-			<v-row>
-				<v-col class="text-center">
-					{{ name }}
-				</v-col>
-
-				<v-col class="text-center">
-					<star-rating
-						:rating="rating"
-						:padding="15"
-						:increment="0.5"
-						:star-size="25"
-						:read-only="true"
-						:show-rating="false"
-					/>
-				</v-col>
-
-				<v-col class="text-center">
-					{{ number }}
-				</v-col>
-
-				<v-col class="text-center">
-					{{ date_edit }}
-				</v-col>
-
-				<v-col class="text-center">
-					{{ date_create }}
-				</v-col>
-			</v-row>
-		</div>
 		<v-col md="5">
 			<button @click="addFind">
 				Add test
 			</button>
 		</v-col>
-	</v-container>
+	</v-card>
 </template>
 
 <script>
 
-import { VueContext } from 'vue-context'
+import ExamComponent from '@/components/ExamComponent'
 
 export default {
 	name: 'ViewExam',
 	components: {
-		VueContext
+        ExamComponent,
 	},
 
 	data () {
 		return {
-			exam_info: []
+			exams_data: []
 		}
 	},
 	computed: {
@@ -110,7 +54,7 @@ export default {
 	},
 	methods: {
 		addFind: function () {
-			this.exam_info.push({ name: 'hola', rating: 2.5, number: 10, date_edit: '10/10/10', date_create: '10/10/10' })
+			this.exams_data.push({ name: 'hola', rating: 2.5, number: 10, date_edit: '10/10/10', date_create: '10/10/10' })
 		}
 	}
 }
