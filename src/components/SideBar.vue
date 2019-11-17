@@ -8,7 +8,10 @@
 				<v-icon>mdi-home</v-icon>
 			</li>
 			<li class="sidebar-menu-item">
-				<v-card hover="true" :elevation=0>
+				<v-card
+					hover="true"
+					:elevation="0"
+				>
 					<v-icon>mdi-book-open-page-variant</v-icon>
 				</v-card>
 			</li>
@@ -22,7 +25,6 @@
 				<v-icon>mdi-account</v-icon>
 			</li>
 		</ul>
-
 	</div>
 </template>
 
@@ -58,7 +60,7 @@ export default {
 
 }
 .class1 {
-	
+
 }
 .class2 {
 	backgroud-color: red;
