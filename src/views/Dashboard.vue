@@ -1,28 +1,25 @@
 <template>
 	<v-container
-    align-center 
-    d-flex 
-    fluid 
-    class="pa-0 dashboard-container"
-  >
-    <SideBar/>
-    <SearchBar/>
-    <CreateExamDialog/>
-  </v-container>
+		align-center
+		d-flex
+		fluid
+		class="pa-0 dashboard-container"
+	>
+		<SideBar />
+		<CreateExamDialog />
+	</v-container>
 </template>
 
 <script>
 import SideBar from '@/components/SideBar'
-import SearchBar from '@/components/SearchBar'
 import CreateExamDialog from '@/components/CreateExamDialog'
 
 export default {
 	name: 'Dashboard',
-  components: {
-    SideBar,
-    SearchBar,
-    CreateExamDialog
-  },
+	components: {
+		SideBar,
+		CreateExamDialog
+	},
 	data () { return {} },
 	methods: {}
 }

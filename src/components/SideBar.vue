@@ -8,11 +8,21 @@
 		>
 			<v-list>
 				<v-list-item
-						@click="mini = !mini"
-					>
+					@click="mini = !mini"
+				>
 					<v-list-item-icon style="margin: auto">
-						<v-icon size=30 v-if="mini">mdi-menu</v-icon>
-						<v-icon size=30 v-else>mdi-backburger</v-icon>
+						<v-icon
+							v-if="mini"
+							size="30"
+						>
+							mdi-menu
+						</v-icon>
+						<v-icon
+							v-else
+							size="30"
+						>
+							mdi-backburger
+						</v-icon>
 					</v-list-item-icon>
 				</v-list-item>
 			</v-list>
@@ -24,13 +34,20 @@
 						<v-list-item
 							v-for="item in items"
 							:key="item.title"
-							@click="$emit('change-tab-event', item.title)"
+							@click="mini = true; $emit('change-tab-event', item.title)"
 						>
-							<v-list-item-icon >
-								<v-icon size=30>{{ item.icon }}</v-icon>
+							<v-list-item-icon>
+								<v-icon size="30">
+									{{ item.icon }}
+								</v-icon>
 							</v-list-item-icon>
 							<v-list-item-content>
-								<v-list-item-title style="color: #717171;">{{ item.title }}</v-list-item-title>
+								<v-list-item-title
+									class="title"
+									style="font-size: 18px !important ; color: #717171;"
+								>
+									{{ item.title }}
+								</v-list-item-title>
 							</v-list-item-content>
 						</v-list-item>
 					</v-list>
@@ -38,13 +55,15 @@
 
 				<div style="position: absolute; bottom: 0; width: 100%; ">
 					<v-list>
-					<v-list-item
+						<v-list-item
 							@click="$emit('change-tab-event', 'profile')"
 						>
-						<v-list-item-icon style="margin:auto">
-							<v-icon size=30>mdi-account</v-icon>
-						</v-list-item-icon>
-					</v-list-item>
+							<v-list-item-icon style="margin:auto">
+								<v-icon size="30">
+									mdi-account
+								</v-icon>
+							</v-list-item-icon>
+						</v-list-item>
 					</v-list>
 				</div>
 			</div>
