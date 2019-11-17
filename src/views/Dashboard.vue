@@ -12,13 +12,15 @@
 
 <script>
 import SideBar from '@/components/SideBar'
-import CreateExamDialog from '@/components/CreateExamDialog'
+import SearchBar from '@/components/SearchBar'
+import CreateExamPanel from '@/components/CreateExamPanel'
 
 export default {
 	name: 'Dashboard',
 	components: {
 		SideBar,
-		CreateExamDialog
+		SearchBar,
+		CreateExamPanel
 	},
 	data () { return {} },
 	methods: {}
@@ -26,8 +28,10 @@ export default {
 </script>
 
 <style scoped>
-  .dashboard-container {
-    height: 100%;
-    background-color: #F3F3F6;
-  }
+.sidebar-container {
+  max-width: 85px;
+}
+.panel-container {
+  padding: 2vh;
+}
 </style>

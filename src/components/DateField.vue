@@ -43,8 +43,7 @@
 <script>
 export default {
 	name: 'DateField',
-	data () { return {} },
-	methods: {}
+	props: ['date']
 }
 </script>
 

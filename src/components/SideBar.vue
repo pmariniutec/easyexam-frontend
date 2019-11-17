@@ -93,8 +93,7 @@ export default {
 .sidebar {
 	max-width: 180px;
 	position: absolute;
-	height: 99vh;
-	margin-left: 5px;
+	height: 96vh;
+	margin: 2vh;
 }
-
 </style>
