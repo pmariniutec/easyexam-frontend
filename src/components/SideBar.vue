@@ -77,5 +77,4 @@ export default {
 	height: 99vh;
 	margin-left: 5px;
 }
-
 </style>
