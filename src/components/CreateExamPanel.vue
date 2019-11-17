@@ -1,6 +1,6 @@
 <template>
 	<v-card
-		class="mx-auto"
+		class="create-exam-card"
 	>
 		<v-card-title
 			primary-title
@@ -9,7 +9,11 @@
 				<v-col cols="10">
 					Create new exam
 				</v-col>
-				<v-col cols="2">
+				<v-col
+          cols="2"
+          align="right"
+          class="px-6"
+        >
 					<v-btn
 						color="primary"
 					>
@@ -74,4 +78,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.create-exam-card {
+  height: 96vh;
+  overflow-y: auto;
+}
 </style>

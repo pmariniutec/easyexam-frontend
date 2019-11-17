@@ -1,5 +1,12 @@
 <template>
-	<v-card shaped hover elevation="10" width="900" min-height="100" class="mx-auto">
+	<v-card
+		shaped
+		hover
+		elevation="10"
+		width="900"
+		min-height="100"
+		class="mx-auto"
+	>
 		<v-row>
 			<v-col class="text-center">
 				<h2>Name</h2>
@@ -22,9 +29,9 @@
 			</v-col>
 		</v-row>
 
-        <div v-for="data in exams_data">
-            <ExamComponent :exam_info="data"/>        
-        </div>
+		<div v-for="data in exams_data">
+			<ExamComponent :exam_info="data" />
+		</div>
 
 		<v-col md="5">
 			<button @click="addFind">
@@ -41,7 +48,7 @@ import ExamComponent from '@/components/ExamComponent'
 export default {
 	name: 'ViewExam',
 	components: {
-        ExamComponent,
+		ExamComponent
 	},
 
 	data () {

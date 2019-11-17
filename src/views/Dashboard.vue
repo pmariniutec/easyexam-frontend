@@ -1,23 +1,18 @@
 <template>
 	<v-container
-		align-center
 		d-flex
 		fluid
 		class="pa-0"
 	>
-		<v-row
-			no-gutters
-		>
+		<v-row no-gutters>
 			<v-col
-				cols="1"
-			>
+        class="sidebar-container"
+      >
 				<SideBar />
 			</v-col>
 			<v-col
-				cols="11"
-				align-center
-				class="pa-6"
-			>
+        class="panel-container"
+      >
 				<CreateExamPanel />
 			</v-col>
 		</v-row>
@@ -42,4 +37,10 @@ export default {
 </script>
 
 <style scoped>
+.sidebar-container {
+  max-width: 85px;
+}
+.panel-container {
+  padding: 2vh;
+}
 </style>
