@@ -1,37 +1,70 @@
 <template>
-	<div class="sidebar">
-		<ul class="sidebar-menu">
-			<li class="sidebar-menu-item">
-				<v-icon>mdi-backburger</v-icon>
-			</li>
-			<li class="sidebar-menu-item">
-				<v-icon>mdi-home</v-icon>
-			</li>
-			<li class="sidebar-menu-item">
-				<v-card
-					hover="true"
-					:elevation="0"
-				>
-					<v-icon>mdi-book-open-page-variant</v-icon>
-				</v-card>
-			</li>
-			<li class="sidebar-menu-item">
-				<v-icon>mdi-clipboard-list</v-icon>
-			</li>
-			<li class="sidebar-menu-item">
-				<v-icon>mdi-settings</v-icon>
-			</li>
-			<li class="sidebar-menu-item">
-				<v-icon>mdi-account</v-icon>
-			</li>
-		</ul>
-	</div>
+	<v-card class="sidebar">
+		<v-navigation-drawer
+			permanent
+			:mini-variant="mini"
+			mini-variant-width="70px"
+			style="position: relative"
+		>
+			<v-list>
+				<v-list-item
+						@click="mini = !mini"
+					>
+					<v-list-item-icon style="margin: auto">
+						<v-icon size=30 v-if="mini">mdi-menu</v-icon>
+						<v-icon size=30 v-else>mdi-backburger</v-icon>
+					</v-list-item-icon>
+				</v-list-item>
+			</v-list>
+
+			<v-divider />
+			<div class="tabs">
+				<div>
+					<v-list>
+						<v-list-item
+							v-for="item in items"
+							:key="item.title"
+							@click="$emit('change-tab-event', item.title)"
+						>
+							<v-list-item-icon >
+								<v-icon size=30>{{ item.icon }}</v-icon>
+							</v-list-item-icon>
+							<v-list-item-content>
+								<v-list-item-title style="color: #717171;">{{ item.title }}</v-list-item-title>
+							</v-list-item-content>
+						</v-list-item>
+					</v-list>
+				</div>
+
+				<div style="position: absolute; bottom: 0; width: 100%; ">
+					<v-list>
+					<v-list-item
+							@click="$emit('change-tab-event', 'profile')"
+						>
+						<v-list-item-icon style="margin:auto">
+							<v-icon size=30>mdi-account</v-icon>
+						</v-list-item-icon>
+					</v-list-item>
+					</v-list>
+				</div>
+			</div>
+		</v-navigation-drawer>
+	</v-card>
 </template>
 
 <script>
 export default {
 	name: 'SideBar',
-	data () { return {} },
+	data () {
+		return {
+			items: [
+				{ title: 'Home', icon: 'mdi-home', href: 'dashboard' },
+				{ title: 'New Exam', icon: 'mdi-file-document-box-plus', href: 'create-exam' },
+				{ title: 'Settings', icon: 'mdi-settings', href: 'settings' }
+			],
+			mini: true
+		}
+	},
 	computed: {}
 
 }
@@ -39,31 +72,9 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar {
-	  position: absolute;
-		  width: 70px;
-			  height: 99vh;
-				  margin: 0 5px;
-					  border-radius: 4px;
-						  background-color: #ffffff;
-							  transform: translateX(0);
-								  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-
-}
-.sidebar-menu {
-	  font-weight: 600;
-		  color: transparent;
-
-}
-.sidebar-menu-item {
-	  font-size: 36px;
-		  cursor: pointer;
-
-}
-.class1 {
-
-}
-.class2 {
-	backgroud-color: red;
-	color: red;
+	max-width: 180px;
+	position: absolute;
+	height: 99vh;
+	margin-left: 5px;
 }
 </style>
