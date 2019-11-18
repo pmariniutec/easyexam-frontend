@@ -15,7 +15,9 @@
 		transform-origin: left;
 		position: fixed;
 		top: -125px;
-		left: -14%;"
+		left: -14%;
+		z-index: 0;
+		"
 		/>
 		<v-row
 			align="center"
@@ -91,6 +93,7 @@
 			<v-col
 				cols="12"
 				align="center"
+				style="z-index: 1;"
 			>
 				¿No tienes una cuenta?
 				<router-link :to="{ name: 'register' }">

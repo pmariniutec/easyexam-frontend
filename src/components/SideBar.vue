@@ -34,7 +34,7 @@
 						<v-list-item
 							v-for="item in items"
 							:key="item.title"
-							@click="$emit('change-tab-event', item.title)"
+							@click="mini = true; $emit('change-tab-event', item.title)"
 						>
 							<v-list-item-icon>
 								<v-icon size="30">
