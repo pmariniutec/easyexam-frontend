@@ -1,12 +1,13 @@
 <template>
-	<v-card
-		:style="style"
-	>
+	<v-container>
 		<div
-			class="latex-card"
+			:class="getMode ? 'show' : 'hidden'"
 			v-html="generateLaTeX"
 		/>
-	</v-card>
+		<div :class="getMode ? 'hidden' : 'show'">
+			{{ text }}
+		</div>
+	</v-container>
 </template>
 
 <script>
@@ -22,6 +23,10 @@ export default {
 		},
 		'text': {
 			type: String
+		},
+		'mode': {
+			type: String,
+			default: 'latex'
 		}
 	},
 	data () { return {} },
@@ -29,14 +34,18 @@ export default {
 		generateLaTeX: function () {
 			let generator = parse(this.text, { generator: new HtmlGenerator({ hyphenate: false }) })
 			return generator.htmlDocument('https://cdn.jsdelivr.net/npm/latex.js@0.11.1/dist/').documentElement.outerHTML
+		},
+		getMode: function () {
+			return this.mode === 'latex'
 		}
-
 	},
 	methods: {}
 }
 </script>
 <style>
-	.latex-card {
-		padding: 10px;
-	}
+.shoow{
+display: show}
+.hidden{
+	display: none
+}
 </style>
