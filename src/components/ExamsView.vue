@@ -24,7 +24,7 @@
             <ExamRowComponent :exam_info="data" />        
         </div>
 
-		<v-col md="5">
+		<v-col v-if="debug_data" hidden md="5">
 			<button @click="addFind">
 				Add test
 			</button>
@@ -35,6 +35,7 @@
 <script>
 
 import ExamRowComponent from '@/components/ExamRowComponent'
+import { mapActions } from 'vuex'
 
 export default {
 	name: 'ExamsView',
@@ -44,13 +45,25 @@ export default {
 
 	data () {
 		return {
-			exams_data: []
+			exams_data: [],
+            debug_data: false
 		}
 	},
 	computed: {
 
 	},
+    beforeMount() {
+        this.loadExams()
+    },
 	methods: {
+		...mapActions('exams', ['fetchExams']),
+        loadExams () {
+            this.exams_data = this.fetchExams()
+            $.each(this.exams_data, (key, value) => {
+                console.log(value)
+                console.log(key)
+            })
+        },
 		addFind: function () {
 			this.exams_data.push({ name: 'hola', difficulty: 2.5, number: 10, date_edit: '10/10/10', date_create: '10/10/10' })
 		}
