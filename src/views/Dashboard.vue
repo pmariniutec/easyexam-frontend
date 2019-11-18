@@ -6,17 +6,15 @@
 	>
 		<v-row no-gutters>
 			<v-col
-        id="sidebar"
-      >
-				<SideBar 
-          v-on:change-tab-event="changeTab"
-        />
+				id="sidebar"
+			>
+				<SideBar
+					@change-tab-event="changeTab"
+				/>
 			</v-col>
 			<v-col
-        class="panel-container"
-      >
-
-			</v-col>
+				class="panel-container"
+			/>
 		</v-row>
 	</v-container>
 </template>
@@ -27,14 +25,14 @@ import SideBar from '@/components/SideBar'
 export default {
 	name: 'Dashboard',
 	components: {
-		SideBar,
+		SideBar
 	},
 	data: () => ({}),
 	methods: {
-    changeTab: function (href) {
-      this.$router.push(`/${href}`)
-    },
-  }
+		changeTab: function (href) {
+			this.$router.push(`/${href}`)
+		}
+	}
 }
 </script>
 

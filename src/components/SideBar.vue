@@ -37,7 +37,10 @@
 							@click="$emit('change-tab-event', item.href)"
 						>
 							<v-list-item-icon>
-								<v-icon size="30">
+								<v-icon
+									size="30"
+									:color="item.color"
+								>
 									{{ item.icon }}
 								</v-icon>
 							</v-list-item-icon>
@@ -50,10 +53,18 @@
 					</v-list>
 				</div>
 
-				<div style="position: absolute; bottom: 0; width: 100%; ">
-					<v-list>
+				<div style="position: absolute; bottom: 0; width: 100%; text-align: center;">
+          <v-chip
+            color="secondary"
+          >
+            {{ points }}
+          </v-chip> 
+          <span>
+            points
+          </span>
+          <v-list>
 						<v-list-item
-							@click="$emit('change-tab-event', 'profile')"
+							@click="$emit('change-tab-event', 'dashboard/profile')"
 						>
 							<v-list-item-icon style="margin:auto">
 								<v-icon size="30">
@@ -71,15 +82,28 @@
 <script>
 export default {
 	name: 'SideBar',
-	data () {
-		return {
-			items: [
-				{ title: 'Home', icon: 'mdi-home', href: 'dashboard' },
-				{ title: 'New Exam', icon: 'mdi-file-document-box-plus', href: 'dashboard/create-exam' },
-			],
-			mini: true
-		}
-	},
+	data: () => ({
+		items: [
+			{
+				title: 'Home',
+				icon: 'mdi-home',
+				href: 'dashboard'
+			},
+			{
+				title: 'Courses',
+				icon: 'mdi-book-multiple',
+				href: 'dashboard/courses'
+			},
+			{
+				title: 'New Exam',
+				icon: 'mdi-pencil-plus-outline',
+				href: 'dashboard/create-exam',
+				color: 'primary'
+			}
+		],
+		mini: true,
+    points: 30,
+	}),
 	computed: {}
 
 }

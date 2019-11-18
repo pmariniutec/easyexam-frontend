@@ -10,10 +10,10 @@
 					Create new exam
 				</v-col>
 				<v-col
-          cols="2"
-          align="right"
-          class="px-6"
-        >
+					cols="2"
+					align="right"
+					class="px-6"
+				>
 					<v-btn
 						color="primary"
 					>

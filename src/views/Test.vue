@@ -1,12 +1,12 @@
 <template>
 	<v-container
-    align-center 
-    d-flex 
-    fluid 
-    class="pa-0 dashboard-container"
-  >
-    <ExamsView/>
-  </v-container>
+		align-center
+		d-flex
+		fluid
+		class="pa-0 dashboard-container"
+	>
+		<ExamsView />
+	</v-container>
 </template>
 
 <script>
@@ -14,9 +14,9 @@ import ExamsView from '@/components/ExamsView'
 
 export default {
 	name: 'Test',
-  components: {
-    ExamsView
-  },
+	components: {
+		ExamsView
+	},
 	data () { return {} },
 	methods: {}
 }

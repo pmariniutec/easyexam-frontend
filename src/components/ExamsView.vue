@@ -1,11 +1,12 @@
 <template>
-	<v-card shaped
-            hover
-            elevation="10"
-            width="900"
-            min-height="100"
-            class="mx-auto">
-
+	<v-card
+		shaped
+		hover
+		elevation="10"
+		width="900"
+		min-height="100"
+		class="mx-auto"
+	>
 		<v-row class="grey--text text--darken-2 text-center title">
 			<v-col> Name </v-col>
 
@@ -17,14 +18,19 @@
 
 			<v-col>	Date Created </v-col>
 		</v-row>
-        <v-divider></v-divider>
-        <div v-for="data in exams_data" 
-            v-bind:key="data.name">
+		<v-divider />
+		<div
+			v-for="data in exams_data"
+			:key="data.name"
+		>
+			<ExamRowComponent :exam_info="data" />
+		</div>
 
-            <ExamRowComponent :exam_info="data" />        
-        </div>
-
-		<v-col v-if="debug_data" hidden md="5">
+		<v-col
+			v-if="debug_data"
+			hidden
+			md="5"
+		>
 			<button @click="addFind">
 				Add test
 			</button>
@@ -40,30 +46,30 @@ import { mapActions } from 'vuex'
 export default {
 	name: 'ExamsView',
 	components: {
-        ExamRowComponent
+		ExamRowComponent
 	},
 
 	data () {
 		return {
 			exams_data: [],
-            debug_data: false
+			debug_data: false
 		}
 	},
 	computed: {
 
 	},
-    beforeMount() {
-        this.loadExams()
-    },
+	beforeMount () {
+		this.loadExams()
+	},
 	methods: {
 		...mapActions('exams', ['fetchExams']),
-        loadExams () {
-            this.exams_data = this.fetchExams()
-            $.each(this.exams_data, (key, value) => {
-                console.log(value)
-                console.log(key)
-            })
-        },
+		loadExams () {
+			this.exams_data = this.fetchExams()
+			$.each(this.exams_data, (key, value) => {
+				console.log(value)
+				console.log(key)
+			})
+		},
 		addFind: function () {
 			this.exams_data.push({ name: 'hola', difficulty: 2.5, number: 10, date_edit: '10/10/10', date_create: '10/10/10' })
 		}
