@@ -42,64 +42,64 @@ const redirectLogout = (to, from, next) => {
 }
 
 const router = new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login,
-      beforeEnter: requireNoAuth
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: Register,
-      beforeEnter: requireNoAuth
-    },
-    {
-      path: '/logout',
-      name: 'logout',
-      beforeEnter: redirectLogout
-    },
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: Dashboard,
-      //beforeEnter: requireAuth
-    },
-    {
-      path: '/dashboard/create-exam',
-      name: 'dashboardCreateExam',
-      component: DashboardCreateExam,
-    }, 
-    {
-      path: '/profile',
-      name: 'profile',
-      component: Profile,
-      beforeEnter: requireAuth,
-    },
-    {
-      path: '/createExam',
-      name: 'createExam',
-      component: CreateExam
-      // beforeEnter: requireAuth
-    },
-    {
-        path: '/test',
-        name: 'test',
-        component: Test,
-    },
-    {
-      path: '*',
-      name: 'pageNotFound',
-      component: PageNotFound,
-    },
+	mode: 'history',
+	base: process.env.BASE_URL,
+	routes: [
+		{
+			path: '/',
+			name: 'home',
+			component: Home
+		},
+		{
+			path: '/login',
+			name: 'login',
+			component: Login,
+			beforeEnter: requireNoAuth
+		},
+		{
+			path: '/register',
+			name: 'register',
+			component: Register,
+			beforeEnter: requireNoAuth
+		},
+		{
+			path: '/logout',
+			name: 'logout',
+			beforeEnter: redirectLogout
+		},
+		{
+			path: '/dashboard',
+			name: 'dashboard',
+			component: Dashboard
+			// beforeEnter: requireAuth
+		},
+		{
+			path: '/dashboard/create-exam',
+			name: 'dashboardCreateExam',
+			component: DashboardCreateExam
+		},
+		{
+			path: '/profile',
+			name: 'profile',
+			component: Profile,
+			beforeEnter: requireAuth
+		},
+		{
+			path: '/createExam',
+			name: 'createExam',
+			component: CreateExam
+			// beforeEnter: requireAuth
+		},
+		{
+			path: '/test',
+			name: 'test',
+			component: Test
+		},
+		{
+			path: '*',
+			name: 'pageNotFound',
+			component: PageNotFound
+		}
 	]
 })
 
