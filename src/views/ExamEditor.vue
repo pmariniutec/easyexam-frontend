@@ -1,83 +1,57 @@
 <template>
-	<v-container fluid>
-		<v-row justify="space-around">
-			<v-col cols="6">
-				<v-row
-					v-for="item in texList"
-					cols="6"
-				>
+	<v-container
+		align-center
+		d-flex
+		fluid
+		class="pa-0 dashboard-container"
+	>
+		<SideBar />
+		<v-card style="margin-left: 100px; max-height: 90vh; overflow-y: scroll;">
+			<v-container>
+				<v-row>
+					<v-col>
+						<v-btn @click="mode='raw'">
+							Raw
+						</v-btn>
+						<v-btn @click="mode='latex'">
+							LaTeX
+						</v-btn>
+					</v-col>
+				</v-row>
+				<v-row v-for="item in texList">
 					<v-col>
 						<LaTeXPreviewCard
-							v-if="item.mode === 'latex'"
-							style="width: 100%;"
+							v-if="mode==='latex'"
+							style="width: 600px;"
 							:text="item.tex"
 						/>
 						<v-card
 							v-else
-							style="padding: 10px; width: 100%; font-size: 12px;"
+							style="padding: 10px; width: 600px; font-size: 12px;"
 						>
 							{{ item.tex }}
 						</v-card>
 					</v-col>
 				</v-row>
-			</v-col>
-			<v-col>
-				<v-list>
-					<v-list-item-group v-model="question">
-						<v-list-item
-							v-for="(question, i) in questions"
-							:key="i"
-						>
-							<v-list-item-content>
-								<v-list-item-title>
-									{{ question.text }}
-								</v-list-item-title>
-							</v-list-item-content>
-						</v-list-item>
-					</v-list-item-group>
-				</v-list>
-				<v-textarea
-					counter
-					label="New question"
-					:rules="questionLimit"
-				/>
-				<v-btn
-					class="my-6 float-right"
-					small
-				>
-					Add
-				</v-btn>
-			</v-col>
-		</v-row>
+			</v-container>
+		</v-card>
 	</v-container>
 </template>
 
 <script>
-
+import SideBar from '@/components/SideBar'
 import LaTeXPreviewCard from '@/components/LaTeXPreviewCard'
 
 export default {
-	name: 'CreateExamPanelDetails',
+	name: 'Editor',
 	components: {
+		SideBar,
 		LaTeXPreviewCard
 	},
-	data: () => ({
-		question: 3,
-		questions: [
-			{
-				text: 'Question 1'
-			},
-			{
-				text: 'Question 2'
-			},
-			{
-				text: 'Question 3'
-			}
-		],
-		questionLimit: [
-			v => v.length <= 60 || 'Max 60 characters'
-		],
-		texList: [{ mode: 'latex', tex: String.raw`
+	data () {
+		return {
+			mode: 'latex',
+			texList: [{ tex: String.raw`
 				\documentclass{article}
 					\begin{document}
 						\noindent Our friend Martin is moving to Barranco. He is a big fan of beer and pretty much anything that contains alcohol. Luckily, he has found a street with $n$ bars. Since he will definitely visit all of them frequently, he wants to find an apartment close to them. 
@@ -93,7 +67,7 @@ export default {
 							\item \textit{Bonus}: Can you do better? Sketch a faster algorithm.
 						\end{enumerate}
 					\end{document}
-			` }, { mode: 'latex', tex: String.raw`
+			` }, { tex: String.raw`
 				\documentclass{article}
 					\begin{document}
 						\noindent Our friend Martin is moving to Barranco. He is a big fan of beer and pretty much anything that contains alcohol. Luckily, he has found a street with $n$ bars. Since he will definitely visit all of them frequently, he wants to find an apartment close to them. 
@@ -109,7 +83,7 @@ export default {
 							\item \textit{Bonus}: Can you do better? Sketch a faster algorithm.
 						\end{enumerate}
 					\end{document}
-			` }, { mode: 'latex', tex: String.raw`
+			` }, { tex: String.raw`
 				\documentclass{article}
 					\begin{document}
 						\noindent Our friend Martin is moving to Barranco. He is a big fan of beer and pretty much anything that contains alcohol. Luckily, he has found a street with $n$ bars. Since he will definitely visit all of them frequently, he wants to find an apartment close to them. 
@@ -126,10 +100,19 @@ export default {
 						\end{enumerate}
 					\end{document}
 				` }
-		]
-	})
+			]
+		}
+	},
+	methods: {}
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+.dashboard-container {
+	height: 100%;
+	background-color: #f3f3f6;
+}
+p {
+  font-size: 12px;
+}
 </style>

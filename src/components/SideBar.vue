@@ -75,7 +75,7 @@ export default {
 		return {
 			items: [
 				{ title: 'Home', icon: 'mdi-home', href: 'dashboard' },
-				{ title: 'New Exam', icon: 'mdi-file-document-box-plus', href: 'dashboard/create-exam' },
+				{ title: 'New Exam', icon: 'mdi-file-document-box-plus', href: 'dashboard/create-exam' }
 			],
 			mini: true
 		}

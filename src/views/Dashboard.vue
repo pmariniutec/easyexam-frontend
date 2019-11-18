@@ -23,7 +23,6 @@
 
 <script>
 import SideBar from '@/components/SideBar'
-
 export default {
 	name: 'Dashboard',
 	components: {

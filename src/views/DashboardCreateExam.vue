@@ -6,15 +6,15 @@
 	>
 		<v-row no-gutters>
 			<v-col
-        class="sidebar-container"
-      >
+				class="sidebar-container"
+			>
 				<SideBar
-          v-on:change-tab-event="changeTab"
-        />
+					@change-tab-event="changeTab"
+				/>
 			</v-col>
 			<v-col
-        class="panel-container"
-      >
+				class="panel-container"
+			>
 				<CreateExamPanel />
 			</v-col>
 		</v-row>
@@ -29,14 +29,16 @@ export default {
 	name: 'DashboardCreateExam',
 	components: {
 		SideBar,
-    CreateExamPanel,
+		CreateExamPanel
 	},
-  data: () => ({}),
+	data () {
+		return {}
+	},
 	methods: {
-    changeTab: function (href) {
-      this.$router.push(`/${href}`)
-    },
-  }
+		changeTab: function (href) {
+			this.$router.push(`/${href}`)
+		}
+	}
 }
 </script>
 
