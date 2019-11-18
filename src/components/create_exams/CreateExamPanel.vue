@@ -60,8 +60,8 @@
 </template>
 
 <script>
-import CreateExamPanelDetails from '@/components/CreateExamPanelDetails'
-import CreateExamPanelQuestions from '@/components/CreateExamPanelQuestions'
+import CreateExamPanelDetails from '@/components/create_exams/CreateExamPanelDetails'
+import CreateExamPanelQuestions from '@/components/create_exams/CreateExamPanelQuestions'
 
 export default {
 	name: 'CreateExamPanel',

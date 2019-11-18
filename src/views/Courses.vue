@@ -21,7 +21,7 @@
 
 <script>
 import SideBar from '@/components/SideBar'
-import CoursesView from '@/components/CoursesView'
+import CoursesView from '@/components/course/CoursesView'
 
 export default {
 	name: 'Courses',

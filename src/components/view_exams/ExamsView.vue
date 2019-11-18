@@ -34,7 +34,7 @@
 
 <script>
 
-import ExamRowComponent from '@/components/ExamRowComponent'
+import ExamRowComponent from '@/components/view_exams/ExamRowComponent'
 import { mapActions } from 'vuex'
 
 export default {

@@ -23,7 +23,7 @@
 
 <script>
 import SideBar from '@/components/SideBar'
-import CreateExamPanel from '@/components/CreateExamPanel'
+import CreateExamPanel from '@/components/create_exams/CreateExamPanel'
 
 export default {
 	name: 'DashboardCreateExam',

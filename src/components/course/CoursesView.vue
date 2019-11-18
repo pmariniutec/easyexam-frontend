@@ -29,7 +29,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import CourseCard from '@/components/CourseCard'
+import CourseCard from '@/components/course/CourseCard'
 
 export default {
 	name: 'CoursesView',
