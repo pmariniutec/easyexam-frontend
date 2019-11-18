@@ -8,7 +8,7 @@ import Register from './views/Register'
 import CreateExam from './views/CreateExam'
 import Profile from './views/Profile'
 import Dashboard from './views/Dashboard'
-import DashboardCreateExam from './views/DashboardCreateExam'
+import Courses from './views/Courses'
 import Test from './views/Test'
 import PageNotFound from './views/PageNotFound'
 
@@ -71,6 +71,12 @@ const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
+      //beforeEnter: requireAuth
+    },
+    {
+      path: '/dashboard/courses',
+      name: 'courses',
+      component: Courses,
       //beforeEnter: requireAuth
     },
     {
