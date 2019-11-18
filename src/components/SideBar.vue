@@ -34,7 +34,7 @@
 						<v-list-item
 							v-for="item in items"
 							:key="item.title"
-							@click="$emit('change-tab-event', item.title)"
+							@click="$emit('change-tab-event', item.href)"
 						>
 							<v-list-item-icon>
 								<v-icon size="30">
@@ -75,8 +75,7 @@ export default {
 		return {
 			items: [
 				{ title: 'Home', icon: 'mdi-home', href: 'dashboard' },
-				{ title: 'New Exam', icon: 'mdi-file-document-box-plus', href: 'create-exam' },
-				{ title: 'Settings', icon: 'mdi-settings', href: 'settings' }
+				{ title: 'New Exam', icon: 'mdi-file-document-box-plus', href: 'dashboard/create-exam' },
 			],
 			mini: true
 		}
