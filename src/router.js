@@ -8,6 +8,7 @@ import Register from './views/Register'
 import CreateExam from './views/CreateExam'
 import Profile from './views/Profile'
 import Dashboard from './views/Dashboard'
+import Courses from './views/Courses'
 import Test from './views/Test'
 
 Vue.use(Router)
@@ -69,7 +70,13 @@ const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      beforeEnter: requireAuth
+      //beforeEnter: requireAuth
+    },
+    {
+      path: '/dashboard/courses',
+      name: 'courses',
+      component: Courses,
+      //beforeEnter: requireAuth
     },
     {
       path: '/profile',
