@@ -43,7 +43,10 @@
 <script>
 export default {
 	name: 'DateField',
-	props: ['date']
+	props: ['date'],
+  data: () => ({
+    menu: '',
+  }),
 }
 </script>
 
