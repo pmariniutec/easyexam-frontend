@@ -2,51 +2,75 @@
 	<v-container fluid>
 		<v-row justify="space-around">
 			<v-col cols="6">
+				<b>
+					Preview
+				</b>
 				<v-row
 					v-for="item in texList"
 					cols="6"
 				>
 					<v-col>
-						<LaTeXPreviewCard
-							v-if="item.mode === 'latex'"
-							style="width: 100%;"
-							:text="item.tex"
-						/>
-						<v-card
-							v-else
-							style="padding: 10px; width: 100%; font-size: 12px;"
-						>
-							{{ item.tex }}
+						<v-card>
+							<LaTeXPreviewCard
+								style="width: 90%;"
+								:text="item.tex"
+								:mode="item.mode"
+							/>
+							<v-btn @click="item.mode = 'latex'">
+								Latex
+							</v-btn>
+							<v-btn @click="item.mode = 'txt'">
+								Source
+							</v-btn>
 						</v-card>
 					</v-col>
 				</v-row>
 			</v-col>
-			<v-col>
-				<v-list>
-					<v-list-item-group v-model="question">
-						<v-list-item
-							v-for="(question, i) in questions"
-							:key="i"
-						>
-							<v-list-item-content>
-								<v-list-item-title>
-									{{ question.text }}
-								</v-list-item-title>
-							</v-list-item-content>
-						</v-list-item>
-					</v-list-item-group>
-				</v-list>
-				<v-textarea
-					counter
-					label="New question"
-					:rules="questionLimit"
-				/>
-				<v-btn
-					class="my-6 float-right"
-					small
-				>
-					Add
-				</v-btn>
+			<v-col cols="6">
+				<b>
+					Suggested questions
+				</b>
+				<v-container>
+					<v-row>
+						<v-text-field
+							label="Search for a keyword..."
+							solo
+						/>
+					</v-row>
+
+					<v-row>
+						<v-row>
+							<v-list>
+								<v-list-item-group v-model="question">
+									<v-list-item
+										v-for="(question, i) in questions"
+										:key="i"
+									>
+										<v-list-item-content>
+											<v-list-item-title>
+												{{ question.text }}
+											</v-list-item-title>
+										</v-list-item-content>
+									</v-list-item>
+								</v-list-item-group>
+							</v-list>
+						</v-row>
+						<v-row>
+							<v-textarea
+								counter
+								label="New question"
+								:rules="questionLimit"
+							/>
+							<v-btn
+								class="my-6 float-right"
+								small
+							>
+								Add
+							</v-btn>
+						</v-row>
+					</v-row>
+
+				</v-container>
 			</v-col>
 		</v-row>
 	</v-container>
@@ -127,7 +151,14 @@ export default {
 					\end{document}
 				` }
 		]
-	})
+	}),
+	methods: {
+		changeMode (mode) {
+			console.log(this)
+			console.log(mode)
+			this.mode = mode
+		}
+	}
 }
 </script>
 
