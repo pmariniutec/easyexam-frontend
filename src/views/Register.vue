@@ -99,6 +99,7 @@
 			<v-col
 				cols="12"
 				align="center"
+				style="z-index: 1;"
 			>
 				¿Ya tienes una cuenta?
 				<router-link :to="{ name: 'register' }">

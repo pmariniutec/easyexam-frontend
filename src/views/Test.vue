@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ExamsView from '@/components/ExamsView'
+import ExamsView from '@/components/view_exams/ExamsView'
 
 export default {
 	name: 'Test',

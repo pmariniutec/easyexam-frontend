@@ -6,32 +6,31 @@
 	>
 		<v-row no-gutters>
 			<v-col
-				id="sidebar"
-			>
-				<SideBar
-					@change-tab-event="changeTab"
-				/>
+        class="sidebar-container"
+      >
+				<SideBar />
 			</v-col>
 			<v-col
-				class="panel-container"
-			/>
+        class="panel-container"
+      >
+				<CoursesView />
+			</v-col>
 		</v-row>
 	</v-container>
 </template>
 
 <script>
 import SideBar from '@/components/SideBar'
+import CoursesView from '@/components/course/CoursesView'
+
 export default {
-	name: 'Dashboard',
+	name: 'Courses',
 	components: {
-		SideBar
+		SideBar,
+	    CoursesView	
 	},
-	data: () => ({}),
-	methods: {
-		changeTab: function (href) {
-			this.$router.push(`/${href}`)
-		}
-	}
+	data () { return {} },
+	methods: {}
 }
 </script>
 

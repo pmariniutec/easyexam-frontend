@@ -15,12 +15,7 @@ const actions = {
 	}
 }
 
-const mutations = {
-
-}
-
 export default {
 	state: initialState,
 	actions,
-	mutations
 }

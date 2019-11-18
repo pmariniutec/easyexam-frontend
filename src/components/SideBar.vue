@@ -104,8 +104,7 @@ export default {
 		mini: true,
     points: 30,
 	}),
-	computed: {}
-
+	computed: {},
 }
 </script>
 

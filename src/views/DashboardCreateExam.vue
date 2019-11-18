@@ -23,7 +23,7 @@
 
 <script>
 import SideBar from '@/components/SideBar'
-import CreateExamPanel from '@/components/CreateExamPanel'
+import CreateExamPanel from '@/components/create_exams/CreateExamPanel'
 
 export default {
 	name: 'DashboardCreateExam',
@@ -32,8 +32,7 @@ export default {
 		CreateExamPanel
 	},
 	data: () => ({}),
-	methods: {
-		changeTab: function (href) {
+	methods: { changeTab: function (href) {
 			this.$router.push(`/${href}`)
 		}
 	}
