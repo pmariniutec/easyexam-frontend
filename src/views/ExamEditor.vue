@@ -15,7 +15,7 @@
 			<v-col
 				class="panel-container"
 			>
-				<CreateExamPanel />
+				<ExamEditorPanel />
 			</v-col>
 		</v-row>
 	</v-container>
