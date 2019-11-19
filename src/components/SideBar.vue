@@ -27,7 +27,6 @@
 				</v-list-item>
 			</v-list>
 
-			<v-divider />
 			<div class="tabs">
 				<div>
 					<v-list>
@@ -54,15 +53,15 @@
 				</div>
 
 				<div style="position: absolute; bottom: 0; width: 100%; text-align: center;">
-          <v-chip
-            color="secondary"
-          >
-            {{ points }}
-          </v-chip> 
-          <span>
-            points
-          </span>
-          <v-list>
+					<v-chip
+						color="secondary"
+					>
+						{{ points }}
+					</v-chip>
+					<span>
+						points
+					</span>
+					<v-list>
 						<v-list-item
 							@click="$emit('change-tab-event', 'dashboard/profile')"
 						>
@@ -102,9 +101,9 @@ export default {
 			}
 		],
 		mini: true,
-    points: 30,
+		points: 30
 	}),
-	computed: {},
+	computed: {}
 }
 </script>
 
@@ -112,7 +111,9 @@ export default {
 .sidebar {
 	max-width: 180px;
 	position: absolute;
-	height: 96vh;
-	margin: 2vh;
+	height: 100vh;
+	margin: 0 4vh 0 0;
+  left: 0;
+  top: 0;
 }
 </style>
