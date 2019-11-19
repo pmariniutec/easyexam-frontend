@@ -1,30 +1,32 @@
 <template>
-    <v-card class="course-panel">
-        <h2 class="mx-4 my-6"> Courses </h2>
-        <v-row
-            v-for="row in rows"
-            class="course-col"
-        >
-            <div
-                v-for="course in row"
-                :key="course.uuid"
-                class="course-item-container"
-            >
-                <CourseCard :courseInfo="course" />
+	<v-card class="course-panel">
+		<h2 class="mx-4 my-6">
+			Courses
+		</h2>
+		<v-row
+			v-for="row in rows"
+			class="course-col"
+		>
+			<div
+				v-for="course in row"
+				:key="course.uuid"
+				class="course-item-container"
+			>
+				<CourseCard :course-info="course" />
 
-                <v-divider />
-            </div>
-        </v-row>
-        <v-row class="justify-center">
-            <CourseNewModal/>
-            <button
-                v-if="debugData"
-                @click="addCourse" 
-            >
-                Add test
-            </button>
-        </v-row>
-    </v-card>
+				<v-divider />
+			</div>
+		</v-row>
+		<v-row class="justify-center">
+			<CourseNewModal />
+			<button
+				v-if="debugData"
+				@click="addCourse"
+			>
+				Add test
+			</button>
+		</v-row>
+	</v-card>
 </template>
 
 <script>
@@ -36,7 +38,7 @@ export default {
 	name: 'CoursesView',
 	components: {
 		CourseCard,
-        CourseNewModal
+		CourseNewModal
 	},
 	data: () => ({
 		courseData: [],
@@ -52,9 +54,9 @@ export default {
 			return rows
 		}
 	},
-    beforeMount () {
-        this.loadCourses() 
-    },
+	beforeMount () {
+		this.loadCourses()
+	},
 	methods: {
 		...mapActions('exams', ['getCourses', 'deleteCourse']),
 		loadCourses () {
@@ -65,7 +67,7 @@ export default {
 			})
 		},
 		addCourse: function () {
-			this.courseData.push({ name: 'ADA', code: 'CS101', uuid:'123' })
+			this.courseData.push({ name: 'ADA', code: 'CS101', uuid: '123' })
 		}
 	}
 }
