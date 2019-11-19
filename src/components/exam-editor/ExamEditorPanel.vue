@@ -22,6 +22,7 @@
 						<v-btn
 							color="secondary"
 							class="ma-2"
+                            @click="openPdf()"
 						>
 							Preview
 						</v-btn>
@@ -143,7 +144,10 @@ export default {
 			  .catch(() => {
 					this.error = 'Invalid Credentials'
 				})
-		}
+		},
+        openPdf: function() {  
+            window.open('https://docs.google.com/viewer?url=https://www.computer-pdf.com/pdf/0776-front-end-developer-handbook-2018.pdf', '_blank'); 
+        }
 	}
 }
 </script>
