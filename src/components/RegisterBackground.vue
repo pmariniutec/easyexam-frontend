@@ -12,6 +12,7 @@
 			transform="translate(247 185)"
 		/>
 	</svg>
+	
 </template>
 <script>
 
