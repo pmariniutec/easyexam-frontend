@@ -70,31 +70,31 @@ const router = new Router({
 		{
 			path: '/dashboard',
 			name: 'dashboard',
-			component: Dashboard
-			// beforeEnter: requireAuth
+			component: Dashboard,
+			//beforeEnter: requireAuth
 		},
 		{
 			path: '/dashboard/create-exam',
 			name: 'dashboardCreateExam',
-			component: DashboardCreateExam
-			// beforeEnter: requireAuth
+			component: DashboardCreateExam,
+			//beforeEnter: requireAuth
 		},
 		{
 			path: '/dashboard/courses',
 			name: 'courses',
-			component: Courses
-			//  beforeEnter: requireAuth
+			component: Courses,
+			//beforeEnter: requireAuth
 		},
 		{
 			path: '/dashboard/profile',
 			name: 'profile',
-			component: DashboardProfile
-			// beforeEnter: requireAuth
+			component: DashboardProfile,
+			//beforeEnter: requireAuth
 		},
 		{
 			path: '*',
 			name: 'pageNotFound',
-			component: PageNotFound
+			component: PageNotFound,
 		}
 	]
 })
