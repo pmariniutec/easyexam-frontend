@@ -3,6 +3,11 @@
 		class="fill-height"
 		fluid
 	>
+		<LoginBookPile
+			style="
+				z-index:1;
+			"
+		/>
 		<LoginBackground
 			height="1263.18"
 			width="1506"
@@ -54,7 +59,7 @@
 							<v-text-field
 								id="password"
 								v-model="inputData.password"
-								label="passwod"
+								label="password"
 								name="password"
 								type="password"
 								:class="{ 'error--text': error }"
@@ -66,7 +71,7 @@
 							>
 								{{ error }}
 							</h3>
-						<h3 class="forgot-password" @click="forgotPassword"> 
+						<h3 class="forgot-password" @click="forgotPassword">
 							<router-link :to="{name: forgot-password}" class="forgot-password">
 								Forgot your password?
 							</router-link>
@@ -97,11 +102,13 @@
 <script>
 import { mapActions } from 'vuex'
 import LoginBackground from '@/components/LoginBackground'
+import LoginBookPile from '@/components/LoginBookPile'
 
 export default {
 	name: 'Login',
 	components: {
-		LoginBackground
+		LoginBackground,
+		LoginBookPile
 	},
 	data () {
 		return {
