@@ -5,17 +5,14 @@
 		fluid
 		class="pa-0 dashboard-container"
 	>
-		<ExamsView />
 	</v-container>
 </template>
 
 <script>
-import ExamsView from '@/components/view_exams/ExamsView'
 
 export default {
 	name: 'Test',
 	components: {
-		ExamsView
 	},
 	data () { return {} },
 	methods: {}

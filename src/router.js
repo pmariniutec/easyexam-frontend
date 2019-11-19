@@ -9,7 +9,7 @@ import Dashboard from './views/Dashboard'
 import Courses from './views/Courses'
 import Test from './views/Test'
 import PageNotFound from './views/PageNotFound'
-import DashboardCreateExam from './views/DashboardCreateExam'
+import ExamEditor from './views/ExamEditor'
 import DashboardProfile from './views/DashboardProfile'
 
 Vue.use(Router)
@@ -74,9 +74,9 @@ const router = new Router({
 			// beforeEnter: requireAuth
 		},
 		{
-			path: '/dashboard/create-exam',
-			name: 'dashboardCreateExam',
-			component: DashboardCreateExam
+			path: '/dashboard/exam-editor',
+			name: 'examEditor',
+			component: ExamEditor
 			// beforeEnter: requireAuth
 		},
 		{
@@ -90,6 +90,11 @@ const router = new Router({
 			name: 'profile',
 			component: DashboardProfile
 			// beforeEnter: requireAuth
+		},
+        {
+			path: '/test',
+			name: 'test',
+			component: Test
 		},
 		{
 			path: '*',
