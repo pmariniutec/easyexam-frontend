@@ -54,15 +54,15 @@
 				</div>
 
 				<div style="position: absolute; bottom: 0; width: 100%; text-align: center;">
-          <v-chip
-            color="secondary"
-          >
-            {{ points }}
-          </v-chip> 
-          <span>
-            points
-          </span>
-          <v-list>
+					<v-chip
+						color="secondary"
+					>
+						{{ points }}
+					</v-chip>
+					<span>
+						points
+					</span>
+					<v-list>
 						<v-list-item
 							@click="$emit('change-tab-event', 'dashboard/profile')"
 						>
@@ -102,9 +102,9 @@ export default {
 			}
 		],
 		mini: true,
-    points: 30,
+		points: 30
 	}),
-	computed: {},
+	computed: {}
 }
 </script>
 

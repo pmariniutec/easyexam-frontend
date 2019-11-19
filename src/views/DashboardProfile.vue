@@ -15,7 +15,7 @@
 			<v-col
 				class="panel-container"
 			>
-				<CreateExamPanel />
+				<ProfilePanel />
 			</v-col>
 		</v-row>
 	</v-container>
@@ -23,18 +23,19 @@
 
 <script>
 import SideBar from '@/components/SideBar'
-import CreateExamPanel from '@/components/create_exams/CreateExamPanel'
+import ProfilePanel from '@/components/ProfilePanel'
 
 export default {
-	name: 'DashboardCreateExam',
+	name: 'DashboardProfile',
 	components: {
 		SideBar,
-		CreateExamPanel
+		ProfilePanel
 	},
 	data: () => ({}),
-	methods: { changeTab: function (href) {
-		this.$router.push(`/${href}`)
-	}
+	methods: {
+		changeTab: function (href) {
+			this.$router.push(`/${href}`)
+		}
 	}
 }
 </script>

@@ -5,13 +5,12 @@ import store from './store/store'
 import Home from './views/Home'
 import Login from './views/Login'
 import Register from './views/Register'
-import CreateExam from './views/CreateExam'
-import Profile from './views/Profile'
 import Dashboard from './views/Dashboard'
 import Courses from './views/Courses'
 import Test from './views/Test'
 import PageNotFound from './views/PageNotFound'
 import DashboardCreateExam from './views/DashboardCreateExam'
+import DashboardProfile from './views/DashboardProfile'
 
 Vue.use(Router)
 
@@ -78,25 +77,25 @@ const router = new Router({
 			path: '/dashboard/create-exam',
 			name: 'dashboardCreateExam',
 			component: DashboardCreateExam
-      // beforeEnter: requireAuth
+			// beforeEnter: requireAuth
 		},
-    {
-      path: '/dashboard/courses',
-      name: 'courses',
-      component: Courses,
-      //beforeEnter: requireAuth
-    },
+		{
+			path: '/dashboard/courses',
+			name: 'courses',
+			component: Courses
+			//  beforeEnter: requireAuth
+		},
 		{
 			path: '/dashboard/profile',
 			name: 'profile',
-			component: Profile,
-			beforeEnter: requireAuth
+			component: DashboardProfile
+			// beforeEnter: requireAuth
 		},
 		{
 			path: '*',
 			name: 'pageNotFound',
 			component: PageNotFound
-		},
+		}
 	]
 })
 

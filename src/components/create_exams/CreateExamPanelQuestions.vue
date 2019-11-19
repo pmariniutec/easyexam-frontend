@@ -7,7 +7,7 @@
 				</b>
 				<v-row
 					v-for="item in texList"
-          :key="item"
+					:key="item"
 					cols="6"
 				>
 					<v-col>
@@ -58,9 +58,9 @@
 						</v-row>
 						<v-row>
 							<v-textarea
+								v-model="newQuestion"
 								counter
 								label="New question"
-                v-model="newQuestion"
 								:rules="questionLimit"
 							/>
 							<v-btn
@@ -71,7 +71,6 @@
 							</v-btn>
 						</v-row>
 					</v-row>
-
 				</v-container>
 			</v-col>
 		</v-row>
@@ -100,7 +99,7 @@ export default {
 				text: 'Question 3'
 			}
 		],
-    newQuestion: '',
+		newQuestion: '',
 		questionLimit: [
 			v => v.length <= 60 || 'Max 60 characters'
 		],
