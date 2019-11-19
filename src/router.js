@@ -70,26 +70,26 @@ const router = new Router({
 		{
 			path: '/dashboard',
 			name: 'dashboard',
-			component: Dashboard
-			// beforeEnter: requireAuth
+			component: Dashboard,
+			beforeEnter: requireAuth
 		},
 		{
 			path: '/dashboard/exam-editor',
 			name: 'examEditor',
-			component: ExamEditor
-			// beforeEnter: requireAuth
+			component: ExamEditor,
+			beforeEnter: requireAuth
 		},
 		{
 			path: '/dashboard/courses',
 			name: 'courses',
-			component: Courses
-			// beforeEnter: requireAuth
+			component: Courses,
+			beforeEnter: requireAuth
 		},
 		{
 			path: '/dashboard/profile',
 			name: 'profile',
-			component: DashboardProfile
-			// beforeEnter: requireAuth
+			component: DashboardProfile,
+			beforeEnter: requireAuth
 		},
         {
 			path: '/test',
