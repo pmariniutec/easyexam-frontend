@@ -2,12 +2,12 @@
 	<v-card
 		class="panel-container"
 	>
-    <v-card-title
+		<v-card-title
 			primary-title
 		>
 			<v-row>
 				<v-col cols="10">
-				  My profile
+					My profile
 				</v-col>
 				<v-col
 					cols="2"
@@ -22,8 +22,8 @@
 				</v-col>
 			</v-row>
 		</v-card-title>
-		
-    <v-card-text>
+
+		<v-card-text>
 			<v-form v-model="valid">
 				<v-text-field
 					v-model="user.firstName"

@@ -32,9 +32,10 @@ export default {
 		CreateExamPanel
 	},
 	data: () => ({}),
-	methods: { changeTab: function (href) {
-		this.$router.push(`/${href}`)
-	}
+	methods: {
+		changeTab: function (href) {
+		  this.$router.push(`/${href}`)
+		}
 	}
 }
 </script>

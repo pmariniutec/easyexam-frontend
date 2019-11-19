@@ -4,7 +4,7 @@ const CSRF_COOKIE_NAME = 'csrftoken'
 const CSRF_HEADER_NAME = 'X-CSRFToken'
 
 const session = axios.create({
-	baseURL: process.env.VUE_APP_API_URL || 'http://127.0.0.1:8000',
+	baseURL: process.env.VUE_APP_API_URL || 'ec2-3-95-228-103.compute-1.amazonaws.com:5000',
 	headers: {
 		'Accept': 'application/json',
 		'Content-Type': 'application/json'
