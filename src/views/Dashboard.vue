@@ -6,7 +6,7 @@
 	>
 		<v-row no-gutters>
 			<v-col
-				id="sidebar"
+				class="sidebar-container"
 			>
 				<SideBar
 					@change-tab-event="changeTab"
@@ -14,17 +14,22 @@
 			</v-col>
 			<v-col
 				class="panel-container"
-			/>
+			>
+				<HomePanel />
+			</v-col>
 		</v-row>
 	</v-container>
 </template>
 
 <script>
 import SideBar from '@/components/SideBar'
+import HomePanel from '@/components/HomePanel'
+
 export default {
 	name: 'Dashboard',
 	components: {
-		SideBar
+		SideBar,
+		HomePanel
 	},
 	data: () => ({}),
 	methods: {
