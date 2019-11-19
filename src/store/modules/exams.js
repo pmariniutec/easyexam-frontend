@@ -9,12 +9,12 @@ const initialState = {
 
 const actions = {
 	createExam ({ commit }, { title, questions, keywords }) {
-		if (auth.isAuthenticated()) {
+		if (authService.isAuthenticated()) {
 			return examService.createExam(title, questions, keywords)
 		}
 	},
 	updateExams () {
-		if (auth.isAuthenticated()) {
+		if (authService.isAuthenticated()) {
 			commit(FETCHED_EXAMS)
 			return examService.fetchExams()
 		}

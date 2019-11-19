@@ -43,9 +43,10 @@ export default {
 <style scoped>
 .sidebar-container {
   max-width: 85px;
-	position: fixed;
+  position: fixed;
 }
 .panel-container {
+  margin-left: 70px;
   padding: 2vh;
 }
 </style>
