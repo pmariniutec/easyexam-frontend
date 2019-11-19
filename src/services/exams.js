@@ -9,7 +9,7 @@ const examService = {
 	},
     deleteCourse (courseId){
         return session.delete('/api/course/${courseId}')
-    }
+    },
 	createExam (title, questions, keywords) {
 		return session.post('/api/exam/create/', { title, questions, keywords })
 	},
