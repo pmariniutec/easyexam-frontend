@@ -69,7 +69,6 @@
 							</v-btn>
 						</v-row>
 					</v-row>
-
 				</v-container>
 			</v-col>
 		</v-row>
