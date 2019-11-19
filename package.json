@@ -26,6 +26,7 @@
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.3",
     "vue-star-rating": "^1.6.1",
+    "vuedraggable": "^2.23.2",
     "vuetify": "^2.1.10",
     "vuex": "^3.0.1"
   },
