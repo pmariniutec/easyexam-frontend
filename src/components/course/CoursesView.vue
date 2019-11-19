@@ -7,17 +7,17 @@
 			fill-height
 			elevation="10"
 			width="100%"
-			class="mx-auto container"
+			class="mx-auto course-container"
 		>
 			<v-row
 				v-for="row in rows"
 				:key="row"
-				class="col"
+				class="course-col"
 			>
 				<div
 					v-for="course in row"
 					:key="course.name"
-					class="item-container"
+					class="course-item-container"
 				>
 					<CourseCard :course_info="course" />
 
@@ -69,17 +69,17 @@ export default {
 </script>
 <style lang="scss">
 @import '~vue-context/dist/css/vue-context.css';
-// .container {
-//   display: flex;
-// }
-// .col {
-//   margin: 10px;
-//   flex-grow: 1;
-//   display: flex;
-//   flex-direction: row;
-// }
-// .item-container {
-//   padding: 5px;
-//   margin: 5px;
-// }
+ .course-container {
+   display: flex;
+ }
+ .course-col {
+   margin: 10px;
+   flex-grow: 1;
+   display: flex;
+   flex-direction: row;
+ }
+ .course-item-container {
+   padding: 5px;
+   margin: 5px;
+ }
 </style>
