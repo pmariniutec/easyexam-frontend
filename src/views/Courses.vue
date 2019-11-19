@@ -8,7 +8,9 @@
 			<v-col
         class="sidebar-container"
       >
-				<SideBar />
+				<SideBar 
+          @change-tab-event="changeTab"
+        />
 			</v-col>
 			<v-col
         class="panel-container"
@@ -29,8 +31,11 @@ export default {
 		SideBar,
 	    CoursesView	
 	},
-	data () { return {} },
-	methods: {}
+	data: () => ({}),
+	methods: { changeTab: function (href) {
+			this.$router.push(`/${href}`)
+		}
+	}
 }
 </script>
 
