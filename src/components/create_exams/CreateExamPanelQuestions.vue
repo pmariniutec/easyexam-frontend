@@ -63,28 +63,31 @@
 							>
 								<v-col>
 									<v-card>
-										<v-row>
-											<v-col
-												cols="1"
-												style="padding: 0px;"
-											>
-												<v-btn
-													style="padding: 0px;"
-													height="100%"
-													small
-													block
-													@click="acceptSuggestion(item)"
+										<v-container>
+											<v-row>
+												<v-col
+													cols="2"
 												>
-													<v-icon>mdi-menu-left</v-icon>
-												</v-btn>
-											</v-col>
-											<v-col cols="11">
-												<LaTeXPreview
-													style="width: 90%;"
-													:text="item.tex"
-												/>
-											</v-col>
-										</v-row>
+													<v-btn icon>
+														<v-icon
+															@click="acceptSuggestion(item)"
+														>
+															mdi-menu-left
+														</v-icon>
+													</v-btn>
+													<v-btn icon>
+														<v-icon>
+															mdi-dots-vertical
+														</v-icon>
+													</v-btn>
+												</v-col>
+												<v-col cols="10">
+													<LaTeXPreview
+														:text="item.tex"
+													/>
+												</v-col>
+											</v-row>
+										</v-container>
 									</v-card>
 								</v-col>
 							</v-row>

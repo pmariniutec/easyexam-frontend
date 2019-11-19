@@ -13,7 +13,10 @@
 				:value="getText"
 			/>
 		</v-container>
-		<v-btn @click="toggle">
+		<v-btn
+			text
+			@click="toggle"
+		>
 			{{ mode === 'txt' ? 'Done' : 'Edit' }}
 		</v-btn>
 	</v-card>
