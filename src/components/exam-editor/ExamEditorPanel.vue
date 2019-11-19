@@ -68,7 +68,7 @@ import { mapActions } from 'vuex'
 import CreateExamPanelQuestions from '@/components/create_exams/CreateExamPanelQuestions'
 
 export default {
-	name: 'CreateExamPanel',
+	name: 'ExamEditorPanel',
 	components: {
 		CreateExamPanelQuestions
 	},
