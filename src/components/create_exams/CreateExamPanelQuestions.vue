@@ -10,7 +10,6 @@
 					group="people"
 					@start="drag=true"
 					@end="drag=false"
-
 				>
 					<v-row
 						v-for="item in questionList"
@@ -76,11 +75,27 @@
 															mdi-menu-left
 														</v-icon>
 													</v-btn>
-													<v-btn icon>
-														<v-icon>
-															mdi-dots-vertical
-														</v-icon>
-													</v-btn>
+													<v-menu offset-y>
+														<template v-slot:activator="{ on }">
+															<v-btn
+																icon
+																v-on="on"
+															>
+																<v-icon>
+																	mdi-dots-vertical
+																</v-icon>
+															</v-btn>
+														</template>
+														<v-list>
+															<v-list-tile
+																v-for="(item, index) in dropdown"
+																:key="index"
+																@click=""
+															>
+																<v-list-tile-title>{{ item.title }}</v-list-tile-title>
+															</v-list-tile>
+														</v-list>
+													</v-menu>
 												</v-col>
 												<v-col cols="10">
 													<LaTeXPreview
@@ -125,6 +140,12 @@ export default {
 	data: () => ({
 		select: ['add-tags-with', 'enter', 'tab', 'paste'],
 		items: [],
+		dropdown: [
+			{ title: 'Click Me' },
+			{ title: 'Click Me' },
+			{ title: 'Click Me' },
+			{ title: 'Click Me 2' }
+		],
 		search: '', // sync search
 		suggestedList: [{ id: 1, mode: 'latex', tex: String.raw`$$x^2$$` },
 			{ id: 2, mode: 'latex', tex: String.raw`
