@@ -12,7 +12,7 @@ const store = new Vuex.Store({
 	modules: {
 		auth,
 		password,
-        exams
+		exams
 	}
 })
 

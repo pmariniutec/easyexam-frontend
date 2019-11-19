@@ -31,11 +31,8 @@ export default {
 		SideBar,
 		CreateExamPanel
 	},
-	data () {
-		return {}
-	},
-	methods: {
-		changeTab: function (href) {
+	data: () => ({}),
+	methods: { changeTab: function (href) {
 			this.$router.push(`/${href}`)
 		}
 	}

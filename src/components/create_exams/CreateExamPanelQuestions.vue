@@ -7,6 +7,7 @@
 				</b>
 				<v-row
 					v-for="item in texList"
+          :key="item"
 					cols="6"
 				>
 					<v-col>

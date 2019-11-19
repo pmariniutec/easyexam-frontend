@@ -1,6 +1,5 @@
 import session from './session'
 
-
 const examService = {
 
 	fetchExams () {
