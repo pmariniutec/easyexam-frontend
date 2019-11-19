@@ -24,6 +24,7 @@
     "vue-cli-plugin-s3-deploy": "^3.0.0",
     "vue-context": "^4.1.1",
     "vue-google-oauth2": "^1.4.0",
+    "vue-pdf": "^4.0.7",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.3",
     "vue-star-rating": "^1.6.1",

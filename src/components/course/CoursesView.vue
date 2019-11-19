@@ -59,13 +59,9 @@ export default {
 		...mapActions('exams', ['getCourses', 'deleteCourse']),
 		loadCourses () {
 			this.courseData = this.getCourses()
-			$.each(this.courseData, (key, value) => {
-				console.log(value)
-				console.log(key)
-			})
 		},
 		addCourse: function () {
-			this.courseData.push({ name: 'ADA', code: 'CS101', uuid:'123' })
+			this.courseData.push({ name: 'ADA', code: 'CS101', uuid: '123' })
 		}
 	}
 }
