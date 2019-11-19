@@ -1,16 +1,22 @@
 import session from '@/services/session'
-import auth from '@/services/session'
+import authService from '@/services/auth'
 import examService from '@/services/exams'
 
 const TOKEN_STORAGE_KEY = 'easyexam_token'
 
 const initialState = {
 }
+
 const actions = {
+	createExam ({ commit }, { title, questions, keywords }) {
+		if (auth.isAuthenticated()) {
+			return examService.createExam(title, questions, keywords)
+		}
+	},
 	updateExams () {
 		if (auth.isAuthenticated()) {
 			commit(FETCHED_EXAMS)
-			return exams.fetchExams()
+			return examService.fetchExams()
 		}
 	}
 }

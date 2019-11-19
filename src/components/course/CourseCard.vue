@@ -2,32 +2,53 @@
 <template>
 	<v-card
 		:style="bgc"
-		class="mx-5 my-5"
-		outlined
-	>
-		<v-list-item two-line>
-			<v-list-item-title class="headline mb-1">
-				{{ course_info.name }}
-			</v-list-item-title>
-		</v-list-item>
+		class="course-card my-2"
+		outlined >
+        <v-app-bar
+          dark
+          color="gray"
+        >
+
+          <v-toolbar-title>	{{ courseInfo.name }} : {{courseInfo.code}} </v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-menu
+            left 
+            bottom
+          >
+            <template v-slot:activator="{ on }">
+              <v-btn icon v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list 
+                nav
+            >
+
+              <v-list-item
+                @click="removeCourse($event,courseInfo.uuid )" >
+                <v-list-item-title> Delete </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+
+        </v-app-bar>
 		<v-card-actions>
 			<v-btn
 				text
+                elevation="5"
+                block
 				color="deep-purple accent-4"
-				@click="viewCourse($event, course_info.name)"
+				@click="viewCourse($event, courseInfo.name)"
 			>
 				View
-			</v-btn>
-			<v-btn
-				text
-				color="red accent-4"
-			>
-				Delete
 			</v-btn>
 		</v-card-actions>
 	</v-card>
 </template>
 <script>
+
+import { mapActions } from 'vuex'
 
 export default {
 	name: 'CourseCard',
@@ -44,30 +65,26 @@ export default {
 
 	data: () => ({
 		bgc: {
-			backgroundColor: ''
+			backgroundColor: '#DDDDDD'
 		}
 	}),
 	computed: {
-
-	},
-	beforeMount () {
-		this.generator()
 	},
 	methods: {
-		generator: function (event) {
-			let g_scale = Math.floor(Math.random() * (16 - 12) + 12).toString(16)
-			this.mycolor = '#' + (g_scale.repeat(6))
-			this.bgc.backgroundColor = this.mycolor
-		},
+		...mapActions('exams', ['deleteCourse']),
 		viewCourse: function (event, name) {
 			this.$router.push({ path: `/courses/${name}` })
-		}
+		},
+        removeCourse: function (event, uuid) {
+            this.deleteCourse(uuid)
+        }
 	}
 }
 </script>
 
 <style lang="scss">
 @import '~vue-context/dist/css/vue-context.css';
-.v-card {
+.course-card{
+    width: 24vw;
 }
 </style>
