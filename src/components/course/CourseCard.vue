@@ -26,7 +26,7 @@
             >
 
               <v-list-item
-                @click="() => {}" >
+                @click="removeCourse($event,courseInfo.uuid )" >
                 <v-list-item-title> Delete </v-list-item-title>
               </v-list-item>
             </v-list>
@@ -48,6 +48,8 @@
 </template>
 <script>
 
+import { mapActions } from 'vuex'
+
 export default {
 	name: 'CourseCard',
 	components: {
@@ -67,14 +69,14 @@ export default {
 		}
 	}),
 	computed: {
-
 	},
 	methods: {
+		...mapActions('exams', ['deleteCourse']),
 		viewCourse: function (event, name) {
 			this.$router.push({ path: `/courses/${name}` })
 		},
         removeCourse: function (event, uuid) {
-           //TODO  remove course from DB and delete all exams related to it 
+            this.deleteCourse(uuid)
         }
 	}
 }
