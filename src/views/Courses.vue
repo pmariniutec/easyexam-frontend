@@ -1,4 +1,5 @@
 <template>
+	<!--
 	<v-container
 		d-flex
 		fluid
@@ -15,26 +16,81 @@
 			<v-col
 				class="panel-container"
 			>
-				<CoursesView />
-			</v-col>
+		</v-col>
 		</v-row>
+		</v-container>
+			-->
+	<v-container>
+		<CoursesComponent />
+		<form>
+			<v-text-field
+				v-model="name"
+				label="Name"
+				data-vv-name="name"
+				required
+			/>
+			<v-text-field
+				v-model="code"
+				label="Code"
+				data-vv-name="code"
+				required
+			/>
+			<v-btn
+				class="mr-4"
+				@click="submit"
+			>
+				submit
+			</v-btn>
+		</form>
 	</v-container>
 </template>
 
 <script>
+
+import { mapActions } from 'vuex'
 import SideBar from '@/components/SideBar'
-import CoursesView from '@/components/course/CoursesView'
+import CoursesComponent from '@/components/course/CoursesComponent'
 
 export default {
 	name: 'Courses',
 	components: {
-		SideBar,
-	    CoursesView
+		CoursesComponent
 	},
-	data: () => ({}),
-	methods: { changeTab: function (href) {
-		this.$router.push(`/${href}`)
-	}
+	data: () => ({
+		name: '',
+		code: '',
+		select: null,
+		checkbox: null,
+		dictionary: {
+			attributes: {
+				email: 'E-mail Address'
+				// custom attributes
+			},
+			custom: {
+				name: {
+					required: () => 'Name can not be empty',
+					max: 'The name field may not be greater than 10 characters'
+					// custom messages
+				},
+				select: {
+					required: 'Select field is required'
+				}
+			}
+		}
+
+	}),
+
+	methods: {
+		...mapActions('course', ['getCourses', 'createCourse']),
+		submit () {
+			let payload = { name: this.name, code: this.code }
+			console.log(payload)
+			this.createCourse(payload)
+				.then((res) => console.log(res))
+				.catch(() => {
+					console.log('Error')
+				})
+		}
 	}
 }
 </script>

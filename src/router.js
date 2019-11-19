@@ -82,8 +82,8 @@ const router = new Router({
 		{
 			path: '/dashboard/courses',
 			name: 'courses',
-			component: Courses
-			// beforeEnter: requireAuth
+			component: Courses,
+			 beforeEnter: requireAuth
 		},
 		{
 			path: '/dashboard/profile',
@@ -91,7 +91,7 @@ const router = new Router({
 			component: DashboardProfile
 			// beforeEnter: requireAuth
 		},
-        {
+		{
 			path: '/test',
 			name: 'test',
 			component: Test
