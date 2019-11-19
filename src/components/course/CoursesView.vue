@@ -52,9 +52,20 @@ export default {
 			return rows
 		}
 	},
+    beforeMount () {
+        this.loadCourses() 
+    },
 	methods: {
+		...mapActions('exams', ['getCourses', 'deleteCourse']),
+		loadCourses () {
+			this.courseData = this.getCourses()
+			$.each(this.courseData, (key, value) => {
+				console.log(value)
+				console.log(key)
+			})
+		},
 		addCourse: function () {
-			this.courseData.push({ name: 'ADA', code: 'CS101', uuid:'CS001' })
+			this.courseData.push({ name: 'ADA', code: 'CS101', uuid:'123' })
 		}
 	}
 }

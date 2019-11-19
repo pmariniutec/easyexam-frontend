@@ -12,11 +12,11 @@
           <v-container>
             <v-row class="justify-center">
               <v-col cols="12" sm="6" md="4">
-                <v-text-field label="Course name"></v-text-field>
+                <v-text-field v-model="courseName" label="Course name"></v-text-field>
               </v-col>
 
               <v-col cols="12" sm="6" md="4">
-                <v-text-field label="Course code" hint="code of the course  ex: CS101"></v-text-field>
+                <v-text-field v-model="courseCode" label="Course code" hint="code of the course  ex: CS101"></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -24,7 +24,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="addCourse()">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -33,16 +33,25 @@
 
 <script>
 
+import { mapActions } from 'vuex'
+
 export default {
 	name: 'CourseNewModal',
 	components: {
 	},
 	data: () => ({
-		dialog: false
+		dialog: false,
+        courseName: '',
+        courseCode: ''
 	}),
 	computed: {
 	},
 	methods: {
+		...mapActions('exams', ['createCourse']),
+        addCourse: function (event) {
+           this.createCourse(courseName, courseCode)
+           dialog = false
+        }
 	}
 }
 </script>
