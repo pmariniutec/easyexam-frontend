@@ -1,49 +1,69 @@
 <template>
-	<v-container>
-		<div
-			:class="getMode ? 'show' : 'hidden'"
-			v-html="generateLaTeX"
-		/>
-		<div :class="getMode ? 'hidden' : 'show'">
-			{{ text }}
-		</div>
-	</v-container>
+	<v-card>
+		<v-container>
+			<LaTeXPreview
+				:text="text"
+				:class="getMode === 'latex'? 'show' : 'hidden'"
+			/>
+			<v-textarea
+				v-model="temp_text"
+				auto-grow
+				solo
+				:class="getMode === 'latex' ? 'hidden' : 'show'"
+				:value="getText"
+			/>
+		</v-container>
+		<v-btn @click="toggle">
+			{{ mode === 'txt' ? 'Done' : 'Edit' }}
+		</v-btn>
+	</v-card>
 </template>
 
 <script>
-import { parse, HtmlGenerator } from 'latex.js'
+import LaTeXPreview from '@/components/LaTeXPreview'
 
 export default {
 	name: 'LaTeXPreviewCard',
 	components: {
+		LaTeXPreview
 	},
 	props: {
 		'style': {
-			type: String
+			type: String,
+			default: ''
 		},
 		'text': {
-			type: String
+			type: String,
+			default: ''
 		},
 		'mode': {
 			type: String,
 			default: 'latex'
 		}
 	},
-	data () { return {} },
-	computed: {
-		generateLaTeX: function () {
-			let generator = parse(this.text, { generator: new HtmlGenerator({ hyphenate: false }) })
-			return generator.htmlDocument('https://cdn.jsdelivr.net/npm/latex.js@0.11.1/dist/').documentElement.outerHTML
-		},
-		getMode: function () {
-			return this.mode === 'latex'
+	data () {
+		return {
+			'temp_text': this.text
 		}
 	},
-	methods: {}
+	computed: {
+		getMode: function () {
+			return this.mode
+		},
+		getText: function () {
+			return this.text
+		}
+	},
+	methods: {
+		toggle: function (event) {
+			this.mode = this.mode === 'latex'	? 'txt' : 'latex'
+			this.text = this.temp_text
+		}
+	}
 }
 </script>
 <style>
-.shoow{
+.show{
 display: show}
 .hidden{
 	display: none
