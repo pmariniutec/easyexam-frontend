@@ -10,7 +10,6 @@
 					group="people"
 					@start="drag=true"
 					@end="drag=false"
-
 				>
 					<v-row
 						v-for="item in questionList"

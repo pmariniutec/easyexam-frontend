@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 import CreateExamPanelDetails from '@/components/create_exams/CreateExamPanelDetails'
 import CreateExamPanelQuestions from '@/components/create_exams/CreateExamPanelQuestions'
 
@@ -69,10 +71,15 @@ export default {
 		CreateExamPanelDetails,
 		CreateExamPanelQuestions
 	},
-	data () {
-		return {
-			tab: null,
-			texList: [{ mode: 'latex', tex: String.raw`
+	data: () => ({
+		exam: {
+			  title: '',
+			  questions: '',
+			  keywords: ''
+		},
+    error: '',
+		tab: null,
+		texList: [{ mode: 'latex', tex: String.raw`
 				\documentclass{article}
 					\begin{document}
 						\noindent Our friend Martin is moving to Barranco. He is a big fan of beer and pretty much anything that contains alcohol. Luckily, he has found a street with $n$ bars. Since he will definitely visit all of them frequently, he wants to find an apartment close to them. 
@@ -121,8 +128,18 @@ export default {
 						\end{enumerate}
 					\end{document}
 				` }
-			]
-		}
+		]
+	}),
+	methods: {
+		...mapActions('exams', { createExamAction: 'createExam' }),
+
+		createExam: function () {
+      this.createExamAction(this.exam)
+        .then(() => ({}))
+			  .catch(() => {
+					this.error = 'Invalid Credentials'
+				})      
+    },
 	}
 }
 </script>

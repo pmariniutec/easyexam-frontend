@@ -3,17 +3,17 @@
 		class="fill-height"
 		fluid
 	>
-	<RegisterBookPile
-		style="
+		<RegisterBookPile
+			style="
 			z-index:1;
 		"
-	/>
-			<RegisterBackground
-				height="1263.18"
-				width="1506"
-				fill="#fd7576"
-				view-box="425 -125 800 1263.184"
-				style="
+		/>
+		<RegisterBackground
+			height="1263.18"
+			width="1506"
+			fill="#fd7576"
+			view-box="425 -125 800 1263.184"
+			style="
 			padding: 0 0;
 			overflow: inherit;
 			transform: scale(0.8);
@@ -21,10 +21,10 @@
 			position: fixed;
 			top: -305px;
 			right: -30%;"
-			/>
-			<v-row
-				class="register-card-div"
-			>
+		/>
+		<v-row
+			class="register-card-div"
+		>
 			<v-col
 				cols="12"
 				sm="12"
@@ -39,7 +39,9 @@
 						flat
 						class="register-card-title"
 					>
-						<v-toolbar-title class="register-card-title">Create account</v-toolbar-title>
+						<v-toolbar-title class="register-card-title">
+							Create account
+						</v-toolbar-title>
 						<div class="flex-grow-1" />
 					</v-toolbar>
 					<v-card-text class="register-card-input">
@@ -81,11 +83,11 @@
 										type="email"
 										style="padding-top: 0"
 									/>
-									</v-col>
-									<v-col
-										cols="12"
-										class="register-card-input"
-									>
+								</v-col>
+								<v-col
+									cols="12"
+									class="register-card-input"
+								>
 									<v-text-field
 										id="password"
 										v-model="inputData.password"
@@ -100,15 +102,19 @@
 					<v-card-actions>
 						<v-btn
 							class="register-btn"
-							@click="register">
+							@click="register"
+						>
 							Crear Cuenta
 						</v-btn>
 					</v-card-actions>
 					<h3 class="go-to-login">
-					<router-link :to="{ name: 'login' }" class="go-to-login">
-						Already have an account? Sign In
-					</router-link>
-				</h3>
+						<router-link
+							:to="{ name: 'login' }"
+							class="go-to-login"
+						>
+							Already have an account? Sign In
+						</router-link>
+					</h3>
 				</v-card>
 			</v-col>
 		</v-row>

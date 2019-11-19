@@ -41,7 +41,9 @@
 						flat
 						class="login-card-title"
 					>
-						<v-toolbar-title class="login-card-title">Welcome back</v-toolbar-title>
+						<v-toolbar-title class="login-card-title">
+							Welcome back
+						</v-toolbar-title>
 						<div class="flex-grow-1" />
 					</v-toolbar>
 					<v-form @submit.prevent>
@@ -71,13 +73,19 @@
 							>
 								{{ error }}
 							</h3>
-						<h3 class="forgot-password" @click="forgotPassword">
-							<router-link :to="{name: forgot-password}" class="forgot-password">
-								Forgot your password?
-							</router-link>
-						</h3>
+							<h3
+								class="forgot-password"
+								@click="forgotPassword"
+							>
+								<router-link
+									:to="{name: forgot-password}"
+									class="forgot-password"
+								>
+									Forgot your password?
+								</router-link>
+							</h3>
 						</v-card-text>
-					<v-card-actions>
+						<v-card-actions>
 							<v-btn
 								class="login-btn"
 								type="submit"
@@ -86,12 +94,14 @@
 								LOGIN
 							</v-btn>
 						</v-card-actions>
-							<h3 class="go-to-register">
-							<router-link :to="{ name: 'register' }" class="go-to-register">
+						<h3 class="go-to-register">
+							<router-link
+								:to="{ name: 'register' }"
+								class="go-to-register"
+							>
 								Don’t have an account? Sign Up
 							</router-link>
 						</h3>
-
 					</v-form>
 				</v-card>
 			</v-col>
@@ -101,6 +111,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+
 import LoginBackground from '@/components/LoginBackground'
 import LoginBookPile from '@/components/LoginBookPile'
 
@@ -135,7 +146,6 @@ export default {
 			this.login(this.inputData)
 				.then(() => this.$router.push('/dashboard'))
 				.catch(() => {
-					console.log('Invalid credentials.')
 					this.error = 'Invalid Credentials'
 				})
 		},
