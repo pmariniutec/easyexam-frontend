@@ -41,7 +41,6 @@
 <script>
 
 import ExamRowComponent from '@/components/view_exams/ExamRowComponent'
-import { mapActions } from 'vuex'
 
 export default {
 	name: 'ExamsView',
@@ -59,17 +58,8 @@ export default {
 
 	},
 	beforeMount () {
-		this.loadExams()
 	},
 	methods: {
-		...mapActions('exams', ['fetchExams']),
-		loadExams () {
-			this.exams_data = this.fetchExams()
-			$.each(this.exams_data, (key, value) => {
-				console.log(value)
-				console.log(key)
-			})
-		},
 		addFind: function () {
 			this.exams_data.push({ name: 'hola', difficulty: 2.5, number: 10, date_edit: '10/10/10', date_create: '10/10/10' })
 		}
