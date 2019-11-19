@@ -17,5 +17,5 @@ const actions = {
 
 export default {
 	state: initialState,
-	actions,
+	actions
 }

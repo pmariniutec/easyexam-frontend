@@ -2,9 +2,9 @@
 	<v-card
 		class="panel-container"
 	>
-    <v-card-title>
-      Hello User!
-    </v-card-title>
+		<v-card-title>
+			Hello User!
+		</v-card-title>
 	</v-card>
 </template>
 
