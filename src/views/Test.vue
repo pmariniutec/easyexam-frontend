@@ -5,17 +5,14 @@
 		fluid
 		class="pa-0 dashboard-container"
 	>
-		<Preview />
 	</v-container>
 </template>
 
 <script>
-import Preview from '@/components/Preview'
 
 export default {
 	name: 'Test',
 	components: {
-		Preview
 	},
 	data () { return {} },
 	methods: {}
