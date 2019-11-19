@@ -27,7 +27,6 @@
 				</v-list-item>
 			</v-list>
 
-			<v-divider />
 			<div class="tabs">
 				<div>
 					<v-list>
@@ -112,7 +111,9 @@ export default {
 .sidebar {
 	max-width: 180px;
 	position: absolute;
-	height: 96vh;
-	margin: 2vh;
+	height: 100vh;
+	margin: 0 4vh 0 0;
+  left: 0;
+  top: 0;
 }
 </style>
