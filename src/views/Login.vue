@@ -206,6 +206,7 @@ export default {
 	font-weight: bold !important;
 	opacity: unset !important;
 	width: 100%;
+	height: 50px !important;
 }
 .forgot-password {
 	font-size: 10px !important;
