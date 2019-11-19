@@ -60,6 +60,7 @@
 							<v-textarea
 								counter
 								label="New question"
+                v-model="newQuestion"
 								:rules="questionLimit"
 							/>
 							<v-btn
@@ -99,6 +100,7 @@ export default {
 				text: 'Question 3'
 			}
 		],
+    newQuestion: '',
 		questionLimit: [
 			v => v.length <= 60 || 'Max 60 characters'
 		],
