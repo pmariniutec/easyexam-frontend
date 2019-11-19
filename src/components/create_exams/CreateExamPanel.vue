@@ -6,24 +6,34 @@
 			primary-title
 		>
 			<v-row>
-				<v-col cols="10">
+				<div class="title">
 					Create new exam
-				</v-col>
-				<v-col
-					cols="2"
-					align="right"
-					class="px-6"
-				>
-					<v-btn
-						color="primary"
-					>
-						Create
-					</v-btn>
-				</v-col>
+				</div>
+
 			</v-row>
 		</v-card-title>
-
-		<v-card-text>
+		
+		<div class="row" style="width:100%">
+			<div class="column">
+				<label for="title">Title</label>
+				<input id="title" name="title">
+			</div>
+		<div class="column">
+				<label for="title">Teacher's name</label>
+				<input id="title" name="title">
+			</div>
+		</div >
+		<div class="row" style="width:100%">
+			<div class="column">
+				<label for="title">Title</label>
+				<input id="title" name="title">
+			</div>
+		<div class="column">
+				<label for="title">Teacher's name</label>
+				<input id="title" name="title">
+			</div>
+		</div >
+	<v-card-text>
 			<v-tabs
 				v-model="tab"
 			>
@@ -56,6 +66,17 @@
 				</v-tab-item>
 			</v-tabs-items>
 		</v-card-text>
+		<v-col
+					cols="2"
+					align="right"
+					class="px-6"
+				>
+					<v-btn
+						color="primary"
+					>
+						Create
+					</v-btn>
+				</v-col>
 	</v-card>
 </template>
 
@@ -129,7 +150,48 @@ export default {
 
 <style lang="scss" scoped>
 .create-exam-card {
-  height: 96vh;
+	background-color: #F3F3F6;
+	width: 70%;
+	left: 12%;
+	margin: 20px 0;
+	border-radius: 5% !important;
+	padding: 0 30px;
   overflow-y: auto;
 }
+.title {
+	color: #23246E;
+  font-weight: 700 !important;
+  border-bottom-color: #23246E;
+  border-bottom-style: solid;
+	border-radius: 1px;
+  width: 100%;
+  margin: 20px 0px 10px 0px;
+  padding-bottom: 8px;
+}
+.row {
+	margin-bottom: 5px;
+}
+.row:after {
+	content: "";
+  display: table;
+  clear: both;
+}
+.column {
+  float: left;
+  width: 50%;
+	padding: 0px 20px;
+}
+label {
+	width: 100%;
+  display: inline-flex;
+}
+input {
+	width: 100%;
+	background-color: white;
+	padding: 7px;
+	border: 1px solid #DBDBDB;
+	border-radius: 12px;
+	box-sizing: border-box;
+}
+
 </style>

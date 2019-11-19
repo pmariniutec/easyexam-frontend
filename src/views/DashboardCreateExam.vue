@@ -2,7 +2,7 @@
 	<v-container
 		d-flex
 		fluid
-		class="pa-0"
+		class="pa-0 dashboard"
 	>
 		<v-row no-gutters>
 			<v-col
@@ -43,6 +43,11 @@ export default {
 </script>
 
 <style scoped>
+.dashboard {
+	background-color: rgba(150,150,150,0.5);
+	width: 100%;
+  height: 100%;
+}
 .sidebar-container {
   max-width: 85px;
 }
