@@ -7,15 +7,15 @@ const TOKEN_STORAGE_KEY = 'easyexam_token'
 const initialState = {
 }
 const actions = {
-  updateExams() {
-        if(auth.isAuthenticated()){
-            commit(FETCHED_EXAMS)
-            return exams.fetchExams()
-        }
-    }
+	updateExams () {
+		if (auth.isAuthenticated()) {
+			commit(FETCHED_EXAMS)
+			return exams.fetchExams()
+		}
+	}
 }
 
 export default {
-    state: initialState,
-    actions
+	state: initialState,
+	actions,
 }

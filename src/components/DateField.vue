@@ -44,9 +44,9 @@
 export default {
 	name: 'DateField',
 	props: ['date'],
-  data: () => ({
-    menu: '',
-  }),
+	data: () => ({
+		menu: ''
+	})
 }
 </script>
 
