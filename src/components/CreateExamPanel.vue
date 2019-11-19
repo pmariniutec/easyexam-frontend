@@ -1,6 +1,6 @@
 <template>
 	<v-card
-		class="create-exam-card"
+		class="panel-container"
 	>
 		<v-card-title
 			primary-title
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.create-exam-card {
+.panel-container {
   height: 96vh;
   overflow-y: auto;
 }
