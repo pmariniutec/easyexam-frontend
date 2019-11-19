@@ -7,11 +7,16 @@
 		>
 			<v-container>
 				<v-row>
-					<v-col cols="9">
-						Create new exam
+					<v-col cols="6">
+            <v-text-field
+              v-model="exam.title"
+              label="Exam Title"
+              append-icon="mdi-pencil"
+              solo
+            /> 
 					</v-col>
 					<v-col
-						cols="3"
+						cols="6"
 						align="right"
 					>
 						<v-btn
@@ -72,7 +77,7 @@ export default {
 		courses: ['CourseName - CourseCode'],
 		userName: 'firstName lastName',
 		exam: {
-			  title: '',
+			  title: 'New Exam',
 			  questions: '',
 			  keywords: ''
 		},
