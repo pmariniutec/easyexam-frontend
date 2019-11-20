@@ -51,10 +51,10 @@ const mutations = {
 	[SELECT_COURSE] (state, courseId) {
 		// what if courses werent fetched
 		// TODO: add fallback, update state with getCourses
-		state.currentCourse = state.courses.filter(course => {
-			return course.id === courseId
+		let result = state.courses.find(course => {
+			return course.id == courseId
 		})
-		console.log('Current course set to: ', state.currentCourse)
+		state.currentCourse = result
 	}
 }
 
