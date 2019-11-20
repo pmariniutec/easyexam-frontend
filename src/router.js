@@ -5,6 +5,7 @@ import store from './store/store'
 import Home from './views/Home'
 import Login from './views/Login'
 import Register from './views/Register'
+import ForgotPassword from './views/ForgotPassword'
 import Dashboard from './views/Dashboard'
 import Courses from './views/Courses'
 import Test from './views/Test'
@@ -67,6 +68,12 @@ const router = new Router({
 			path: '/logout',
 			name: 'logout',
 			beforeEnter: redirectLogout
+		},
+		{
+			path: '/forgot-password',
+			name: 'forgotPassword',
+			component: ForgotPassword,
+			beforeEnter: requireNoAuth
 		},
 		{
 			path: '/dashboard',
