@@ -12,18 +12,34 @@
 						:text="question"
 					/>
 				</v-row>
-				<b>
-					Rating
-				</b>
-				<v-row justify="space-around">
-					<star-rating v-model="rating" :star-size='20'></star-rating>
+				<hr>
+				<v-row class="mt-5">
+					<b>
+						Rating
+					</b>
 					<v-col
-						cols="11"
+						cols="12"
+					>
+						<star-rating 
+							v-model="rating"
+							active-color="#3577CC"
+							:star-size='15'
+							:star-points="circle_points"
+							:rounded-corners="true"
+							:padding="5"
+						/>
+					</v-col>
+				</v-row>
+				<v-row>
+					<b>
+						Comment
+					</b>
+					<v-col
+						cols="12"
 					>
 						<v-textarea
 							v-model = "temp_comment"
 							auto-grow
-							label = "Comment"
 						/>
 					</v-col>
 				</v-row>
@@ -76,6 +92,10 @@ export default {
 		temp_comment: '',
 		error: '',
 		tab: null,
+		circle_points: [0,25, 2,35, 5,40, 10,45, 15,48, 
+			25,50, 35,48, 40,45, 45,40, 48,35, 
+			50,25, 48,15, 45,10, 40,5, 35,2, 
+			25,0, 15,2, 10,5, 5,10, 2,15],
 	}),
 	computed: {
 		getQuestion: function () {
