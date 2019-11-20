@@ -16,14 +16,14 @@
 					Rating
 				</b>
 				<v-row justify="space-around">
+					<star-rating v-model="rating" :star-size='20'></star-rating>
 					<v-col
 						cols="11"
 					>
 						<v-textarea
-							v-model = "temp_question"
+							v-model = "temp_comment"
 							auto-grow
 							label = "Comment"
-							:value = "getQuestion"
 						/>
 					</v-col>
 				</v-row>
@@ -34,6 +34,12 @@
 			class="px-6"
 			align="right"
 		>
+			<v-btn
+				@click="cancel"
+				class="ma-3"
+			>
+				Cancel
+			</v-btn>
 			<v-btn
 				color="primary"
 				@click="rate"
@@ -48,6 +54,7 @@
 import { mapActions } from 'vuex'
 
 import LaTeXPreview from '@/components/LaTeXPreview'
+import Rating from "vue-star-rating"
 import JQuery from 'jquery'
 let $ = JQuery
 
@@ -65,8 +72,8 @@ export default {
 		LaTeXPreview
 	},
 	data: () => ({
-		ratable: '',
-		temp_question: '',
+		rating: 1,
+		temp_comment: '',
 		error: '',
 		tab: null,
 	}),
@@ -76,18 +83,10 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('exams', { createExamAction: 'createExam' }),
-
-		createExam: function () {
-			this.createExamAction(this.exam).then(() => ({}))
-			  .catch(() => {
-					this.error = 'Invalid Credentials'
-				})      
-		},
-		generatePreview: function  () {
-			this.question = this.temp_question;
-		},
 		rate: function () {
+			this.$emit('close-dialog');
+		},
+		cancel: function () {
 			this.$emit('close-dialog');
 		}
 	}
