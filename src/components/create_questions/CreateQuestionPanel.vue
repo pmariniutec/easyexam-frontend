@@ -1,46 +1,83 @@
 <template>
 	<v-card
-		class="create-exam-card"
+		class="panel-card"
 	>
-		<v-card-title
-			primary-title
-		>
-			<v-row>
-				<div class="title">
-					Create a question
-				</div>
-			</v-row>
-		</v-card-title>
 		<v-card-text>
-			<CreateExamPanelQuestions />
+			<v-container fluid>
+				<v-row justify="space-around">
+					<v-col cols="6">
+						<v-textarea
+							v-model = "temp_question"
+							auto-grow
+							label = "Make your question..."
+							:value = "getQuestion"
+						/>
+						<br><br>
+						<v-combobox
+							:items="items"
+							:search-input.sync="search"
+							hide-selected
+							hint="Maximum of 5 tags"
+							label="Tags"
+							multiple
+							persistent-hint
+							small-chips
+						>
+							<template v-slot:no-data>
+								<v-list-item>
+									<v-list-item-content>
+										<v-list-item-title>
+											No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
+										</v-list-item-title>
+									</v-list-item-content>
+								</v-list-item>
+							</template>
+						</v-combobox>
+					</v-col>
+					<v-col cols="6">
+						<b>
+							Preview
+						</b>
+						<LaTeXPreview
+							:text="question"
+						/>
+					</v-col>
+				</v-row>
+			</v-container>
 		</v-card-text>
 		<v-col
-			cols="2"
-			align="right"
+			cols="6"
 			class="px-6"
 		>
+			<v-btn
+				@click = "generatePreview"
+				color = "secondary"
+			>
+				Generate Preview
+			</v-btn>
+			<span
+				style="width:5px; display: inline-block"
+			/>
 			<v-btn
 				color="primary"
 			>
 				Submit
 			</v-btn>
 		</v-col>
-	</v-row>
 	</v-card>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 
-import CreateExamPanelQuestions from '@/components/create_questions/CreateExamPanelQuestions'
-import CreateExamInput from '@/components/create_exams/CreateExamInput'
+import LaTeXPreview from '@/components/LaTeXPreview'
 import JQuery from 'jquery'
 let $ = JQuery
 
 export default {
 	name: 'CreateQuestionPanel',
 	components: {
-		CreateExamPanelQuestions
+		LaTeXPreview
 	},
 	data: () => ({
 		exam: {
@@ -48,69 +85,32 @@ export default {
 			  questions: '',
 			  keywords: ''
 		},
-    error: '',
+		select: ['add-tags-with', 'enter', 'tab', 'paste'],
+		items: [],
+		search: '',
+		question: '',
+		temp_question: '',
+		error: '',
 		tab: null,
-		texList: [{ mode: 'latex', tex: String.raw`
-				\documentclass{article}
-					\begin{document}
-						\noindent Our friend Martin is moving to Barranco. He is a big fan of beer and pretty much anything that contains alcohol. Luckily, he has found a street with $n$ bars. Since he will definitely visit all of them frequently, he wants to find an apartment close to them.
-
-						\bigbreak\noindent Martin wants to minimize the total distance to all of them and has offered you a \textit{ronnie} to come up with an algorithm to solve his problem.
-
-						\bigbreak\noindent Let $n$ be the number of bars in the street and the let the following sequence represent the street numbers where they are: $s_1, s_2, \ldots, s_i, \ldots, s_n$. Note that several bars might be in the same location/street number.
-
-						\bigbreak\noindent Both $n$ and the sequence of $s_i$'s are integers. The distance between two street numbers $s_i$ and $s_j$ is $d_{ij} = |s_i - s_j|$.
-
-						\begin{enumerate}
-							\item Find an $O(n\log n)$ solution.
-							\item \textit{Bonus}: Can you do better? Sketch a faster algorithm.
-						\end{enumerate}
-					\end{document}
-			` }, { mode: 'latex', tex: String.raw`
-				\documentclass{article}
-					\begin{document}
-						\noindent Our friend Martin is moving to Barranco. He is a big fan of beer and pretty much anything that contains alcohol. Luckily, he has found a street with $n$ bars. Since he will definitely visit all of them frequently, he wants to find an apartment close to them.
-
-						\bigbreak\noindent Martin wants to minimize the total distance to all of them and has offered you a \textit{ronnie} to come up with an algorithm to solve his problem.
-
-						\bigbreak\noindent Let $n$ be the number of bars in the street and the let the following sequence represent the street numbers where they are: $s_1, s_2, \ldots, s_i, \ldots, s_n$. Note that several bars might be in the same location/street number.
-
-						\bigbreak\noindent Both $n$ and the sequence of $s_i$'s are integers. The distance between two street numbers $s_i$ and $s_j$ is $d_{ij} = |s_i - s_j|$.
-
-						\begin{enumerate}
-							\item Find an $O(n\log n)$ solution.
-							\item \textit{Bonus}: Can you do better? Sketch a faster algorithm.
-						\end{enumerate}
-					\end{document}
-			` }, { mode: 'latex', tex: String.raw`
-				\documentclass{article}
-					\begin{document}
-						\noindent Our friend Martin is moving to Barranco. He is a big fan of beer and pretty much anything that contains alcohol. Luckily, he has found a street with $n$ bars. Since he will definitely visit all of them frequently, he wants to find an apartment close to them.
-
-						\bigbreak\noindent Martin wants to minimize the total distance to all of them and has offered you a \textit{ronnie} to come up with an algorithm to solve his problem.
-
-						\bigbreak\noindent Let $n$ be the number of bars in the street and the let the following sequence represent the street numbers where they are: $s_1, s_2, \ldots, s_i, \ldots, s_n$. Note that several bars might be in the same location/street number.
-
-						\bigbreak\noindent Both $n$ and the sequence of $s_i$'s are integers. The distance between two street numbers $s_i$ and $s_j$ is $d_{ij} = |s_i - s_j|$.
-
-						\begin{enumerate}
-							\item Find an $O(n\log n)$ solution.
-							\item \textit{Bonus}: Can you do better? Sketch a faster algorithm.
-						\end{enumerate}
-					\end{document}
-				` }
-		]
 	}),
+	computed: {
+		getQuestion: function () {
+			return this.question;
+		}
+	},
 	methods: {
 		...mapActions('exams', { createExamAction: 'createExam' }),
 
 		createExam: function () {
-      this.createExamAction(this.exam)
-        .then(() => ({}))
+			this.createExamAction(this.exam).then(() => ({}))
 			  .catch(() => {
 					this.error = 'Invalid Credentials'
 				})      
-    },
+		},
+		generatePreview: function  () {
+			console.log("Hola");
+			this.question = this.temp_question;
+		}
 	}
 }
 
