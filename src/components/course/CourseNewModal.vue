@@ -8,8 +8,6 @@
 			<template v-slot:activator="{ on }">
 				<v-btn
 					elevation="5"
-					color="gray"
-					dark
 					v-on="on"
 				>
 					New Course
@@ -85,11 +83,12 @@ export default {
 	computed: {
 	},
 	methods: {
-		...mapActions('course', ['createCourse']),
+		...mapActions('course', ['createCourse', 'getCourses']),
 		addCourse: function (event) {
 			let payload = { name: this.courseName, code: this.courseCode }
 			this.createCourse(payload)
 			this.dialog = false
+			this.getCourses()
 		}
 	}
 }
