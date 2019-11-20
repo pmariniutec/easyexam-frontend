@@ -9,6 +9,7 @@ import Dashboard from './views/Dashboard'
 import Courses from './views/Courses'
 import Test from './views/Test'
 import PageNotFound from './views/PageNotFound'
+import DashboardCreateQuestion from './views/DashboardCreateQuestion'
 import ExamEditor from './views/ExamEditor'
 import DashboardProfile from './views/DashboardProfile'
 import Exams from './views/Exams'
@@ -78,6 +79,12 @@ const router = new Router({
 			path: '/dashboard/exam-editor',
 			name: 'examEditor',
 			component: ExamEditor,
+			beforeEnter: requireAuth
+		},
+		{
+			path: '/dashboard/create-question',
+			name: 'dashboardCreateQuestion',
+			component: DashboardCreateQuestion,
 			beforeEnter: requireAuth
 		},
 		{
