@@ -1,4 +1,5 @@
 import courseService from '@/services/course'
+import session from '@/services/session'
 
 import {
 	CREATE_COURSE,
@@ -16,6 +17,7 @@ const getters = {
 
 const actions = {
 	createCourse ({ commit }, { name, code, exams }) {
+		console.log('HEADERS:', session.defaults.headers)
 		return courseService.createCourse(name, code, exams)
 			.then(({ data }) => commit(CREATE_COURSE, data))
 	},

@@ -141,7 +141,7 @@ export default {
 				password: ''
 			},
 			valid: null,
-			role: ['ROLE_STUDENT']
+			role: ['STUDENT']
 		}
 	},
 	methods: {

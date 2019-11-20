@@ -85,10 +85,11 @@ export default {
 	computed: {
 	},
 	methods: {
-		...mapActions('exams', ['createCourse']),
+		...mapActions('course', ['createCourse']),
 		addCourse: function (event) {
-			this.createCourse(courseName, courseCode)
-			dialog = false
+			let payload = { name: this.courseName, code: this.courseCode }
+			this.createCourse(payload)
+			this.dialog = false
 		}
 	}
 }
