@@ -96,7 +96,7 @@ export default {
 			{
 				title: 'New Exam',
 				icon: 'mdi-pencil-plus-outline',
-				href: 'dashboard/create-exam',
+				href: 'dashboard/exam-editor',
 				color: 'primary'
 			}
 		],
