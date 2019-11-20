@@ -60,6 +60,7 @@
 			/>
 			<v-btn
 				color="primary"
+				@click="createNewQuestion"
 			>
 				Submit
 			</v-btn>
@@ -108,8 +109,10 @@ export default {
 				})      
 		},
 		generatePreview: function  () {
-			console.log("Hola");
 			this.question = this.temp_question;
+		},
+		createNewQuestion: function () {
+			this.$emit('close-dialog');
 		}
 	}
 }
