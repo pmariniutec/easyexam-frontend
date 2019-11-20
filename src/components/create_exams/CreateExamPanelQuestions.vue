@@ -75,27 +75,27 @@
 															mdi-menu-left
 														</v-icon>
 													</v-btn>
-													<v-menu offset-y>
-														<template v-slot:activator="{ on }">
+													<v-dialog
+														v-model="item.dialog"
+														width="70%"
+														persistent
+													>
+														<template v-slot:activator="{on}">
 															<v-btn
 																icon
 																v-on="on"
 															>
 																<v-icon>
-																	mdi-dots-vertical
+																	mdi-heart
 																</v-icon>
 															</v-btn>
 														</template>
-														<v-list>
-															<v-list-tile
-																v-for="(item, index) in dropdown"
-																:key="index"
-																@click=""
-															>
-																<v-list-tile-title>{{ item.title }}</v-list-tile-title>
-															</v-list-tile>
-														</v-list>
-													</v-menu>
+														<RateQuestion
+															:question="item.tex"
+															:id="item.id"
+															v-on:close-dialog="closeDialog(item);"
+														/>
+													</v-dialog>
 												</v-col>
 												<v-col cols="10">
 													<LaTeXPreview
@@ -119,6 +119,7 @@
 
 import LaTeXPreviewCard from '@/components/LaTeXPreviewCard'
 import LaTeXPreview from '@/components/LaTeXPreview'
+import RateQuestion from '@/components/RateQuestion'
 import draggable from 'vuedraggable'
 /* TODO
 		- bug #1:
@@ -134,21 +135,16 @@ export default {
 	name: 'CreateExamPanelDetails',
 	components: {
 		draggable,
+		RateQuestion,
 		LaTeXPreviewCard,
 		LaTeXPreview
 	},
 	data: () => ({
 		select: ['add-tags-with', 'enter', 'tab', 'paste'],
 		items: [],
-		dropdown: [
-			{ title: 'Click Me' },
-			{ title: 'Click Me' },
-			{ title: 'Click Me' },
-			{ title: 'Click Me 2' }
-		],
 		search: '', // sync search
-		suggestedList: [{ id: 1, mode: 'latex', tex: String.raw`$$x^2$$` },
-			{ id: 2, mode: 'latex', tex: String.raw`
+		suggestedList: [{ id: 1, dialog:false, mode: 'latex', tex: String.raw`$$x^2$$` },
+			{ id: 2, dialog:false, mode: 'latex', tex: String.raw`
 			\documentclass{article}
 				\usepackage[shortlabels]{enumitem}
 			\begin{document}
@@ -222,6 +218,9 @@ export default {
 				}
 			}
 			this.questionList.push({ 'id': item.id, 'mode': 'latex', 'tex': item.tex })
+		},
+		closeDialog (item) {
+			item.dialog = false;
 		}
 	}
 }
