@@ -6,7 +6,10 @@ const examService = {
 		session.post('/exam/create/', title, questions, keywords)
 	},
 	getExams () {
-		return session.get('/exam')
-	}
+		return session.get('/exam/')
+	},
+  previewExam (latexString) {
+    session.post('/latex/compile/', latexString)
+  }
 }
 export default examService
