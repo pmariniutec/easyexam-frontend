@@ -5,7 +5,9 @@ import {
 	CREATE_COURSE,
 	SET_COURSES_DATA,
 	ADD_EXAM_COURSE,
-	SELECT_COURSE
+	SELECT_COURSE,
+    DELETE_COURSE
+
 } from './types'
 
 const initialState = {
@@ -22,6 +24,10 @@ const actions = {
 	createCourse ({ commit }, { name, code, exams }) {
 		return courseService.createCourse(name, code, exams)
 			.then(({ data }) => commit(CREATE_COURSE, data))
+	},
+	deleteCourse ({ commit }, id) {
+		return courseService.deleteCourse(id)
+			.then(({ data }) => commit(DELETE_COURSE, data))
 	},
 	getCourses ({ commit }) {
 		return courseService.getCourses()
@@ -55,7 +61,10 @@ const mutations = {
 			return course.id == courseId
 		})
 		state.currentCourse = result
-	}
+	},
+    [DELETE_COURSE] (state, data) {
+		console.log('MUTATION DELETE_COURSE: ', data)
+    }
 }
 
 export default {

@@ -5,10 +5,9 @@
 		outlined
 	>
 		<v-app-bar
-			dark
-			color="gray"
+            class="course-card-modal"
 		>
-			<v-toolbar-title>	{{ courseInfo.name }} : {{ courseInfo.code }} </v-toolbar-title>
+			<v-toolbar-title class="course-card-title" >	{{ courseInfo.name }} : {{ courseInfo.code }} </v-toolbar-title>
 			<v-spacer />
 			<v-menu
 				left
@@ -27,7 +26,7 @@
 					nav
 				>
 					<v-list-item
-						@click="removeCourse($event,courseInfo.uuid )"
+						@click="removeCourse($event,courseInfo.id)"
 					>
 						<v-list-item-title> Delete </v-list-item-title>
 					</v-list-item>
@@ -78,6 +77,7 @@ export default {
 		},
 		removeCourse: function (event, uuid) {
 			this.deleteCourse(uuid)
+            this.$emit('refresh')
 		}
 	}
 }
@@ -87,5 +87,16 @@ export default {
 @import '~vue-context/dist/css/vue-context.css';
 .course-card{
     width: 24vw;
+    max-width: 200px;
+}
+.course-card-modal {
+    height: 12vw !important;
+    max-height: 120px;
+}
+.course-card-title {
+    word-wrap: break-word;
+    white-space: break-spaces;
+    font-family: Helvetica;
+    font-size: 12pt;
 }
 </style>

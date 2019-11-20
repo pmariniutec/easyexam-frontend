@@ -54,13 +54,17 @@
 					>
 						Close
 					</v-btn>
-					<v-btn
-						color="blue darken-1"
-						text
-						@click="addCourse()"
-					>
-						Save
-					</v-btn>
+                    <router-link
+                        :to="{name: 'courses'}"
+                    >
+                        <v-btn
+                            color="blue darken-1"
+                            text
+                            @click="addCourse()"
+                        >
+                            Save
+                        </v-btn>
+                    </router-link>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
@@ -88,7 +92,7 @@ export default {
 			let payload = { name: this.courseName, code: this.courseCode }
 			this.createCourse(payload)
 			this.dialog = false
-			this.getCourses()
+            this.$emit('refresh')
 		}
 	}
 }
