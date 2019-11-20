@@ -24,7 +24,7 @@
 					>
 						<div
 							v-for="course in row"
-							:key="course.uuid"
+							:key="course.id"
 							class="course-item-container"
 						>
 							<CourseCard :course-info="course" />
@@ -34,12 +34,6 @@
 					</v-row>
 					<v-row class="justify-center">
 						<CourseNewModal />
-						<button
-							v-if="debugData"
-							@click="addCourse"
-						>
-							Add test
-						</button>
 					</v-row>
 				</v-card>
 			</v-col>
@@ -48,7 +42,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import SideBar from '@/components/SideBar'
 import CourseCard from '@/components/course/CourseCard'
 import CourseNewModal from '@/components/course/CourseNewModal'
@@ -60,32 +54,26 @@ export default {
 		CourseNewModal
 	},
 	data: () => ({
-		courseData: [],
 		debugData: true
 	}),
 	computed: {
+		...mapGetters('course', ['getCourseList']),
 		rows () {
 			let rows = []
 			var i, j
-			for (i = 0, j = this.courseData.length; i < j; i += 3) {
-				rows.push(this.courseData.slice(i, i + 3))
+			for (i = 0, j = this.getCourseList.length; i < j; i += 3) {
+				rows.push(this.getCourseList.slice(i, i + 3))
 			}
 			return rows
 		}
 	},
 	beforeMount () {
-		this.loadCourses()
+		this.getCourses()
 	},
 	methods: {
-		...mapActions('exams', ['getCourses', 'deleteCourse']),
+		...mapActions('course', ['createCourse', 'getCourses']),
 		changeTab: function (href) {
-		    this.$router.push(`/${href}`)
-	    },
-		loadCourses () {
-			// this.courseData = this.getCourses()
-		},
-		addCourse: function () {
-			this.courseData.push({ name: 'ADA', code: 'CS101', uuid: '123' })
+			this.$router.push(`/${href}`)
 		}
 	}
 }

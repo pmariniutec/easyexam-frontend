@@ -70,7 +70,6 @@ const actions = {
 				commit(REGISTRATION_SUCCESS)
 			})
 			.catch((err) => {
-        console.log('error lol' + err)
 				commit(REGISTRATION_FAILURE)
 			})
 	},

@@ -1,4 +1,3 @@
-
 <template>
 	<v-card
 		:style="bgc"
@@ -41,7 +40,7 @@
 				elevation="5"
 				block
 				color="deep-purple accent-4"
-				@click="viewCourse($event, courseInfo.name)"
+				@click="viewCourse($event, courseInfo)"
 			>
 				View
 			</v-btn>
@@ -73,9 +72,9 @@ export default {
 	computed: {
 	},
 	methods: {
-		...mapActions('exams', ['deleteCourse']),
-		viewCourse: function (event, name) {
-			this.$router.push({ path: `/dashboard/courses/${name}` })
+		...mapActions('course', ['deleteCourse']),
+		viewCourse: function (event, course) {
+			this.$router.push({ path: `/dashboard/courses/${course.id}` })
 		},
 		removeCourse: function (event, uuid) {
 			this.deleteCourse(uuid)

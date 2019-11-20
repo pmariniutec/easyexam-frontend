@@ -13,42 +13,42 @@
 				/>
 			</v-col>
 			<v-col class="panel-container">
-            <v-card
-                shaped
-                hover
-                elevation="10"
-                width="900"
-                min-height="100"
-                class="mx-auto"
-            >
-                <v-row class="grey--text text--darken-2 text-center title">
-                    <v-col> Name </v-col>
+				<v-card
+					shaped
+					hover
+					elevation="10"
+					width="900"
+					min-height="100"
+					class="mx-auto"
+				>
+					<v-row class="grey--text text--darken-2 text-center title">
+						<v-col> Name </v-col>
 
-                    <v-col> Difficulty </v-col>
+						<v-col> Difficulty </v-col>
 
-                    <v-col> Questions </v-col>
+						<v-col> Questions </v-col>
 
-                    <v-col>	Last Modified </v-col>
+						<v-col>	Last Modified </v-col>
 
-                    <v-col>	Date Created </v-col>
-                </v-row>
-                <v-divider />
-                <div
-                    v-for="data in examsData"
-                    :key="data.name"
-                >
-                    <ExamRowComponent :examInfo="data" />
-                </div>
+						<v-col>	Date Created </v-col>
+					</v-row>
+					<v-divider />
+					<div
+						v-for="data in exams"
+						:key="data.name"
+					>
+						<ExamRowComponent :exam-info="data" />
+					</div>
 
-                <v-col
-                    v-if="debugData"
-                    md="5"
-                >
-                    <button @click="addFind">
-                        Add test
-                    </button>
-                </v-col>
-            </v-card>
+					<v-col
+						v-if="debugData"
+						md="5"
+					>
+						<button @click="addFind">
+							Add test
+						</button>
+					</v-col>
+				</v-card>
 			</v-col>
 		</v-row>
 	</v-container>
@@ -56,7 +56,7 @@
 
 <script>
 
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import SideBar from '@/components/SideBar'
 import ExamRowComponent from '@/components/view_exams/ExamRowComponent'
 
@@ -64,24 +64,28 @@ export default {
 	name: 'ExamsView',
 	components: {
 		ExamRowComponent,
-        SideBar
+		SideBar
 	},
-
 	data () {
 		return {
-			examsData: [],
 			debugData: true
 		}
 	},
 	computed: {
-
+		exams: function () {
+			return this.getCurrentCourse().exams
+		}
 	},
 	beforeMount () {
-        //TODO add way to fetch params
+		let courseId = this.$route.params.id
+		this.getCourseById({ courseId: courseId })	// loads
+		console.log(courseId, this.getCurrentCourse())
 	},
 	methods: {
+		...mapGetters('course', ['getCurrentCourse']),
+		...mapActions('course', ['getCourseById']),
 		addFind: function () {
-			this.examsData.push({ name: 'hola', difficulty: 2.5, number: 10, date_edit: '10/10/10', date_create: '10/10/10' })
+			this.exams.push({ name: 'hola', difficulty: 2.5, number: 10, date_edit: '10/10/10', date_create: '10/10/10' })
 		},
 		changeTab: function (href) {
 			this.$router.push(`/${href}`)
