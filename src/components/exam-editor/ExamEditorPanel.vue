@@ -19,6 +19,24 @@
 						cols="6"
 						align="right"
 					>
+						<v-dialog
+							v-model="dialog"
+							width="70%"
+						>
+							<template v-slot:activator="{ on }">
+								<v-btn
+									class="ma-2"
+									color="red lighten-2"
+									dark
+									v-on="on"
+								>
+									Add Question
+								</v-btn>
+							</template>
+							<CreateQuestionPanel
+								v-on:close-dialog="closeDialog"
+							/>
+						</v-dialog>
 						<v-btn
 							color="secondary"
 							class="ma-2"
@@ -67,11 +85,13 @@
 import { mapActions } from 'vuex'
 
 import CreateExamPanelQuestions from '@/components/create_exams/CreateExamPanelQuestions'
+import CreateQuestionPanel from '@/components/CreateQuestionPanel'
 
 export default {
 	name: 'ExamEditorPanel',
 	components: {
-		CreateExamPanelQuestions
+		CreateExamPanelQuestions,
+		CreateQuestionPanel
 	},
 	data: () => ({
 		course: 'CourseName - CourseCode',
@@ -84,6 +104,7 @@ export default {
 		},
 		error: '',
 		tab: null,
+		dialog: false,
 		texList: [{ mode: 'latex', tex: String.raw`
 				\documentclass{article}
 					\begin{document}
@@ -147,6 +168,9 @@ export default {
 		},
 		openPdf: function () {
 			window.open('https://docs.google.com/viewer?url=https://www.computer-pdf.com/pdf/0776-front-end-developer-handbook-2018.pdf', '_blank')
+		},
+		closeDialog: function (){
+			this.dialog = false;
 		}
 	}
 }
