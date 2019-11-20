@@ -66,7 +66,7 @@
 		<v-row
 			class="grey--text text--darken-1 text-center"
 			flat
-			@contextmenu.prevent="$refs.menu.open($event, {data: 'data_info'})"
+			@contextmenu.prevent="$refs.menu.open($event, {data: 'dataInfo'})"
 		>
 			<v-col>
 				<v-icon
@@ -76,12 +76,12 @@
 				>
 					mdi-file-document
 				</v-icon>
-				{{ exam_info.name }}
+				{{ examInfo.name }}
 			</v-col>
 
 			<v-col class="centered">
 				<star-rating
-					:rating="exam_info.difficulty"
+					:rating="examInfo.difficulty"
 					:padding="15"
 					:increment="0.5"
 					:star-size="15"
@@ -91,15 +91,15 @@
 			</v-col>
 
 			<v-col>
-				{{ exam_info.number }} questions
+				{{ examInfo.number }} questions
 			</v-col>
 
 			<v-col>
-				{{ exam_info.date_edit }}
+				{{ examInfo.date_edit }}
 			</v-col>
 
 			<v-col>
-				{{ exam_info.date_create }}
+				{{ examInfo.date_create }}
 			</v-col>
 		</v-row>
 	</v-card>

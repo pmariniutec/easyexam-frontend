@@ -11,6 +11,7 @@ import Test from './views/Test'
 import PageNotFound from './views/PageNotFound'
 import ExamEditor from './views/ExamEditor'
 import DashboardProfile from './views/DashboardProfile'
+import Exams from './views/Exams'
 
 Vue.use(Router)
 
@@ -83,6 +84,12 @@ const router = new Router({
 			path: '/dashboard/courses',
 			name: 'courses',
 			component: Courses,
+			beforeEnter: requireAuth
+		},
+		{
+            path: '/dashboard/courses/:id',
+			name: 'exams',
+			component: Exams,
 			beforeEnter: requireAuth
 		},
 		{
