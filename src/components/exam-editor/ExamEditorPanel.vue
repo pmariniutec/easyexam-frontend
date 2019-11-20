@@ -40,7 +40,7 @@
 						<v-btn
 							color="secondary"
 							class="ma-2"
-							@click="openPdf()"
+							@click="previewExam()"
 						>
 							Preview
 						</v-btn>
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 import CreateExamPanelQuestions from '@/components/create_exams/CreateExamPanelQuestions'
 import CreateQuestionPanel from '@/components/CreateQuestionPanel'
@@ -156,9 +156,14 @@ export default {
 				` }
 		]
 	}),
+  computed: {
+		...mapState('exam', ['currentPreview']),
+	},
 	methods: {
-		...mapActions('exams', { createExamAction: 'createExam' }),
-
+		...mapActions('exam', { 
+        createExamAction: 'createExam',
+        previewExamAction: 'previewExam',
+    }),
 		createExam: function () {
 			this.createExamAction(this.exam)
 				.then(() => ({}))
@@ -166,10 +171,12 @@ export default {
 					this.error = 'Invalid Credentials'
 				})
 		},
-		openPdf: function () {
-			window.open('https://docs.google.com/viewer?url=https://www.computer-pdf.com/pdf/0776-front-end-developer-handbook-2018.pdf', '_blank')
+		previewExam: function () {
+      const test = "\documentclass{article}\n\begin{document}aaaa\n\end{document}"
+      this.previewExamAction(test)
+        .then(() => ({}))
 		},
-		closeDialog: function (){
+		closeDialog: function () {
 			this.dialog = false;
 		}
 	}
