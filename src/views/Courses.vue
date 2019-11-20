@@ -50,6 +50,7 @@
 import { mapActions } from 'vuex'
 import SideBar from '@/components/SideBar'
 import CoursesComponent from '@/components/course/CoursesComponent'
+import session from '@/services/session'
 
 export default {
 	name: 'Courses',
@@ -85,6 +86,7 @@ export default {
 		submit () {
 			let payload = { name: this.name, code: this.code }
 			console.log(payload)
+			console.log(session.defaults.headers)
 			this.createCourse(payload)
 				.then((res) => console.log(res))
 				.catch(() => {

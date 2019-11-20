@@ -103,7 +103,7 @@ const mutations = {
 	[SET_TOKEN] (state, token) {
 		const obj = { token: token, expiration: Date.now() + 2 * 24 * 60 * 60 * 1000 } // Expires in 2 days
 		localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(obj))
-		session.defaults.headers.Authorization = `Token ${token}`
+		session.defaults.headers.Authorization = `Bearer ${token}`
 		state.token = token
 	},
 	[REMOVE_TOKEN] (state) {
