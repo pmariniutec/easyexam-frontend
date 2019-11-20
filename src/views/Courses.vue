@@ -14,26 +14,23 @@
 			</v-col>
 			<v-col class="panel-container">
 				<v-card class="course-panel">
-					<h2 class="mx-4 my-6">
+					<h2 style="font-family: Helvetica" class="mx-4 my-6">
 						Courses
 					</h2>
-					<v-row
-						v-for="row in rows"
-						:key="row"
-						class="course-col"
-					>
-						<div
-							v-for="course in row"
-							:key="course.id"
-							class="course-item-container"
-						>
-							<CourseCard :course-info="course" />
+                    <v-col
+                        v-for="course in listCourses"
+                        :key="course.id"
+                        class="course-item-container"
+                    >
+                        <CourseCard
+                            :course-info="course"
+                            @refresh="forceRender()"
+                            />
 
-							<v-divider />
-						</div>
-					</v-row>
+                        <v-divider />
+					</v-col>
 					<v-row class="justify-center">
-						<CourseNewModal />
+						<CourseNewModal @refresh="forceRender()"/>
 					</v-row>
 				</v-card>
 			</v-col>
@@ -54,27 +51,27 @@ export default {
 		CourseNewModal
 	},
 	data: () => ({
-		debugData: true
+        debugData: true
 	}),
 	computed: {
 		...mapGetters('course', ['getCourseList']),
-		rows () {
-			let rows = []
-			var i, j
-			for (i = 0, j = this.getCourseList.length; i < j; i += 3) {
-				rows.push(this.getCourseList.slice(i, i + 3))
-			}
-			return rows
-		}
+        listCourses() {
+            return this.getCourseList
+        }
 	},
 	beforeMount () {
-		this.getCourses()
+		this.getCourse()
 	},
 	methods: {
 		...mapActions('course', ['createCourse', 'getCourses']),
 		changeTab: function (href) {
 			this.$router.push(`/${href}`)
-		}
+		},
+        forceRender() {
+            console.log("Re-render")
+            this.getCourseList
+            this.getCourses()
+        }
 	}
 }
 </script>
