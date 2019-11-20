@@ -91,7 +91,7 @@ const router = new Router({
 			component: DashboardProfile,
 			beforeEnter: requireAuth
 		},
-        {
+		{
 			path: '/test',
 			name: 'test',
 			component: Test

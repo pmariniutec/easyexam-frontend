@@ -4,8 +4,7 @@
 		d-flex
 		fluid
 		class="pa-0 dashboard-container"
-	>
-	</v-container>
+	/>
 </template>
 
 <script>
