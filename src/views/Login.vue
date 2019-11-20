@@ -14,15 +14,14 @@
 			fill="#4DB8DE"
 			view-box="425 -125 800 1263.184"
 			style="
-		padding: 0 0;
-		overflow: inherit;
-		transform: scale(0.8);
-		transform-origin: left;
-		position: fixed;
-		top: -80px;
-		left: -14%;
-		z-index: 0;
-		"
+      padding: 0 0;
+      overflow: inherit;
+      transform: scale(0.8);
+      transform-origin: left;
+      position: fixed;
+      top: -80px;
+      left: -14%;
+      z-index: 0;"
 		/>
 		<v-row
 			class="login-card-div"
@@ -65,6 +64,7 @@
 								name="password"
 								type="password"
 								:class="{ 'error--text': error }"
+								autocomplete="current-password"
 							/>
 							<h3
 								v-if="error"
@@ -78,7 +78,7 @@
 								@click="forgotPassword"
 							>
 								<router-link
-									:to="{name: forgot-password}"
+									:to="{name: 'forgot-password'}"
 									class="forgot-password"
 								>
 									Forgot your password?
