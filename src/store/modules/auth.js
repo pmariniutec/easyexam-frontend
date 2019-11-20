@@ -68,9 +68,9 @@ const actions = {
 		return authService.createAccount(firstName, lastName, email, password, role)
 			.then((response) => {
 				commit(REGISTRATION_SUCCESS)
-				commit(SET_TOKEN, response.data.key)
 			})
-			.catch(() => {
+			.catch((err) => {
+        console.log('error lol' + err)
 				commit(REGISTRATION_FAILURE)
 			})
 	},

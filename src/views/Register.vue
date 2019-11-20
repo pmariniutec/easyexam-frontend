@@ -5,15 +5,14 @@
 	>
 		<RegisterBookPile
 			style="
-			z-index:1;
-		"
+			z-index:1;"
 		/>
 		<RegisterBackground
 			height="1263.18"
 			width="1506"
 			fill="#fd7576"
 			view-box="425 -125 800 1263.184"
-			style="
+			custom-style="
 			padding: 0 0;
 			overflow: inherit;
 			transform: scale(0.8);
@@ -22,6 +21,7 @@
 			top: -305px;
 			right: -30%;"
 		/>
+
 		<v-row
 			class="register-card-div"
 		>
@@ -49,54 +49,36 @@
 							:model="valid"
 							class="register-form"
 						>
-							<v-row>
-								<v-col
-									cols="12"
-									class="register-card-input"
-								>
-									<v-text-field
-										v-model="inputData.firstName"
-										label="name"
-										name="first-name"
-										type="text"
-									/>
-								</v-col>
-								<v-col
-									cols="12"
-									class="register-card-input"
-								>
-									<v-text-field
-										v-model="inputData.lastName"
-										label="last name"
-										name="last-name"
-										type="text"
-									/>
-								</v-col>
-								<v-col
-									cols="12"
-									class="register-card-input"
-								>
-									<v-text-field
-										v-model="inputData.email"
-										label="email"
-										name="email"
-										type="email"
-										style="padding-top: 0"
-									/>
-								</v-col>
-								<v-col
-									cols="12"
-									class="register-card-input"
-								>
-									<v-text-field
-										id="password"
-										v-model="inputData.password"
-										label="password"
-										name="password"
-										type="password"
-									/>
-								</v-col>
-							</v-row>
+							<v-text-field
+								v-model="inputData.firstName"
+								label="name"
+								name="first-name"
+								type="text"
+								required
+							/>
+							<v-text-field
+								v-model="inputData.lastName"
+								label="last name"
+								name="last-name"
+								type="text"
+								required
+							/>
+							<v-text-field
+								v-model="inputData.email"
+								label="email"
+								name="email"
+								type="email"
+								required
+							/>
+							<v-text-field
+								id="password"
+								v-model="inputData.password"
+								label="password"
+								name="password"
+								type="password"
+								autocomplete="new-password"
+								:rules="[rules.password]"
+							/>
 						</v-form>
 					</v-card-text>
 					<v-card-actions>
@@ -123,6 +105,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+
 import RegisterBackground from '@/components/RegisterBackground'
 import RegisterBookPile from '@/components/RegisterBookPile'
 
@@ -141,7 +124,10 @@ export default {
 				password: ''
 			},
 			valid: null,
-			role: ['STUDENT']
+			role: ['TEACHER'],
+			rules: {
+				password: value => value.length >= 6 || 'Min 6 characters'
+			}
 		}
 	},
 	methods: {
@@ -152,10 +138,11 @@ export default {
 			this.error = null
 			const { firstName, lastName, email, password } = this.inputData
 			const payload = { ...this.inputData, role: this.role }
-			console.log(payload)
-			// TODO: add field in database for lastname
-			this.createAccount(payload)
-				.then(() => this.$router.push('/login'))
+			
+      this.createAccount(payload)
+				.then(() => {
+          // this.$router.push('/login')
+        })
 				.catch(() => {
 					console.log('Error, lol.')
 				})

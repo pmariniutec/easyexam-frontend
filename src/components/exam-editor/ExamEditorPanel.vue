@@ -8,12 +8,12 @@
 			<v-container>
 				<v-row>
 					<v-col cols="6">
-            <v-text-field
-              v-model="exam.title"
-              label="Exam Title"
-              append-icon="mdi-pencil"
-              solo
-            /> 
+						<v-text-field
+							v-model="exam.title"
+							label="Exam Title"
+							append-icon="mdi-pencil"
+							solo
+						/>
 					</v-col>
 					<v-col
 						cols="6"
@@ -22,7 +22,7 @@
 						<v-btn
 							color="secondary"
 							class="ma-2"
-                            @click="openPdf()"
+							@click="openPdf()"
 						>
 							Preview
 						</v-btn>
@@ -145,9 +145,9 @@ export default {
 					this.error = 'Invalid Credentials'
 				})
 		},
-        openPdf: function() {  
-            window.open('https://docs.google.com/viewer?url=https://www.computer-pdf.com/pdf/0776-front-end-developer-handbook-2018.pdf', '_blank'); 
-        }
+		openPdf: function () {
+			window.open('https://docs.google.com/viewer?url=https://www.computer-pdf.com/pdf/0776-front-end-developer-handbook-2018.pdf', '_blank')
+		}
 	}
 }
 </script>

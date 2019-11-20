@@ -2,7 +2,7 @@
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		:viewBox="viewBox"
-		:style="style"
+		:style="customStyle"
 		:height="height"
 		:width="width"
 		:fill="fill"
@@ -13,25 +13,30 @@
 		/>
 	</svg>
 </template>
-<script>
 
+<script>
 export default {
-	name: 'LoginBackground',
+	name: 'RegisterBackground',
 	props: {
-		'style': {
+		'customStyle': {
+			default: '',
 			type: String
 		},
 		'viewBox': {
+			default: '425 -125 800 1263.184',
 			type: String
 		},
 		'fill': {
+			default: '#fd7576',
 			type: String
 		},
 		'height': {
-			type: Number
+			default: '1263.18',
+			type: String
 		},
 		'width': {
-			type: Number
+			default: '1506',
+			type: String
 		}
 	},
 	data () {
