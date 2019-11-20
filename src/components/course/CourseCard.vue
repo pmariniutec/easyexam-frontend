@@ -75,7 +75,7 @@ export default {
 	methods: {
 		...mapActions('exams', ['deleteCourse']),
 		viewCourse: function (event, name) {
-			this.$router.push({ path: `/courses/${name}` })
+			this.$router.push({ path: `/dashboard/courses/${name}` })
 		},
 		removeCourse: function (event, uuid) {
 			this.deleteCourse(uuid)
