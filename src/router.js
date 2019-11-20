@@ -83,7 +83,7 @@ const router = new Router({
 		{
 			path: '/dashboard/create-question',
 			name: 'dashboardCreateQuestion',
-			component: DashboardCreateQuestion
+			component: DashboardCreateQuestion,
 			beforeEnter: requireAuth
 		},
 		{
