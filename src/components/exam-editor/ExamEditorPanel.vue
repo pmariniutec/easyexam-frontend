@@ -166,15 +166,11 @@ export default {
     }),
 		createExam: function () {
 			this.createExamAction(this.exam)
-				.then(() => ({}))
-			  .catch(() => {
-					this.error = 'Invalid Credentials'
-				})
 		},
 		previewExam: function () {
       const test = "\documentclass{article}\n\begin{document}aaaa\n\end{document}"
       this.previewExamAction(test)
-        .then(() => ({}))
+        .then(() => console.log(this.currentPreview))
 		},
 		closeDialog: function () {
 			this.dialog = false;

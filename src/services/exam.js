@@ -9,7 +9,7 @@ const examService = {
 		return session.get('/exam/')
 	},
   previewExam (latexString) {
-    session.post('/latex/compile/', latexString)
+    return session.post('/latex/compile/', latexString)
   }
 }
 export default examService
