@@ -202,3 +202,5 @@ export default {
 <style lang="scss" scoped>
 .panel-card {
   min-height: 96vh;
+}
+</style>
