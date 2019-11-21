@@ -124,7 +124,7 @@ export default {
 				password: ''
 			},
 			valid: null,
-			role: ['TEACHER'],
+			role: ['ROLE_TEACHER'],
 			rules: {
 				password: value => value.length >= 6 || 'Min 6 characters'
 			}
