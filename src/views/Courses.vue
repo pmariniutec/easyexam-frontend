@@ -60,7 +60,7 @@ export default {
         }
 	},
 	beforeMount () {
-		this.getCourse()
+        this.getCourses()
 	},
 	methods: {
 		...mapActions('course', ['createCourse', 'getCourses']),
@@ -69,7 +69,6 @@ export default {
 		},
         forceRender() {
             console.log("Re-render")
-            this.getCourseList
             this.getCourses()
         }
 	}
