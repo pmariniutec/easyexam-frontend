@@ -44,9 +44,14 @@
 						v-if="debugData"
 						md="5"
 					>
-						<button @click="addFind">
-							Add test
-						</button>
+						<v-btn 
+                            text 
+                            color="blue darken-1"
+                            @click="addFind" >
+
+							Add Course
+						</v-btn>
+
 					</v-col>
 				</v-card>
 			</v-col>
@@ -79,7 +84,7 @@ export default {
 	beforeMount () {
 		let courseId = this.$route.params.id
 		this.getCourseById({ courseId: courseId })	// loads
-		console.log(courseId, this.getCurrentCourse())
+		console.log(courseId, this.getCurrentCourse)
 	},
 	methods: {
 		...mapGetters('course', ['getCurrentCourse']),

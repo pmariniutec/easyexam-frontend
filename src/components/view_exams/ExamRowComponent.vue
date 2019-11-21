@@ -83,6 +83,7 @@
 				<star-rating
 					:rating="examInfo.difficulty"
 					:padding="15"
+                    :star-points=10
 					:increment="0.5"
 					:star-size="15"
 					:read-only="true"

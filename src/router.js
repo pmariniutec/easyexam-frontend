@@ -97,7 +97,8 @@ const router = new Router({
 			path: '/dashboard/courses/:id',
 			name: 'exams',
 			component: Exams,
-			beforeEnter: requireAuth
+			beforeEnter: requireAuth,
+            props: true
 		},
 		{
 			path: '/dashboard/profile',
