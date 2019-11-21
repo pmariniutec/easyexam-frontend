@@ -12,34 +12,34 @@
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
-			<v-col 
-        class="panel-container"
-      >
-				<v-card 
-          class="panel-card"
-        >
-          <v-card-title 
-            primary-title
-          >
-            <v-col cols="10">
-              Courses
-            </v-col>
-            <v-col 
-              cols="2"
-              align="right"
-            >
-              <CourseNewModal @refresh="forceRender()"/>
-            </v-col>
-          </v-card-title>
-          <v-col
-            v-for="course in listCourses"
-            :key="course.id"
-            class="course-item-container"
-          >
-            <CourseCard
-              :course-info="course"
-              @refresh="forceRender()"
-            />
+			<v-col
+				class="panel-container"
+			>
+				<v-card
+					class="panel-card"
+				>
+					<v-card-title
+						primary-title
+					>
+						<v-col cols="10">
+							Courses
+						</v-col>
+						<v-col
+							cols="2"
+							align="right"
+						>
+							<CourseNewModal @refresh="forceRender()" />
+						</v-col>
+					</v-card-title>
+					<v-col
+						v-for="course in listCourses"
+						:key="course.id"
+						class="course-item-container"
+					>
+						<CourseCard
+							:course-info="course"
+							@refresh="forceRender()"
+						/>
 					</v-col>
 				</v-card>
 			</v-col>
@@ -60,26 +60,26 @@ export default {
 		CourseNewModal
 	},
 	data: () => ({
-        debugData: true
+		debugData: true
 	}),
 	computed: {
 		...mapGetters('course', ['getCourseList']),
-        listCourses() {
-            return this.getCourseList
-        }
+		listCourses () {
+			return this.getCourseList
+		}
 	},
 	beforeMount () {
-        this.getCourses()
+		this.getCourses()
 	},
 	methods: {
 		...mapActions('course', ['createCourse', 'getCourses']),
 		changeTab: function (href) {
 			this.$router.push(`/${href}`)
 		},
-        forceRender() {
-            console.log("Re-render")
-            this.getCourses()
-        }
+		forceRender () {
+			console.log('Re-render')
+			this.getCourses()
+		}
 	}
 }
 </script>
