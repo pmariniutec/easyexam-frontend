@@ -27,7 +27,6 @@
 					</v-list-item-icon>
 				</v-list-item>
 			</v-list>
-			<IconExams />
 
 			<div class="tabs">
 				<div>
@@ -81,7 +80,6 @@
 </template>
 
 <script>
-import IconExams from '@/components/icons/IconExams'
 export default {
 	name: 'SideBar',
 	data: () => ({
