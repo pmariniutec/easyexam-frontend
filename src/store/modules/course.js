@@ -6,7 +6,7 @@ import {
 	SET_COURSES_DATA,
 	ADD_EXAM_COURSE,
 	SELECT_COURSE,
-    DELETE_COURSE
+	DELETE_COURSE
 
 } from './types'
 
@@ -62,9 +62,9 @@ const mutations = {
 		})
 		state.currentCourse = result
 	},
-    [DELETE_COURSE] (state, data) {
+	[DELETE_COURSE] (state, data) {
 		console.log('MUTATION DELETE_COURSE: ', data)
-    }
+	}
 }
 
 export default {

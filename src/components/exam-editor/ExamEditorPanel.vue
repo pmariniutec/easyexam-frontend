@@ -34,7 +34,7 @@
 								</v-btn>
 							</template>
 							<CreateQuestionPanel
-								v-on:close-dialog="closeDialog"
+								@close-dialog="closeDialog"
 							/>
 						</v-dialog>
 						<v-btn
@@ -184,12 +184,16 @@ export default {
 			this.createExamAction(this.exam)
 		},
 		previewExam: function () {
-      const test = "\documentclass{article}\n\begin{document}aaaa\n\end{document}"
-      this.previewExamAction(test)
-        .then(() => console.log(this.currentPreview))
+			const test = '\\documentclass{article}\n\\begin{document}\naaaa\n\\end{document}'
+			this.previewExamAction(test)
+				.then(() => {
+          var file = new Blob([(this.currentPreview)], {type: 'application/pdf'});
+          var fileURL = URL.createObjectURL(file);
+          window.open(fileURL)
+        })
 		},
 		closeDialog: function () {
-			this.dialog = false;
+			this.dialog = false
 		}
 	}
 }
@@ -198,5 +202,3 @@ export default {
 <style lang="scss" scoped>
 .panel-card {
   min-height: 96vh;
-}
-</style>
