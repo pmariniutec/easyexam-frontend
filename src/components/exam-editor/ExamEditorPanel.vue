@@ -47,6 +47,7 @@
 						<v-btn
 							color="primary"
 							class="ma-2"
+                            @click="createExam()"
 						>
 							Save
 						</v-btn>
@@ -68,7 +69,7 @@
 						<v-autocomplete
 							ref="course"
 							v-model="course"
-							:items="courses"
+							:items="listCourses"
 							label="Course"
 							placeholder="Select..."
 						/>
@@ -82,7 +83,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 import CreateExamPanelQuestions from '@/components/create_exams/CreateExamPanelQuestions'
 import CreateQuestionPanel from '@/components/CreateQuestionPanel'
@@ -93,14 +94,17 @@ export default {
 		CreateExamPanelQuestions,
 		CreateQuestionPanel
 	},
+    beforeMount (){
+        this.getCourses()
+    },
 	data: () => ({
-		course: 'CourseName - CourseCode',
+		course: 'null',
 		courses: ['CourseName - CourseCode'],
 		userName: 'firstName lastName',
 		exam: {
 			  title: 'New Exam',
-			  questions: '',
-			  keywords: ''
+			  questions: [{'content': 'What is your name?'}],
+			  keywords: ['ADA']
 		},
 		error: '',
 		tab: null,
@@ -158,13 +162,25 @@ export default {
 	}),
   computed: {
 		...mapState('exam', ['currentPreview']),
+        ...mapGetters('course', ['getCourseList']),
+        listCourses() {
+            return this.getCourseList.map((course_data) => {
+                    console.log(course_data.name)
+                    return {
+                        text: course_data.name,
+                        value: course_data.id
+                        };
+            })
+        }
 	},
 	methods: {
 		...mapActions('exam', { 
         createExamAction: 'createExam',
         previewExamAction: 'previewExam',
     }),
+        ...mapActions('course', ['getCourses']),
 		createExam: function () {
+            console.log(this.exam)
 			this.createExamAction(this.exam)
 		},
 		previewExam: function () {
