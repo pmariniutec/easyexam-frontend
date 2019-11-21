@@ -49,7 +49,7 @@
                             color="blue darken-1"
                             @click="addFind" >
 
-							Add Course
+							Add Exams
 						</v-btn>
 
 					</v-col>
