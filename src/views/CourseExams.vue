@@ -44,8 +44,8 @@
 						v-if="debugData"
 						md="5"
 					>
-						<v-btn
-                            text
+						<v-btn 
+                            text 
                             color="blue darken-1"
                             @click="addFind" >
 

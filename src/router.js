@@ -13,6 +13,7 @@ import PageNotFound from './views/PageNotFound'
 import ExamEditor from './views/ExamEditor'
 import DashboardProfile from './views/DashboardProfile'
 import Exams from './views/Exams'
+import CourseExams from './views/CourseExams'
 
 Vue.use(Router)
 
@@ -94,9 +95,15 @@ const router = new Router({
 			beforeEnter: requireAuth
 		},
 		{
-			path: '/dashboard/courses/:id',
+			path: '/dashboard/exams',
 			name: 'exams',
 			component: Exams,
+			beforeEnter: requireAuth
+		},
+		{
+			path: '/dashboard/courses/:id',
+			name: 'exams',
+			component: CourseExams,
 			beforeEnter: requireAuth,
             props: true
 		},

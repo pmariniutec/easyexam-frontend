@@ -23,9 +23,11 @@
 						>
 							mdi-backburger
 						</v-icon>
+
 					</v-list-item-icon>
 				</v-list-item>
 			</v-list>
+			<IconExams />
 
 			<div class="tabs">
 				<div>
@@ -79,6 +81,7 @@
 </template>
 
 <script>
+import IconExams from '@/components/icons/IconExams'
 export default {
 	name: 'SideBar',
 	data: () => ({
@@ -92,6 +95,11 @@ export default {
 				title: 'Courses',
 				icon: 'mdi-book-multiple',
 				href: 'dashboard/courses'
+			},
+			{
+				title: 'Exams',
+				icon: 'mdi-library-books',
+				href: 'dashboard/exams'
 			},
 			{
 				title: 'New Exam',
