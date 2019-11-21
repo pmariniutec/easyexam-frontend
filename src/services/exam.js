@@ -8,8 +8,15 @@ const examService = {
 	getExams () {
 		return session.get('/exam/')
 	},
-  previewExam (latexString) {
-    return session.post('/latex/compile/', latexString)
-  }
+	previewExam (latexString) {
+		return session.post(
+      '/latex/compile/', 
+      latexString, 
+      {
+        responseType: 'arraybuffer',
+        dataType:'blob'
+      }
+    )
+	}
 }
 export default examService
