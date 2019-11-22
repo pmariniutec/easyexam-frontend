@@ -6,13 +6,7 @@
 			max-width="600px"
 		>
 			<template v-slot:activator="{ on }">
-				<!-- <Button text="New Course" /> -->
-				<v-btn
-					elevation="5"
-					v-on="on"
-				>
-					New Course
-				</v-btn>
+				<Button text="New Course" v-on="on"/>
 			</template>
 			<v-card>
 				<v-card-title>
@@ -95,6 +89,10 @@
 				this.dialog = false
 				await this.createCourse(payload)
 	            this.$emit('refresh')
+			},
+			toggleMessage () {
+				console.log('whaaat?')
+				this.showMessage = !this.showMessage
 			}
 		}
 	}
