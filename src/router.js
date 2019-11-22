@@ -32,7 +32,7 @@ const requireNoAuth = (to, from, next) => {
 	store.dispatch('auth/checkAuthToken')
 		.then(() => {
 			if (store.getters['auth/isAuthenticated']) {
-				next('/dashboard')
+				next('/dashboard/courses')
 			} else {
 				next()
 			}

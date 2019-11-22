@@ -12,7 +12,7 @@
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
-			<div class="panel-container">
+			<BaseContainer>
 				<h1>Courses</h1>
 				<div>
 					<CourseCard
@@ -25,7 +25,7 @@
 						<CourseNewModal @refresh="forceRender()"/>
 					</v-row>
 				</div>
-			</div>
+			</BaseContainer>
 		</v-row>
 	</v-container>
 </template>
@@ -35,12 +35,14 @@ import { mapActions, mapGetters } from 'vuex'
 import SideBar from '@/components/SideBar'
 import CourseCard from '@/components/course/CourseCard'
 import CourseNewModal from '@/components/course/CourseNewModal'
+import BaseContainer from '@/components/BaseContainer'
 export default {
 	name: 'Courses',
 	components: {
 		SideBar,
 		CourseCard,
-		CourseNewModal
+		CourseNewModal,
+		BaseContainer
 	},
 	data: () => ({
         debugData: true
@@ -71,14 +73,6 @@ export default {
 .sidebar-container {
   max-width: 180px;
 }
-	.panel-container {
-		margin: 55px 8% 0 0;
-		width: 78%;
-		background-color: #FFFFFF;
-		padding: 40px 50px;
-		border-radius: 14px;
-		box-shadow: 3px 5px 20px 0px rgba(156, 161, 250, 0.16);
-	}
 
 	h1 {
 		font-family: Helvetica;
