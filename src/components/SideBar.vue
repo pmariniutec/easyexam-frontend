@@ -116,7 +116,7 @@ export default {
 <style lang="scss" scoped>
 .sidebar {
 	max-width: 180px;
-	position: absolute;
+	position: fixed;
 	height: 100vh;
 	margin: 0 4vh 0 0;
   left: 0;

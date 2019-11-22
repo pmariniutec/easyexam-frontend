@@ -12,37 +12,20 @@
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
-			<v-col
-				class="panel-container"
-			>
-				<v-card
-					class="panel-card"
-				>
-					<v-card-title
-						primary-title
-					>
-						<v-col cols="10">
-							Courses
-						</v-col>
-						<v-col
-							cols="2"
-							align="right"
-						>
-							<CourseNewModal @refresh="forceRender()" />
-						</v-col>
-					</v-card-title>
-					<v-col
+			<div class="panel-container">
+				<h1>Courses</h1>
+				<div>
+					<CourseCard
 						v-for="course in listCourses"
 						:key="course.id"
-						class="course-item-container"
-					>
-						<CourseCard
-							:course-info="course"
-							@refresh="forceRender()"
-						/>
-					</v-col>
-				</v-card>
-			</v-col>
+						:course-info="course"
+						@refresh="forceRender()"
+					/>
+					<v-row class="justify-center">
+						<CourseNewModal @refresh="forceRender()"/>
+					</v-row>
+				</div>
+			</div>
 		</v-row>
 	</v-container>
 </template>
@@ -60,26 +43,26 @@ export default {
 		CourseNewModal
 	},
 	data: () => ({
-		debugData: true
+        debugData: true
 	}),
 	computed: {
 		...mapGetters('course', ['getCourseList']),
-		listCourses () {
-			return this.getCourseList
-		}
+        listCourses() {
+            return this.getCourseList
+        }
 	},
 	beforeMount () {
-		this.getCourses()
+        this.getCourses()
 	},
 	methods: {
 		...mapActions('course', ['createCourse', 'getCourses']),
 		changeTab: function (href) {
 			this.$router.push(`/${href}`)
 		},
-		forceRender () {
-			console.log('Re-render')
-			this.getCourses()
-		}
+        forceRender() {
+            console.log("Re-render")
+            this.getCourses()
+        }
 	}
 }
 </script>
@@ -87,20 +70,28 @@ export default {
 <style scoped>
 .sidebar-container {
   max-width: 180px;
-  position: fixed;
 }
-.panel-container {
-  margin-left: 70px;
-  padding: 2vh;
-}
-.panel-card {
-  min-height: 96vh;
-}
-.course-col {
-  margin: 3vh;
-  display: flex;
-}
-.course-item-container {
-  margin: 3vh;
-}
+	.panel-container {
+		margin: 55px 8% 0 0;
+		width: 78%;
+		background-color: #FFFFFF;
+		padding: 40px 50px;
+		border-radius: 14px;
+		box-shadow: 3px 5px 20px 0px rgba(156, 161, 250, 0.16);
+	}
+
+	h1 {
+		font-family: Helvetica;
+		font-size: 16pt;
+		color: #23246E;
+	}
+
+	.course-panel {
+		overflow: scroll;
+	}
+
+ .course-col {
+   margin: 3vh;
+   display: flex;
+ }
 </style>

@@ -174,7 +174,7 @@ export default {
         }
 	},
 	methods: {
-		...mapActions('exam', { 
+		...mapActions('exam', {
         createExamAction: 'createExam',
         previewExamAction: 'previewExam',
     }),
