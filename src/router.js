@@ -11,7 +11,7 @@ import Courses from './views/Courses'
 import Test from './views/Test'
 import PageNotFound from './views/PageNotFound'
 import ExamEditor from './views/ExamEditor'
-import DashboardProfile from './views/DashboardProfile'
+import Profile from './views/Profile'
 import Exams from './views/Exams'
 import CourseExams from './views/CourseExams'
 
@@ -110,7 +110,7 @@ const router = new Router({
 		{
 			path: '/dashboard/profile',
 			name: 'profile',
-			component: DashboardProfile,
+			component: Profile,
 			beforeEnter: requireAuth
 		},
 		{
