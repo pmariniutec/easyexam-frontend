@@ -17,8 +17,10 @@ export default {
 	},
 	computed: {
 		generateLaTeX: function () {
-			let generator = parse(this.text, { generator: new HtmlGenerator({ hyphenate: false }) })
-			return generator.htmlDocument('https://cdn.jsdelivr.net/npm/latex.js@0.11.1/dist/').documentElement.outerHTML
+			let generator = new HtmlGenerator({ hyphenate: false })
+      let doc = parse(this.text, { generator: generator }).htmlDocument()
+      console.log(doc.documentElement.outerHTML)
+			return doc.documentElement.outerHTML
 		},
 		getText: function () {
 			return this.text
