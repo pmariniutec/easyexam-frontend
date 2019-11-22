@@ -13,10 +13,10 @@ import {
 const initialState = {
 	exams: [],
 	currentExam: {
-    title: '',
-    questions: [],
-    keywords: []
-  },
+		title: '',
+		questions: [],
+		keywords: []
+	},
 	currentPreview: null,
 	loadingPreview: false,
 	error: false
@@ -24,25 +24,25 @@ const initialState = {
 
 const getters = {
 	getExamList: state => state.exams,
-	getCurrentExam: state => state.currentExam,
+	getCurrentExam: state => state.currentExam
 }
 
 const actions = {
 	createExam ({ commit }, { title, questions, keywords }) {
 		return examService.createExam(title, questions, keywords)
 			.then(({ data }) => commit(CREATE_EXAM, data))
-            .catch(error => {
-                console.log(error.response)
-            })
+			.catch(error => {
+				console.log(error.response)
+			})
 	},
 	getExams ({ commit }) {
 		return examService.getExams()
 			.then(({ data }) => commit(SET_EXAMS_DATA, data))
-            .catch(error => {
-                console.log(error.response)
-            })
+			.catch(error => {
+				console.log(error.response)
+			})
 	},
-  getExamById({ commit }, { examId }) {},
+	getExamById ({ commit }, { examId }) {},
 	selectExam ({ commit }, { title, questions, keywords }) {
 		commit(SELECT_EXAM, { title, questions, keywords })
 	},

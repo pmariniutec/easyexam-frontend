@@ -36,19 +36,19 @@ export default {
 	data: () => ({}),
 	beforeMount: function () {
 		let examId = this.$route.params.id
-    if (examId) {
-      this.getExamById({ examId }) 
-    } else {
-      let newExam = {
-        title: "New Exam",
-        questions: [],
-        keywords: []
-      }
-      this.selectExam(newExam)
-    }
+					if (examId) {
+			this.getExamById({ examId })
+			} else {
+			let newExam = {
+				title: 'New Exam',
+				questions: [],
+				keywords: []
+			}
+			this.selectExam(newExam)
+		}
 	},
 	methods: {
-    ...mapActions('exam', ['getExamById', 'selectExam']),
+		...mapActions('exam', ['getExamById', 'selectExam']),
 		changeTab: function (href) {
 		  this.$router.push({ name: href })
 		}

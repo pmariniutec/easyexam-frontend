@@ -111,20 +111,20 @@ export default {
 			  keywords: ['ADA']
 		},
 		course: {
-			name: 'huevada',
+			name: 'Design and Analysis of Algorithms',
 			code: 'CS2101'
 		},
 		error: '',
 		tab: null,
 		dialog: false
 	}),
-  beforeMount: function () {
-    this.fetchUser()
-  },
+	beforeMount: function () {
+		this.fetchUser()
+	},
 	computed: {
-    ...mapState('auth', ['user',]),
+		...mapState('auth', ['user']),
 		...mapState('exam', ['currentExam', 'currentPreview']),
-		...mapGetters('course', ['getCourseList',]),
+		...mapGetters('course', ['getCourseList']),
 		listCourses () {
 			return this.getCourseList.map((courseData) => {
 				return {
@@ -135,21 +135,21 @@ export default {
 		}
 	},
 	methods: {
-    ...mapActions('auth', ['userDetail',]),
+		...mapActions('auth', ['userDetail']),
 		...mapActions('exam', {
 			createExamAction: 'createExam',
 			previewExamAction: 'previewExam'
 		}),
 		...mapActions('course', [
-      'getCourses',
-      'addExamToCourse',
-    ]),
-    fetchUser: async function() {
-      await this.userDetail()
-    },
+			'getCourses',
+			'addExamToCourse'
+		]),
+		fetchUser: async function () {
+			await this.userDetail()
+		},
 		createExam: function () {
-		  this.createExamAction(this.currentExam)
-      // this.addExamToCourse({ courseId, examId })
+			this.createExamAction(this.currentExam)
+			// this.addExamToCourse({ courseId, examId })
 		},
 		previewExam: function () {
 			let latexString = '\\documentclass{article}\n' +
@@ -160,19 +160,19 @@ export default {
          '\\begin{center}\n' +
          this.course.name + ' - ' + this.course.code + '\n' +
          '\\end{center}\n'
-         
-      if (this.currentExam.questions.length > 0) {
-        latexString += '\\begin{enumerate}\n'
-      }
-      
+
+			if (this.currentExam.questions.length > 0) {
+				latexString += '\\begin{enumerate}\n'
+			}
+
 			for (var i = 0; i < this.currentExam.questions.length; ++i) {
 				latexString += '\\item ' + this.currentExam.questions[i].title + '\n\n' +
           this.currentExam.questions[i].content + '\n'
 			}
-      
-      if (this.currentExam.questions.length > 0) {
-        latexString += '\\end{enumerate}\n'
-      }
+
+			if (this.currentExam.questions.length > 0) {
+				latexString += '\\end{enumerate}\n'
+			}
 
 			latexString += '\\end{document}'
 
@@ -180,7 +180,7 @@ export default {
 				.then(() => {
 					var file = new Blob([(this.currentPreview)], { type: 'application/pdf' })
 					var fileURL = URL.createObjectURL(file)
-					window.open(fileURL)
+					window.open(fileURL, '_blank')
 				})
 		},
 		closeDialog: function () {

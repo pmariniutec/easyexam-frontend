@@ -100,7 +100,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('exams', { createExamAction: 'createExam' }),
+		...mapActions('question', ['createQuestion']),
 
 		createExam: function () {
 			this.createExamAction(this.exam).then(() => ({}))
@@ -116,28 +116,6 @@ export default {
 		}
 	}
 }
-
-$(function () {
-	$('.tags input').on('focusout', function () {
-		var txt = this.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g, '') // allowed characters
-		if (txt) {
-			$(this).before('<span class="tag">' + txt.toLowerCase() + '</span>')
-		}
-		this.value = ''
-	}).on('keyup', function (e) {
-		// if: comma,enter (delimit more keyCodes with | pipe)
-		if (/(188|13|9)/.test(e.which)) {
-			$(this).focusout()
-		}
-	})
-
-	$('.tags').on('click', '.tag', function () {
-		if (confirm('Really delete this tag?')) $(this).remove()
-	})
-	$('.tags').tagcloud({
-		tags: ['Quint', 'USS Indianapolis', 'Orca']
-	})
-})
 
 </script>
 
