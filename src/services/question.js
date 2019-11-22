@@ -4,7 +4,7 @@ const questionService = {
 	createQuestion (title, content) {
 		return session.post('/question/create', { title, content })
 	},
-	getQuestions() {
+	getQuestions () {
 		return session.get('/question')
 	}
 }

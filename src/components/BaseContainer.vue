@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
-      <slot></slot>
-  </div>
+	<div class="container">
+		<slot />
+	</div>
 </template>
 
 <script>
 export default {
-  name: 'BaseContainer',
+	name: 'BaseContainer'
 }
 </script>
 

@@ -5,7 +5,10 @@
 		class="pa-0"
 		style="height: 100%;"
 	>
-		<v-row no-gutters style="height: 100%;">
+		<v-row
+			no-gutters
+			style="height: 100%;"
+		>
 			<v-col
 				class="sidebar-container"
 			>
@@ -41,7 +44,7 @@ export default {
 	data: () => ({}),
 	methods: {
 		changeTab: function (href) {
-			this.$router.push({name: href})
+			this.$router.push({ name: href })
 		}
 	}
 }

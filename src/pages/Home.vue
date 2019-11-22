@@ -2,13 +2,29 @@
 	<div>
 		<v-toolbar>
 			<v-toolbar-title style="font-size:33px">
-				<img src="@/assets/img/home/logo.png" height="25"/>
+				<img
+					src="@/assets/img/home/logo.png"
+					height="25"
+				>
 				EasyExam
 			</v-toolbar-title>
-			<v-spacer></v-spacer>
+			<v-spacer />
 			<v-toolbar-items>
-				<v-btn text x-large :to="{ name : 'login' }">Login</v-btn>
-				<v-btn text x-large color="primary" :to="{ name : 'register' }">Register</v-btn>
+				<v-btn
+					text
+					x-large
+					:to="{ name : 'login' }"
+				>
+					Login
+				</v-btn>
+				<v-btn
+					text
+					x-large
+					color="primary"
+					:to="{ name : 'register' }"
+				>
+					Register
+				</v-btn>
 			</v-toolbar-items>
 		</v-toolbar>
 		<v-container class="my-10">
@@ -17,7 +33,11 @@
 					cols="4"
 				>
 					<v-container fill-height>
-						<v-layout row wrap align-center>
+						<v-layout
+							row
+							wrap
+							align-center
+						>
 							<v-flex>
 								<v-container
 									fluid
@@ -37,10 +57,14 @@
 						</v-layout>
 					</v-container>
 				</v-col>
-				<v-col cols="8"
+				<v-col
+					cols="8"
 					align="center"
 				>
-					<img src="@/assets/img/home/create-exam.png" height="400"/>
+					<img
+						src="@/assets/img/home/create-exam.png"
+						height="400"
+					>
 				</v-col>
 			</v-row>
 		</v-container>

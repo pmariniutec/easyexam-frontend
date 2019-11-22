@@ -12,50 +12,59 @@ import {
 
 const initialState = {
 	courses: [],
-	currentCourse: null
+	currentCourse: {
+    id: '',
+    name: '',
+    code: '',
+    exams: [],
+    created: '',
+    updated: ''
+  }
 }
 
 const getters = {
 	getCourseList: state => state.courses,
-	getCurrentCourse: state => state.currentCourse
+	getCurrentCourse: state => state.currentCourse,
+  getCourseExams: state => state.currentCourse.exams,
 }
 
 const actions = {
 	createCourse ({ commit }, { name, code, exams }) {
 		return courseService.createCourse(name, code, exams)
 			.then(({ data }) => commit(CREATE_COURSE, data))
-            .catch(error => {
-                console.log(error.response)
-            })
+			.catch(error => {
+				console.log(error.response)
+			})
 	},
 	deleteCourse ({ commit }, id) {
 		return courseService.deleteCourse(id)
 			.then(({ data }) => commit(DELETE_COURSE, data))
-            .catch(error => {
-                console.log(error.response)
-            })
+			.catch(error => {
+				console.log(error.response)
+			})
 	},
 	getCourses ({ commit }) {
 		return courseService.getCourses()
 			.then(({ data }) => {
 				commit(SET_COURSES_DATA, data)
 			})
-            .catch(error => {
-                console.log(error.response)
-            })
+			.catch(error => {
+				console.log(error.response)
+			})
 	},
 	addExamToCourse ({ commit }, { courseId, examId }) {
 		return courseService.addExamToCourse(courseId, examId)
 			.then(({ data }) => commit(ADD_EXAM_COURSE, data))
-            .catch(error => {
-                console.log(error.response)
-            })
+			.catch(error => {
+				console.log(error.response)
+			})
 	},
 	getCourseById ({ commit }, { courseId }) {
-		commit(SELECT_COURSE, courseId)
-        .catch(error => {
-            console.log(error.response)
-        })
+		return courseService.getCourseById(courseId)
+      .then(({ data }) => commit(SELECT_COURSE, data))
+			.catch(error => {
+				console.log(error.response)
+			})
 	}
 }
 
@@ -69,13 +78,8 @@ const mutations = {
 	[ADD_EXAM_COURSE] (state, data) {
 		console.log('MUTATION ADD_EXAM_COURSE: ', data)
 	},
-	[SELECT_COURSE] (state, courseId) {
-		// what if courses werent fetched
-		// TODO: add fallback, update state with getCourses
-		let result = state.courses.find(course => {
-			return course.id == courseId
-		})
-		state.currentCourse = result
+	[SELECT_COURSE] (state, data) {
+		state.currentCourse = data
 	},
 	[DELETE_COURSE] (state, data) {
 		console.log('MUTATION DELETE_COURSE: ', data)

@@ -1,29 +1,34 @@
 <template>
-  <div class="input-container">
-    <label for="idt">
-      <input type="text" id="idt" :value="data" placeholder=" ">
-      <span class="label">{{ title }}</span>
-    </label>
-  </div>
+	<div class="input-container">
+		<label for="idt">
+			<input
+				id="idt"
+				type="text"
+				:value="data"
+				placeholder=" "
+			>
+			<span class="label">{{ title }}</span>
+		</label>
+	</div>
 </template>
 
 <script>
-  export default {
-    name: 'Input',
-    props: {
-      title: {
-        type: String,
-        required: true
-      },
-      idt: {
-        type: String
-      },
-      data: {
-        type: String,
-        default: ''
-      }
-    }
-  }
+export default {
+	name: 'Input',
+	props: {
+		title: {
+			type: String,
+			required: true
+		},
+		idt: {
+			type: String
+		},
+		data: {
+			type: String,
+			default: ''
+		}
+	}
+}
 </script>
 <style scoped>
   .input-container {

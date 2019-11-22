@@ -25,11 +25,11 @@ const actions = {
 			.catch(error => {
 				console.log(error.response)
 			})
-	},
+	}
 }
 
 const mutations = {
-	[CREATE_QUESTION](state, data) {
+	[CREATE_QUESTION] (state, data) {
 		console.log('MUTATION CREATE_QUESTION: ', data)
 	}
 }

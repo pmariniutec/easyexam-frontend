@@ -22,19 +22,19 @@
 <script>
 import BaseContainer from '@/components/BaseContainer'
 import SideBar from '@/components/SideBar'
-import ProfilePanel from '@/components/ProfilePanel'
+import ProfilePanel from '@/pages/Profile/Panel'
 
 export default {
 	name: 'Profile',
 	components: {
 		SideBar,
 		ProfilePanel,
-    BaseContainer
+		BaseContainer
 	},
 	data: () => ({}),
 	methods: {
 		changeTab: function (href) {
-			this.$router.push({name: href})
+			this.$router.push({ name: href })
 		}
 	}
 }
