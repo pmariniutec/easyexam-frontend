@@ -29,7 +29,7 @@ export default {
 	components: {
 		SideBar,
 		ProfilePanel,
-        BaseContainer
+    BaseContainer
 	},
 	data: () => ({}),
 	methods: {
