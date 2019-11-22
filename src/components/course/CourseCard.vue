@@ -47,40 +47,38 @@
 	</v-card>
 </template>
 <script>
+	import { mapActions } from 'vuex'
 
-import { mapActions } from 'vuex'
-
-export default {
-	name: 'CourseCard',
-	components: {
-
-	},
-	props: {
-		courseInfo: {
-			type: Object,
-			required: true,
-			default: () => {}
-		}
-	},
-
-	data: () => ({
-		bgc: {
-			backgroundColor: '#DDDDDD'
-		}
-	}),
-	computed: {
-	},
-	methods: {
-		...mapActions('course', ['deleteCourse']),
-		viewCourse: function (event, course) {
-			this.$router.push({ path: `/dashboard/courses/${course.id}` })
+	export default {
+		name: 'CourseCard',
+		components: {
 		},
-		removeCourse: async function (event, uuid) {
-			await this.deleteCourse(uuid)
-            this.$emit('refresh')
+		props: {
+			courseInfo: {
+				type: Object,
+				required: true,
+				default: () => {}
+			}
+		},
+
+		data: () => ({
+			bgc: {
+				backgroundColor: '#DDDDDD'
+			}
+		}),
+		computed: {
+		},
+		methods: {
+			...mapActions('course', ['deleteCourse']),
+			viewCourse: function (event, course) {
+				this.$router.push({ path: `/dashboard/courses/${course.id}` })
+			},
+			removeCourse: async function (event, uuid) {
+				await this.deleteCourse(uuid)
+	            this.$emit('refresh')
+			}
 		}
 	}
-}
 </script>
 
 <style lang="scss">

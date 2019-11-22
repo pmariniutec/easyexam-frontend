@@ -6,6 +6,7 @@
 			max-width="600px"
 		>
 			<template v-slot:activator="{ on }">
+				<!-- <Button text="New Course" /> -->
 				<v-btn
 					elevation="5"
 					v-on="on"
@@ -72,30 +73,31 @@
 </template>
 
 <script>
+	import { mapActions } from 'vuex'
+	import Button from '@/components/Button'
 
-import { mapActions } from 'vuex'
-
-export default {
-	name: 'CourseNewModal',
-	components: {
-	},
-	data: () => ({
-		dialog: false,
-		courseName: '',
-		courseCode: ''
-	}),
-	computed: {
-	},
-	methods: {
-		...mapActions('course', ['createCourse', 'getCourses']),
-		addCourse: async function (event) {
-			let payload = { name: this.courseName, code: this.courseCode }
-			this.dialog = false
-			await this.createCourse(payload)
-            this.$emit('refresh')
+	export default {
+		name: 'CourseNewModal',
+		components: {
+			Button
+		},
+		data: () => ({
+			dialog: false,
+			courseName: '',
+			courseCode: ''
+		}),
+		computed: {
+		},
+		methods: {
+			...mapActions('course', ['createCourse', 'getCourses']),
+			addCourse: async function (event) {
+				let payload = { name: this.courseName, code: this.courseCode }
+				this.dialog = false
+				await this.createCourse(payload)
+	            this.$emit('refresh')
+			}
 		}
 	}
-}
 </script>
 <style lang="scss">
 @import '~vue-context/dist/css/vue-context.css';
