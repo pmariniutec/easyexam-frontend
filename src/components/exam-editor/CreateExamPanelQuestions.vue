@@ -118,7 +118,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 import LaTeXPreviewCard from '@/components/LaTeXPreviewCard'
 import LaTeXPreview from '@/components/LaTeXPreview'
@@ -127,6 +127,11 @@ import draggable from 'vuedraggable'
 
 export default {
 	name: 'CreateExamPanelQuestions',
+    props: {
+        exam: {
+
+        }
+    },
 	components: {
 		draggable,
 		RateQuestion,
@@ -136,24 +141,8 @@ export default {
 	data: () => ({
 		select: ['add-tags-with', 'enter', 'tab', 'paste'],
 		items: [],
-		search: '', // sync search
-		suggestedList: [{ id: 1, dialog: false, mode: 'latex', tex: String.raw`$$x^2$$` },
-			{ id: 2, dialog: false, mode: 'latex', tex: String.raw`
-			\documentclass{article}
-				\usepackage[shortlabels]{enumitem}
-			\begin{document}
-				Arrange the following functions in increasing order of growth rate and justify your answer through a proof. 
-					\begin{enumerate}
-					\item $2^n$
-					\item $\log_2 n$
-					\item $n^{\log_2n}$
-					\item $2^{n^2}$
-					\item $2^{2^n}$
-					\end{enumerate} 
-			\end{document}
-				` }
-		],
-		questionList: [{ id: '3', mode: 'latex', tex: String.raw`
+        exam: {
+            questionList: [{ id: '3', mode: 'latex', tex: String.raw`
 				\documentclass{article}
 					\begin{document}
 						Prove or disprove: $O(f(n) + g(n)) = f(n) + O(g(n))$, if $f(n)$ and $g(n)$.
@@ -180,8 +169,27 @@ export default {
 						\end{enumerate}
 					\end{document}
 				` }
+		    ],
+            tags: []
+        }
+		search: '', // sync search
+		suggestedList: [{ id: 1, dialog: false, mode: 'latex', tex: String.raw`$$x^2$$` },
+			{ id: 2, dialog: false, mode: 'latex', tex: String.raw`
+			\documentclass{article}
+				\usepackage[shortlabels]{enumitem}
+			\begin{document}
+				Arrange the following functions in increasing order of growth rate and justify your answer through a proof. 
+					\begin{enumerate}
+					\item $2^n$
+					\item $\log_2 n$
+					\item $n^{\log_2n}$
+					\item $2^{n^2}$
+					\item $2^{2^n}$
+					\end{enumerate} 
+			\end{document}
+				` }
 		]
-	}),
+    }),
 	watch: {
 		model (val) {
 			if (val.length > 5) {
@@ -190,11 +198,13 @@ export default {
 		}
 	},
   computed: {
-    ...mapState('exam', {
-      examQuestions: state => state.exam.questions,
-    })
+      ...mapGetters('exam', {getCurrentExamAction: 'getCurrentExam'}),
+      getCurrentExam: function(){
+          return getCurrentExamAction
+      }
   },
 	methods: {
+        ...mapActions('exam', ['selectExam']),
 		changeMode (mode) {
 			console.log(this)
 			console.log(mode)
@@ -202,13 +212,14 @@ export default {
 		},
 		updateTags () {
 			this.$nextTick(() => {
-				this.select.push(...this.search.split(','))
+				this.exam.tags.push(...this.exam.tags.split(','))
 				this.$nextTick(() => {
-					this.search = ''
+					this.exam.tags = ''
 				})
 			})
 		},
 		acceptSuggestion (item) {
+            let tempQuestionList = []
 			console.log(item)
 			for (var i = 0; i < this.suggestedList.length; i++) {
 				if (this.suggestedList[i].id === item.id) {
@@ -216,7 +227,9 @@ export default {
 					break
 				}
 			}
-			this.questionList.push({ 'id': item.id, 'mode': 'latex', 'tex': item.tex })
+			this.exam.questions.push({ 'id': item.id, 'mode': 'latex', 'tex': item.tex })
+            this.$emit('add-question', exam)
+
 		},
 		closeDialog (item) {
 			item.dialog = false
@@ -228,7 +241,7 @@ export default {
                     q.mode = quest.mode
                 }
             })
-            console.log(this.questionList)
+            this.$emit('add-question', exam)
         }
 	}
 }

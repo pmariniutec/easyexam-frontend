@@ -13,10 +13,10 @@ import {
 const initialState = {
 	exams: [],
 	currentExam: {
-    title: '',
-    questions: [],
-    keywords: []
-  },
+        title: 'New Exam',
+        questions: [],
+        keywords: []
+    },
 	currentPreview: null,
 	loadingPreview: false,
 	error: false
@@ -25,6 +25,7 @@ const initialState = {
 const getters = {
 	getExamList: state => state.exams,
 	getCurrentExam: state => state.currentExam,
+    getCurrentPreview: state => state.currentPreview
 }
 
 const actions = {
@@ -42,7 +43,7 @@ const actions = {
                 console.log(error.response)
             })
 	},
-  getExamById({ commit }, { examId }) {},
+  getExamById({ commit }, { examId }) {}, //TODO fetch exam by ID
 	selectExam ({ commit }, { title, questions, keywords }) {
 		commit(SELECT_EXAM, { title, questions, keywords })
 	},

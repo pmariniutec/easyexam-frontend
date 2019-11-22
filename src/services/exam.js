@@ -1,6 +1,7 @@
 import session from './session'
 
 const examService = {
+
 	createExam (title, questions, keywords) {
 		// TODO: this possible need a stringify
 		session.post('/exam/create/', {title, questions, keywords} )
@@ -10,8 +11,8 @@ const examService = {
 	},
 	previewExam (latexString) {
 		return session.post(
-      '/latex/compile/', 
-      latexString, 
+      '/latex/compile/',
+      latexString,
       {
         responseType: 'arraybuffer',
         dataType:'blob'
