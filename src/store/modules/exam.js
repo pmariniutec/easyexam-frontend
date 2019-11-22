@@ -31,10 +31,16 @@ const actions = {
 	createExam ({ commit }, { title, questions, keywords }) {
 		return examService.createExam(title, questions, keywords)
 			.then(({ data }) => commit(CREATE_EXAM, data))
+            .catch(error => {
+                console.log(error.response)
+            })
 	},
 	getExams ({ commit }) {
 		return examService.getExams()
 			.then(({ data }) => commit(SET_EXAMS_DATA, data))
+            .catch(error => {
+                console.log(error.response)
+            })
 	},
   getExamById({ commit }, { examId }) {},
 	selectExam ({ commit }, { title, questions, keywords }) {
@@ -45,7 +51,7 @@ const actions = {
 		return examService.previewExam(latexString)
 			.then(({ data }) => commit(SET_EXAM_PREVIEW, data))
 			.then(() => commit(PREVIEW_EXAM_SUCCESS))
-			.catch(() => commit(PREVIEW_EXAM_FAILURE))
+			.catch(error => commit(PREVIEW_EXAM_FAILURE))
 	}
 }
 

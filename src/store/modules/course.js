@@ -24,23 +24,38 @@ const actions = {
 	createCourse ({ commit }, { name, code, exams }) {
 		return courseService.createCourse(name, code, exams)
 			.then(({ data }) => commit(CREATE_COURSE, data))
+            .catch(error => {
+                console.log(error.response)
+            })
 	},
 	deleteCourse ({ commit }, id) {
 		return courseService.deleteCourse(id)
 			.then(({ data }) => commit(DELETE_COURSE, data))
+            .catch(error => {
+                console.log(error.response)
+            })
 	},
 	getCourses ({ commit }) {
 		return courseService.getCourses()
 			.then(({ data }) => {
 				commit(SET_COURSES_DATA, data)
 			})
+            .catch(error => {
+                console.log(error.response)
+            })
 	},
 	addExamToCourse ({ commit }, { courseId, examId }) {
 		return courseService.addExamToCourse(courseId, examId)
 			.then(({ data }) => commit(ADD_EXAM_COURSE, data))
+            .catch(error => {
+                console.log(error.response)
+            })
 	},
 	getCourseById ({ commit }, { courseId }) {
 		commit(SELECT_COURSE, courseId)
+        .catch(error => {
+            console.log(error.response)
+        })
 	}
 }
 
