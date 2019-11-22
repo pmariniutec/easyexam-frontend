@@ -12,7 +12,11 @@ import {
 
 const initialState = {
 	exams: [],
-	currentExam: null,
+	currentExam: {
+    title: '',
+    questions: [],
+    keywords: []
+  },
 	currentPreview: null,
 	loadingPreview: false,
 	error: false
@@ -20,7 +24,7 @@ const initialState = {
 
 const getters = {
 	getExamList: state => state.exams,
-	getCurrentExam: state => state.currentExam
+	getCurrentExam: state => state.currentExam,
 }
 
 const actions = {
@@ -32,10 +36,11 @@ const actions = {
 		return examService.getExams()
 			.then(({ data }) => commit(SET_EXAMS_DATA, data))
 	},
-	selectExam ({ commit }, { exam }) {
-		commit(SELECT_EXAM, exam)
+  getExamById({ commit }, { examId }) {},
+	selectExam ({ commit }, { title, questions, keywords }) {
+		commit(SELECT_EXAM, { title, questions, keywords })
 	},
-	previewExam ({ commit }, latexString) {
+	previewExam ({ commit }, { latexString }) {
 		commit(PREVIEW_EXAM_BEGIN)
 		return examService.previewExam(latexString)
 			.then(({ data }) => commit(SET_EXAM_PREVIEW, data))

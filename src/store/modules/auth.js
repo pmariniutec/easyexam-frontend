@@ -29,7 +29,11 @@ const initialState = {
 	registrationError: false,
 	registrationLoading: false,
 	isSocialLogin: '',
-	user: null
+	user: {
+    firstName: '',
+    lastName: '',
+    fullName: ''
+  }
 }
 
 const getters = {

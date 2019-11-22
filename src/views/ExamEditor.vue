@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 import SideBar from '@/components/SideBar'
 import ExamEditorPanel from '@/components/exam-editor/ExamEditorPanel'
 import BaseContainer from '@/components/BaseContainer'
@@ -33,12 +35,20 @@ export default {
 	},
 	data: () => ({}),
 	beforeMount: function () {
-		let id = $route.params.id
-		// if id is set then edit exam
-		// else create new exam
-
+		let examId = this.$route.params.id
+    if (examId) {
+      this.getExamById({ examId }) 
+    } else {
+      let newExam = {
+        title: "New Exam",
+        questions: [],
+        keywords: []
+      }
+      this.selectExam(newExam)
+    }
 	},
 	methods: {
+    ...mapActions('exam', ['getExamById', 'selectExam']),
 		changeTab: function (href) {
 		  this.$router.push({ name: href })
 		}

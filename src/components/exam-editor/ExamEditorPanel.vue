@@ -60,7 +60,7 @@
 				<v-row>
 					<v-col>
 						<v-text-field
-							v-model="userName"
+							v-model="user.fullName"
 							label="Teacher's name"
 							disabled
 						/>
@@ -110,9 +110,6 @@ export default {
 			],
 			  keywords: ['ADA']
 		},
-		user: {
-			fullName: 'Diego Keynes'
-		},
 		course: {
 			name: 'huevada',
 			code: 'CS2101'
@@ -121,50 +118,65 @@ export default {
 		tab: null,
 		dialog: false
 	}),
-	beforeMount () {
-		this.getCourses()
-	},
+  beforeMount: function () {
+    this.fetchUser()
+  },
 	computed: {
-		...mapState('exam', ['currentPreview']),
-		...mapGetters('course', ['getCourseList']),
+    ...mapState('auth', ['user',]),
+		...mapState('exam', ['currentExam', 'currentPreview']),
+		...mapGetters('course', ['getCourseList',]),
 		listCourses () {
-			return this.getCourseList.map((course_data) => {
+			return this.getCourseList.map((courseData) => {
 				return {
-					text: course_data.name,
-					value: course_data.id
+					text: courseData.name,
+					value: courseData.id
 				}
 			})
 		}
 	},
 	methods: {
+    ...mapActions('auth', ['userDetail',]),
 		...mapActions('exam', {
 			createExamAction: 'createExam',
 			previewExamAction: 'previewExam'
 		}),
-		...mapActions('course', ['getCourses']),
+		...mapActions('course', [
+      'getCourses',
+      'addExamToCourse',
+    ]),
+    fetchUser: async function() {
+      await this.userDetail()
+    },
 		createExam: function () {
-		  this.createExamAction(this.exam)
+		  this.createExamAction(this.currentExam)
+      // this.addExamToCourse({ courseId, examId })
 		},
 		previewExam: function () {
-			let examTex = '\\documentclass{article}\n' +
-         '\\title{' + this.exam.title + '}\n' +
+			let latexString = '\\documentclass{article}\n' +
+         '\\title{' + this.currentExam.title + '}\n' +
          '\\author{' + this.user.fullName + '}\n' +
          '\\begin{document}\n' +
          '\\maketitle\n' +
          '\\begin{center}\n' +
          this.course.name + ' - ' + this.course.code + '\n' +
-         '\\end{center}\n' +
-         '\\begin{enumerate}\n'
-
-			for (var i = 0; i < this.exam.questions.length; ++i) {
-				examTex += '\\item ' + this.exam.questions[i].title + '\n\n' +
-          this.exam.questions[i].content + '\n'
+         '\\end{center}\n'
+         
+      if (this.currentExam.questions.length > 0) {
+        latexString += '\\begin{enumerate}\n'
+      }
+      
+			for (var i = 0; i < this.currentExam.questions.length; ++i) {
+				latexString += '\\item ' + this.currentExam.questions[i].title + '\n\n' +
+          this.currentExam.questions[i].content + '\n'
 			}
+      
+      if (this.currentExam.questions.length > 0) {
+        latexString += '\\end{enumerate}\n'
+      }
 
-			examTex += '\\end{enumerate}\n' +
-        '\\end{document}'
+			latexString += '\\end{document}'
 
-			this.previewExamAction(examTex)
+			this.previewExamAction({ latexString })
 				.then(() => {
 					var file = new Blob([(this.currentPreview)], { type: 'application/pdf' })
 					var fileURL = URL.createObjectURL(file)

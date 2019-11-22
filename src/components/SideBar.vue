@@ -106,7 +106,7 @@ export default {
 			{
 				title: 'New Exam',
 				icon: 'mdi-pencil-plus-outline',
-				name: 'exam-editor',
+				name: 'examEditor',
 				color: 'primary'
 			}
 		],

@@ -1,5 +1,7 @@
 <template>
-	<v-card>
+	<v-card 
+    :style="customStyle"
+  >
 		<v-container>
 			<LaTeXPreview
 				:text="text"
@@ -31,7 +33,7 @@ export default {
 		LaTeXPreview
 	},
 	props: {
-		'style': {
+		'customStyle': {
 			type: String,
 			default: ''
 		},

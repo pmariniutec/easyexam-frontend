@@ -18,7 +18,7 @@
 					>
 						<v-col>
 							<LaTeXPreviewCard
-								style="width: 90%;"
+								custom-style="width: 90%;"
 								:text.sync="item.tex"
 								:mode="item.mode"
 							/>
@@ -116,6 +116,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 
 import LaTeXPreviewCard from '@/components/LaTeXPreviewCard'
 import LaTeXPreview from '@/components/LaTeXPreview'
@@ -195,6 +196,11 @@ export default {
 			}
 		}
 	},
+  computed: {
+    ...mapState('exam', {
+      examQuestions: state => state.exam.questions,
+    })
+  },
 	methods: {
 		changeMode (mode) {
 			console.log(this)
