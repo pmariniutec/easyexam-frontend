@@ -23,6 +23,7 @@
 						<td>Date Created</td>
 					</tr>
 					<tr
+						class="exams-data"
 						v-for="data in exam"
 						:key="data.id"
 					>
@@ -77,12 +78,10 @@ export default {
 .sidebar-container {
   max-width: 180px;
 }
-.panel-container {
-  padding: 2vh;
-}
 	.exams-container {
 		margin: 55px 8% 0 0;
 		width: 78%;
+		max-height: 73%;
 		background-color: #FFFFFF;
 		padding: 40px 50px;
 		border-radius: 14px;
@@ -110,5 +109,9 @@ export default {
 		border-bottom: #969696;
     border-bottom-style: solid;
     border-bottom-width: 2px;
+	}
+
+	.exams-data {
+		overflow-y: auto;
 	}
 </style>

@@ -1,16 +1,16 @@
 <template>
 	<v-card
-		class="homepanel-container"
+		class="recent-exams-container"
 	>
 		<v-card-title>
-			Hello User!
+			RecentExams
 		</v-card-title>
 	</v-card>
 </template>
 
 <script>
 export default {
-	name: 'HomePanel',
+	name: 'RecentExams',
 	components: {
 	},
 	data () {
@@ -21,8 +21,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.homepanel-container {
-	height: 45%;
+.recent-exams-container {
+	height: 100%;
 	width: 45%;
 	margin: 4% 2%;
 	overflow-y: auto;

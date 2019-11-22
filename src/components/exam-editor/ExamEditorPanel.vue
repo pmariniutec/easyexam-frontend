@@ -160,7 +160,7 @@ export default {
 		...mapState('exam', ['currentPreview']),
 	},
 	methods: {
-		...mapActions('exam', { 
+		...mapActions('exam', {
         createExamAction: 'createExam',
         previewExamAction: 'previewExam',
     }),

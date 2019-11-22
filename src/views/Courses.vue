@@ -12,28 +12,20 @@
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
-			<v-col class="panel-container">
-				<v-card class="course-panel">
-					<h2 style="font-family: Helvetica" class="mx-4 my-6">
-						Courses
-					</h2>
-                    <v-col
-                        v-for="course in listCourses"
-                        :key="course.id"
-                        class="course-item-container"
-                    >
-                        <CourseCard
-                            :course-info="course"
-                            @refresh="forceRender()"
-                            />
-
-                        <v-divider />
-					</v-col>
+			<div class="panel-container">
+				<h1>Courses</h1>
+				<div>
+					<CourseCard
+						v-for="course in listCourses"
+						:key="course.id"
+						:course-info="course"
+						@refresh="forceRender()"
+					/>
 					<v-row class="justify-center">
 						<CourseNewModal @refresh="forceRender()"/>
 					</v-row>
-				</v-card>
-			</v-col>
+				</div>
+			</div>
 		</v-row>
 	</v-container>
 </template>
@@ -79,18 +71,27 @@ export default {
 .sidebar-container {
   max-width: 180px;
 }
-.panel-container {
-  padding: 2vh;
-}
-.course-panel {
-    height: 96vh;
-    overflow-y: auto;
-}
+	.panel-container {
+		margin: 55px 8% 0 0;
+		width: 78%;
+		background-color: #FFFFFF;
+		padding: 40px 50px;
+		border-radius: 14px;
+		box-shadow: 3px 5px 20px 0px rgba(156, 161, 250, 0.16);
+	}
+
+	h1 {
+		font-family: Helvetica;
+		font-size: 16pt;
+		color: #23246E;
+	}
+
+	.course-panel {
+		overflow: scroll;
+	}
+
  .course-col {
    margin: 3vh;
    display: flex;
- }
- .course-item-container {
-   margin: 3vh;
  }
 </style>
