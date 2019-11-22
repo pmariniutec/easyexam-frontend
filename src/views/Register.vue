@@ -138,10 +138,10 @@ export default {
 			this.error = null
 			const { firstName, lastName, email, password } = this.inputData
 			const payload = { ...this.inputData, role: this.role }
-			
+
       this.createAccount(payload)
 				.then(() => {
-          // this.$router.push('/login')
+          this.$router.push({name: 'login'})
         })
 				.catch(() => {
 					console.log('Error, lol.')

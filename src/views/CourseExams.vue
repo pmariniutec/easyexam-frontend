@@ -34,7 +34,7 @@
 					</v-row>
 					<v-divider />
 					<div
-						v-for="data in exam"
+						v-for="data in exams"
 						:key="data.name"
 					>
 						<ExamRowComponent :exam-info="data" />
@@ -44,12 +44,12 @@
 						v-if="debugData"
 						md="5"
 					>
-						<v-btn
-                            text
+						<v-btn 
+                            text 
                             color="blue darken-1"
                             @click="addFind" >
 
-							Add Exams
+							Add Course
 						</v-btn>
 
 					</v-col>
@@ -77,16 +77,18 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters('exam', ['getExamList']),
-		listExams() {
-			return this.getExamList
+		exams: function () {
+			return this.getCurrentCourse().exams
 		}
 	},
 	beforeMount () {
-		this.getExams()
+		let courseId = this.$route.params.id
+		this.getCourseById({ courseId: courseId })	// loads
+		console.log(courseId, this.getCurrentCourse)
 	},
 	methods: {
-		...mapActions('exam', ['getExams']),
+		...mapGetters('course', ['getCurrentCourse']),
+		...mapActions('course', ['getCourseById']),
 		addFind: function () {
 			this.exams.push({ name: 'hola', difficulty: 2.5, number: 10, date_edit: '10/10/10', date_create: '10/10/10' })
 		},

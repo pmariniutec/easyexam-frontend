@@ -144,7 +144,7 @@ export default {
 		userLogin () {
 			this.error = null
 			this.login(this.inputData)
-				.then(() => this.$router.push('/dashboard'))
+				.then(() => this.$router.push({name: 'dashboard'}))
 				.catch(() => {
 					this.error = 'Invalid Credentials'
 				})

@@ -122,16 +122,16 @@ export default {
 		userLogin () {
 			this.error = null
 			this.login(this.inputData)
-				.then(() => this.$router.push('/login'))
+				.then(() => this.$router.push({name: 'login'}))
 				.catch(() => {
 					this.error = 'Invalid Credentials'
 				})
-		},
+		}
 
 		// TODO
-		forgotPassword () {
-
-		}
+		// forgotPassword () {
+		//
+		// }
 	}
 }
 </script>

@@ -23,6 +23,7 @@
 						>
 							mdi-backburger
 						</v-icon>
+
 					</v-list-item-icon>
 				</v-list-item>
 			</v-list>
@@ -92,6 +93,11 @@ export default {
 				title: 'Courses',
 				icon: 'mdi-book-multiple',
 				href: 'dashboard/courses'
+			},
+			{
+				title: 'Exams',
+				icon: 'mdi-library-books',
+				href: 'dashboard/exams'
 			},
 			{
 				title: 'New Exam',
