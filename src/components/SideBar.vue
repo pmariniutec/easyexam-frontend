@@ -96,11 +96,6 @@ export default {
 			{
 				title: 'Home',
 				icon: 'mdi-home',
-				name: 'dashboard'
-			},
-			{
-				title: 'Courses',
-				icon: 'mdi-book-multiple',
 				name: 'courses'
 			},
 			{
