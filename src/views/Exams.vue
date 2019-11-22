@@ -14,22 +14,19 @@
 			</v-col>
 			<BaseContainer>
 				<h1>Exams</h1>
-				<table class="exams-table">
-					<tr class="exams-headers">
-						<td>Name</td>
-						<td>Difficulty</td>
-						<td>Questions</td>
-						<td>Last Modified</td>
-						<td>Date Created</td>
-					</tr>
-					<tr
+					<v-row class="exams-headers">
+						<v-col>Name</v-col>
+						<v-col>Questions</v-col>
+						<v-col>Last Modified</v-col>
+						<v-col>Date Created</v-col>
+					</v-row>
+					<div
 						class="exams-data"
-						v-for="data in exam"
+						v-for="data in listExams"
 						:key="data.id"
 					>
 						<ExamRowComponent :exam-info="data" />
-					</tr>
-				</table>
+					</div>
 			</BaseContainer>
 		</v-row>
 	</v-container>
@@ -65,9 +62,6 @@ export default {
 	},
 	methods: {
 		...mapActions('exam', ['getExams']),
-		addFind: function () {
-			this.exams.push({ name: 'hola', difficulty: 2.5, number: 10, date_edit: '10/10/10', date_create: '10/10/10' })
-		},
 		changeTab: function (href) {
 			this.$router.push({name: href})
 		}
@@ -104,6 +98,5 @@ export default {
 	}
   
 	.exams-data {
-		overflow-y: auto;
 	}
 </style>
