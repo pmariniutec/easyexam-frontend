@@ -19,7 +19,6 @@ export default {
 		generateLaTeX: function () {
 			let generator = new HtmlGenerator({ hyphenate: false })
 			let doc = parse(this.text, { generator: generator }).htmlDocument()
-			console.log(doc.documentElement.outerHTML)
 			return doc.documentElement.outerHTML
 		},
 		getText: function () {
