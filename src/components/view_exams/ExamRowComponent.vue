@@ -80,15 +80,14 @@
 			</v-col>
 
 			<v-col class="centered">
-				<star-rating
-					:rating="examInfo.difficulty"
-					:padding="15"
-                    :star-points=10
-					:increment="0.5"
-					:star-size="15"
-					:read-only="true"
-					:show-rating="false"
-				/>
+                <star-rating 
+                    v-model="rating"
+                    active-color="#3577CC"
+                    :star-size='15'
+                    :star-points="circle_points"
+                    :rounded-corners="true"
+                    :padding="5"
+                />
 			</v-col>
 
 			<v-col>
