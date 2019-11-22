@@ -76,30 +76,19 @@
 				>
 					mdi-file-document
 				</v-icon>
-				{{ examInfo.name }}
-			</v-col>
-
-			<v-col class="centered">
-                <star-rating 
-                    v-model="rating"
-                    active-color="#3577CC"
-                    :star-size='15'
-                    :star-points="circle_points"
-                    :rounded-corners="true"
-                    :padding="5"
-                />
+				{{ examInfo.title }}
 			</v-col>
 
 			<v-col>
-				{{ examInfo.number }} questions
+				{{ examInfo.questions.length }} questions
 			</v-col>
 
 			<v-col>
-				{{ examInfo.date_edit }}
+				{{ (new Date(examInfo.updated)).toLocaleString() }}
 			</v-col>
 
 			<v-col>
-				{{ examInfo.date_create }}
+				{{ (new Date(examInfo.created)).toLocaleString() }}
 			</v-col>
 		</v-row>
 	</v-card>
