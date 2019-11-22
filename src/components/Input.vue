@@ -1,16 +1,35 @@
 <template>
-  <label for={{ this.id }}>
-    <input type="text" id={{ id }} placeholder=" ">
-    <span class="label">{{ title }}</span>
-  </label>
+  <div class="input-container">
+    <label for="idt">
+      <input type="text" id="idt" :value="data" placeholder=" ">
+      <span class="label">{{ title }}</span>
+    </label>
+  </div>
 </template>
 
 <script>
   export default {
     name: 'Input',
-    props: ['title', 'id']
+    props: {
+      title: {
+        type: String,
+        required: true
+      },
+      idt: {
+        type: String
+      },
+      data: {
+        type: String,
+        default: ''
+      }
+    }
   }
-<style lang="scss" scoped>
+</script>
+<style scoped>
+  .input-container {
+    position: relative;
+    margin: 0 0 35px 0;
+  }
   label {
   	width: 100%;
     display: inline-flex;
@@ -20,11 +39,12 @@
     margin: auto;
     width: 100%;
   }
+
   .label {
-    position: absolute;;
-    top: 13px;
+    position: absolute;
+    top: 10px;
     left: 10px;
-    font-size: 16px;
+    font-size: 12px;
     color: #67707D;
     transform-origin: 0 0;
     transition: all .2s ease;
@@ -46,10 +66,10 @@
     border: 1px solid #DBDBDB;
 		border-radius: 12px;
     font-family: inherit;
-    padding: 7px;
-    height: 48px;
+    font-weight: 400;
     font-size: 16px;
-    font-weight: 500;
+    padding: 7px;
+    height: 40px;
     background-color: white;
     color: #223254;
   	transition: all .15s ease;
@@ -59,7 +79,7 @@
 		}
   input:not(:placeholder-shown) + span {
   	color: #5A667F;
-    transform: translateY(-40px) translatex(-10px) scale(1);
+    transform: translateY(-32px) translatex(-10px) scale(1);
 	}
 	input:focus {
 		outline: none;
@@ -68,6 +88,6 @@
       background: none;
       outline: none;
       color: #67707D;
-      transform: translateY(-40px) translatex(-10px) scale(1);
+      transform: translateY(-32px) translatex(-10px) scale(1);
 	}
 </style>
