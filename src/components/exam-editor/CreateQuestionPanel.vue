@@ -7,10 +7,10 @@
 				<v-row justify="space-around">
 					<v-col cols="6">
 						<v-textarea
-							v-model = "temp_question"
+							v-model="temp_question"
 							auto-grow
-							label = "Make your question..."
-							:value = "getQuestion"
+							label="Make your question..."
+							:value="getQuestion"
 						/>
 						<br><br>
 						<v-combobox
@@ -50,8 +50,8 @@
 			class="px-6"
 		>
 			<v-btn
-				@click = "generatePreview"
-				color = "secondary"
+				color="secondary"
+				@click="generatePreview"
 			>
 				Generate Preview
 			</v-btn>
@@ -92,11 +92,11 @@ export default {
 		question: '',
 		temp_question: '',
 		error: '',
-		tab: null,
+		tab: null
 	}),
 	computed: {
 		getQuestion: function () {
-			return this.question;
+			return this.question
 		}
 	},
 	methods: {
@@ -106,41 +106,38 @@ export default {
 			this.createExamAction(this.exam).then(() => ({}))
 			  .catch(() => {
 					this.error = 'Invalid Credentials'
-				})      
+				})
 		},
-		generatePreview: function  () {
-			this.question = this.temp_question;
+		generatePreview: function () {
+			this.question = this.temp_question
 		},
 		createNewQuestion: function () {
-			this.$emit('close-dialog');
+			this.$emit('close-dialog')
 		}
 	}
 }
 
+$(function () {
+	$('.tags input').on('focusout', function () {
+		var txt = this.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g, '') // allowed characters
+		if (txt) {
+			$(this).before('<span class="tag">' + txt.toLowerCase() + '</span>')
+		}
+		this.value = ''
+	}).on('keyup', function (e) {
+		// if: comma,enter (delimit more keyCodes with | pipe)
+		if (/(188|13|9)/.test(e.which)) {
+			$(this).focusout()
+		}
+	})
 
-$(function(){
-
-  $('.tags input').on('focusout',function(){
-    var txt= this.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g,''); // allowed characters
-    if(txt) {
-      $(this).before('<span class="tag">'+ txt.toLowerCase() +'</span>');
-    }
-    this.value="";
-  }).on('keyup',function( e ){
-    // if: comma,enter (delimit more keyCodes with | pipe)
-    if(/(188|13|9)/.test(e.which)){ $(this).focusout();
-    }
-  });
-
-
-  $('.tags').on('click','.tag',function(){
-        if(confirm("Really delete this tag?")) $(this).remove();
-  });
-$('.tags').tagcloud({
-    tags: ['Quint', 'USS Indianapolis', 'Orca']
-});
-
-});
+	$('.tags').on('click', '.tag', function () {
+		if (confirm('Really delete this tag?')) $(this).remove()
+	})
+	$('.tags').tagcloud({
+		tags: ['Quint', 'USS Indianapolis', 'Orca']
+	})
+})
 
 </script>
 

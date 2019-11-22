@@ -47,7 +47,7 @@
 						<v-btn
 							color="primary"
 							class="ma-2"
-              @click="createExam()"
+							@click="createExam()"
 						>
 							Save
 						</v-btn>
@@ -94,82 +94,82 @@ export default {
 		CreateExamPanelQuestions,
 		CreateQuestionPanel
 	},
-    beforeMount (){
-        this.getCourses()
-    },
 	data: () => ({
 		userName: 'firstName lastName',
 		exam: {
 			  title: 'New Exam',
 			  questions: [
-          {
-            title: "Martin",
-            content: "\\noindent Our friend Martin is moving to Barranco. He is a big fan of beer and pretty much anything that contains alcohol. Luckily, he has found a street with $n$ bars. Since he will definitely visit all of them frequently, he wants to find an apartment close to them.\r\n\r\n\\bigbreak\\noindent Martin wants to minimize the total distance to all of them and has offered you a \\textit{ronnie} to come up with an algorithm to solve his problem.\r\n\r\n\\bigbreak\\noindent Let $n$ be the number of bars in the street and the let the following sequence represent the street numbers where they are: $s_1, s_2, \\ldots, s_i, \\ldots, s_n$. Note that several bars might be in the same location\/street number.\r\n\r\n\\bigbreak\\noindent Both $n$ and the sequence of $s_i$'s are integers. The distance between two street numbers $s_i$ and $s_j$ is $d_{ij} = |s_i - s_j|$.\r\n\r\n\\begin{enumerate}\r\n\\item Find an $O(n\\log n)$ solution.\r\n\\item \\textit{Bonus}: Can you do better? Sketch a faster algorithm.\r\n\\end{enumerate}"
-          },
-          {
-            title: "Prove this",
-            content: "If $f = O(g)$ and $g = O(h)$, then $f = O(h)$"
-          },
-        ],
+				{
+					title: 'Martin',
+					content: '\\noindent Our friend Martin is moving to Barranco. He is a big fan of beer and pretty much anything that contains alcohol. Luckily, he has found a street with $n$ bars. Since he will definitely visit all of them frequently, he wants to find an apartment close to them.\r\n\r\n\\bigbreak\\noindent Martin wants to minimize the total distance to all of them and has offered you a \\textit{ronnie} to come up with an algorithm to solve his problem.\r\n\r\n\\bigbreak\\noindent Let $n$ be the number of bars in the street and the let the following sequence represent the street numbers where they are: $s_1, s_2, \\ldots, s_i, \\ldots, s_n$. Note that several bars might be in the same location\/street number.\r\n\r\n\\bigbreak\\noindent Both $n$ and the sequence of $s_i$\'s are integers. The distance between two street numbers $s_i$ and $s_j$ is $d_{ij} = |s_i - s_j|$.\r\n\r\n\\begin{enumerate}\r\n\\item Find an $O(n\\log n)$ solution.\r\n\\item \\textit{Bonus}: Can you do better? Sketch a faster algorithm.\r\n\\end{enumerate}'
+				},
+				{
+					title: 'Prove this',
+					content: 'If $f = O(g)$ and $g = O(h)$, then $f = O(h)$'
+				}
+			],
 			  keywords: ['ADA']
 		},
-    user: {
-      fullName: "Diego Keynes",
-    },
-    course: {
-      name: 'huevada',
-      code: 'CS2101'
-    },
+		user: {
+			fullName: 'Diego Keynes'
+		},
+		course: {
+			name: 'huevada',
+			code: 'CS2101'
+		},
 		error: '',
 		tab: null,
-		dialog: false,
+		dialog: false
 	}),
-  computed: {
-    ...mapState('exam', ['currentPreview']),
-    ...mapGetters('course', ['getCourseList']),
-    listCourses() {
-      return this.getCourseList.map((course_data) => {
-          return {
-            text: course_data.name,
-            value: course_data.id
-          };
-        })
-      }
+	beforeMount () {
+		this.getCourses()
+	},
+	computed: {
+		...mapState('exam', ['currentPreview']),
+		...mapGetters('course', ['getCourseList']),
+		listCourses () {
+			return this.getCourseList.map((course_data) => {
+				return {
+					text: course_data.name,
+					value: course_data.id
+				}
+			})
+		}
 	},
 	methods: {
-		...mapActions('exam', { 
-        createExamAction: 'createExam',
-        previewExamAction: 'previewExam',
-    }),
-    ...mapActions('course', ['getCourses']),
+		...mapActions('exam', {
+			createExamAction: 'createExam',
+			previewExamAction: 'previewExam'
+		}),
+		...mapActions('course', ['getCourses']),
 		createExam: function () {
 		  this.createExamAction(this.exam)
 		},
 		previewExam: function () {
-			let examTex = "\\documentclass{article}\n" +
-         "\\title{" + this.exam.title + "}\n" +
-         "\\author{" + this.user.fullName + "}\n" +
-         "\\begin{document}\n" +
-         "\\maketitle\n" +
-         "\\begin{center}\n" +
-         this.course.name + " - " + this.course.code + "\n" +
-         "\\end{center}\n" +
-         "\\begin{enumerate}\n"
+			let examTex = '\\documentclass{article}\n' +
+         '\\title{' + this.exam.title + '}\n' +
+         '\\author{' + this.user.fullName + '}\n' +
+         '\\begin{document}\n' +
+         '\\maketitle\n' +
+         '\\begin{center}\n' +
+         this.course.name + ' - ' + this.course.code + '\n' +
+         '\\end{center}\n' +
+         '\\begin{enumerate}\n'
 
-      for (var i = 0; i < this.exam.questions.length; ++i) {
-        examTex += "\\item " + this.exam.questions[i].title + "\n\n" +
-          this.exam.questions[i].content + "\n"
-      }
+			for (var i = 0; i < this.exam.questions.length; ++i) {
+				examTex += '\\item ' + this.exam.questions[i].title + '\n\n' +
+          this.exam.questions[i].content + '\n'
+			}
 
-      examTex += "\\end{enumerate}\n" +
-        "\\end{document}"
-      
+			examTex += '\\end{enumerate}\n' +
+        '\\end{document}'
+
 			this.previewExamAction(examTex)
 				.then(() => {
-          var file = new Blob([(this.currentPreview)], {type: 'application/pdf'});
-          var fileURL = URL.createObjectURL(file);
-          window.open(fileURL)
-        })
+					var file = new Blob([(this.currentPreview)], { type: 'application/pdf' })
+					var fileURL = URL.createObjectURL(file)
+					window.open(fileURL)
+				})
 		},
 		closeDialog: function () {
 			this.dialog = false
