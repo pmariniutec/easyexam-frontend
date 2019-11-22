@@ -12,11 +12,9 @@
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
-			<div
-				class="exam-editor-container"
-			>
+			<BaseContainer>
 				<ExamEditorPanel />
-			</div>
+			</BaseContainer>
 		</v-row>
 	</v-container>
 </template>
@@ -24,12 +22,14 @@
 <script>
 import SideBar from '@/components/SideBar'
 import ExamEditorPanel from '@/components/exam-editor/ExamEditorPanel'
+import BaseContainer from '@/components/BaseContainer'
 
 export default {
 	name: 'ExamEditor',
 	components: {
 		SideBar,
-		ExamEditorPanel
+		ExamEditorPanel,
+		BaseContainer
 	},
 	data: () => ({}),
 	methods: {
