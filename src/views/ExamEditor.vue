@@ -32,9 +32,15 @@ export default {
 		ExamEditorPanel
 	},
 	data: () => ({}),
+	beforeMount: function () {
+		let id = $route.params.id
+		// if id is set then edit exam
+		// else create new exam
+
+	},
 	methods: {
 		changeTab: function (href) {
-		  this.$router.push({name: href})
+		  this.$router.push({ name: href })
 		}
 	}
 }
