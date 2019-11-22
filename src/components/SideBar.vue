@@ -34,7 +34,7 @@
 						<v-list-item
 							v-for="item in items"
 							:key="item.title"
-							@click="$emit('change-tab-event', item.href)"
+							@click="$emit('change-tab-event', item.name)"
 						>
 							<v-list-item-icon>
 								<v-icon
@@ -64,11 +64,20 @@
 					</span>
 					<v-list>
 						<v-list-item
-							@click="$emit('change-tab-event', 'dashboard/profile')"
+							@click="$emit('change-tab-event', 'profile')"
 						>
 							<v-list-item-icon style="margin:auto">
 								<v-icon size="30">
 									mdi-account
+								</v-icon>
+							</v-list-item-icon>
+						</v-list-item>
+						<v-list-item
+							@click="$emit('change-tab-event', 'logout')"
+						>
+							<v-list-item-icon style="margin:auto">
+								<v-icon size="30">
+									mdi-close
 								</v-icon>
 							</v-list-item-icon>
 						</v-list-item>
@@ -87,22 +96,17 @@ export default {
 			{
 				title: 'Home',
 				icon: 'mdi-home',
-				href: 'dashboard'
-			},
-			{
-				title: 'Courses',
-				icon: 'mdi-book-multiple',
-				href: 'dashboard/courses'
+				name: 'courses'
 			},
 			{
 				title: 'Exams',
 				icon: 'mdi-library-books',
-				href: 'dashboard/exams'
+				name: 'exams'
 			},
 			{
 				title: 'New Exam',
 				icon: 'mdi-pencil-plus-outline',
-				href: 'dashboard/exam-editor',
+				name: 'exam-editor',
 				color: 'primary'
 			}
 		],
@@ -116,7 +120,7 @@ export default {
 <style lang="scss" scoped>
 .sidebar {
 	max-width: 180px;
-	position: absolute;
+	position: fixed;
 	height: 100vh;
 	margin: 0 4vh 0 0;
   left: 0;

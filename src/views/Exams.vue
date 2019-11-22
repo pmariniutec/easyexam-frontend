@@ -12,7 +12,7 @@
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
-			<div class="exams-container">
+			<BaseContainer>
 				<h1>Exams</h1>
 				<table class="exams-table">
 					<tr class="exams-headers">
@@ -23,13 +23,14 @@
 						<td>Date Created</td>
 					</tr>
 					<tr
+						class="exams-data"
 						v-for="data in exam"
 						:key="data.id"
 					>
 						<ExamRowComponent :exam-info="data" />
 					</tr>
 				</table>
-			</div>
+			</BaseContainer>
 		</v-row>
 	</v-container>
 </template>
@@ -39,12 +40,14 @@
 import { mapActions, mapGetters } from 'vuex'
 import SideBar from '@/components/SideBar'
 import ExamRowComponent from '@/components/view_exams/ExamRowComponent'
+import BaseContainer from '@/components/BaseContainer'
 
 export default {
 	name: 'ExamsView',
 	components: {
 		ExamRowComponent,
-		SideBar
+		SideBar,
+		BaseContainer
 	},
 	data () {
 		return {
@@ -66,7 +69,7 @@ export default {
 			this.exams.push({ name: 'hola', difficulty: 2.5, number: 10, date_edit: '10/10/10', date_create: '10/10/10' })
 		},
 		changeTab: function (href) {
-			this.$router.push(`/${href}`)
+			this.$router.push({name: href})
 		}
 	}
 }
@@ -77,18 +80,6 @@ export default {
 .sidebar-container {
   max-width: 180px;
 }
-.panel-container {
-  padding: 2vh;
-}
-	.exams-container {
-		margin: 55px 8% 0 0;
-		width: 78%;
-		background-color: #FFFFFF;
-		padding: 40px 50px;
-		border-radius: 14px;
-		box-shadow: 3px 5px 20px 0px rgba(156, 161, 250, 0.16);
-	}
-
 	h1 {
 		font-family: Helvetica;
 		font-size: 16pt;
@@ -110,5 +101,9 @@ export default {
 		border-bottom: #969696;
     border-bottom-style: solid;
     border-bottom-width: 2px;
+	}
+  
+	.exams-data {
+		overflow-y: auto;
 	}
 </style>

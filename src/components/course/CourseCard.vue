@@ -75,8 +75,8 @@ export default {
 		viewCourse: function (event, course) {
 			this.$router.push({ path: `/dashboard/courses/${course.id}` })
 		},
-		removeCourse: function (event, uuid) {
-			this.deleteCourse(uuid)
+		removeCourse: async function (event, uuid) {
+			await this.deleteCourse(uuid)
             this.$emit('refresh')
 		}
 	}

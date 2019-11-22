@@ -12,11 +12,9 @@
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
-			<v-col
-				class="panel-container"
-			>
+			<BaseContainer>
 				<ExamEditorPanel />
-			</v-col>
+			</BaseContainer>
 		</v-row>
 	</v-container>
 </template>
@@ -24,17 +22,19 @@
 <script>
 import SideBar from '@/components/SideBar'
 import ExamEditorPanel from '@/components/exam-editor/ExamEditorPanel'
+import BaseContainer from '@/components/BaseContainer'
 
 export default {
 	name: 'ExamEditor',
 	components: {
 		SideBar,
-		ExamEditorPanel
+		ExamEditorPanel,
+		BaseContainer
 	},
 	data: () => ({}),
 	methods: {
 		changeTab: function (href) {
-		  this.$router.push(`/${href}`)
+		  this.$router.push({name: href})
 		}
 	}
 }
@@ -43,10 +43,14 @@ export default {
 <style scoped>
 .sidebar-container {
   max-width: 180px;
-  position: fixed;
 }
-.panel-container {
-  margin-left: 70px;
-  padding: 2vh;
-}
+	.exam-editor-container {
+		margin: 55px 8% 0 0;
+		width: 78%;
+		height: 67%;
+		background-color: #FFFFFF;
+		padding: 40px 50px;
+		border-radius: 14px;
+		box-shadow: 3px 5px 20px 0px rgba(156, 161, 250, 0.16);
+	}
 </style>
