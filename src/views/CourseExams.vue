@@ -44,8 +44,8 @@
 						v-if="debugData"
 						md="5"
 					>
-						<v-btn 
-                            text 
+						<v-btn
+                            text
                             color="blue darken-1"
                             @click="addFind" >
 
@@ -102,7 +102,7 @@ export default {
 <style lang="scss">
 @import '~vue-context/dist/css/vue-context.css';
 .sidebar-container {
-  max-width: 85px;
+  max-width: 180px;
 }
 .panel-container {
   padding: 2vh;

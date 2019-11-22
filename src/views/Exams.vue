@@ -12,49 +12,24 @@
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
-			<v-col class="panel-container">
-				<v-card
-					shaped
-					hover
-					elevation="10"
-					width="900"
-					min-height="100"
-					class="mx-auto"
-				>
-					<v-row class="grey--text text--darken-2 text-center title">
-						<v-col> Name </v-col>
-
-						<v-col> Difficulty </v-col>
-
-						<v-col> Questions </v-col>
-
-						<v-col>	Last Modified </v-col>
-
-						<v-col>	Date Created </v-col>
-					</v-row>
-					<v-divider />
-					<div
+			<div class="exams-container">
+				<h1>Exams</h1>
+				<table class="exams-table">
+					<tr class="exams-headers">
+						<td>Name</td>
+						<td>Difficulty</td>
+						<td>Questions</td>
+						<td>Last Modified</td>
+						<td>Date Created</td>
+					</tr>
+					<tr
 						v-for="data in exam"
-						:key="data.name"
+						:key="data.id"
 					>
 						<ExamRowComponent :exam-info="data" />
-					</div>
-
-					<v-col
-						v-if="debugData"
-						md="5"
-					>
-						<v-btn
-                            text
-                            color="blue darken-1"
-                            @click="addFind" >
-
-							Add Exams
-						</v-btn>
-
-					</v-col>
-				</v-card>
-			</v-col>
+					</tr>
+				</table>
+			</div>
 		</v-row>
 	</v-container>
 </template>
@@ -100,9 +75,40 @@ export default {
 <style lang="scss">
 @import '~vue-context/dist/css/vue-context.css';
 .sidebar-container {
-  max-width: 85px;
+  max-width: 180px;
 }
 .panel-container {
   padding: 2vh;
 }
+	.exams-container {
+		margin: 55px 8% 0 0;
+		width: 78%;
+		background-color: #FFFFFF;
+		padding: 40px 50px;
+		border-radius: 14px;
+		box-shadow: 3px 5px 20px 0px rgba(156, 161, 250, 0.16);
+	}
+
+	h1 {
+		font-family: Helvetica;
+		font-size: 16pt;
+		color: #23246E;
+	}
+
+	.exams-table {
+		width: 100%;
+		margin: 25px 0 0 0;
+		border-collapse: collapse;
+	}
+
+	.exams-headers {
+		text-align: center;
+		font-family: Helvetica;
+		font-size: 100%;
+		font-weight: 600;
+		color: #969696;
+		border-bottom: #969696;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+	}
 </style>

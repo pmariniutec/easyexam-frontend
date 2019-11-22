@@ -86,7 +86,7 @@ export default {
 
 <style scoped>
 .sidebar-container {
-  max-width: 85px;
+  max-width: 180px;
   position: fixed;
 }
 .panel-container {
