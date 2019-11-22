@@ -8,9 +8,10 @@ const session = axios.create({
 	headers: {
 		'Accept': 'application/json',
 		'Content-Type': 'application/json',
+		'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYUBkdWNrLmNvbSIsImV4cCI6MTU3NDM3NDEwNSwiaWF0IjoxNTc0MzU2MTA1fQ.t-xJcwMVbqjZm9pkOB0zShSuxK93RD0rYz-TdHgJowyORhbEYx3aVvuzGuyveX9QuFfiUkQ8YPEaFjyaqt14MA'
 	},
 	xsrfCookieName: CSRF_COOKIE_NAME,
-	xsrfHeaderName: CSRF_HEADER_NAME
+	xsrfHeaderName: CSRF_HEADER_NAME,
 })
 
 export default session

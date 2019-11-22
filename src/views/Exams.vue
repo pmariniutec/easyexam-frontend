@@ -110,7 +110,7 @@ export default {
     border-bottom-style: solid;
     border-bottom-width: 2px;
 	}
-
+  
 	.exams-data {
 		overflow-y: auto;
 	}

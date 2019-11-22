@@ -7,10 +7,10 @@ const courseService = {
 	getCourses () {
 		return session.get('/course/')
 	},
-    deleteCourse (courseId) {
-        console.log(courseId)
-        return session.delete(`/course/${courseId}`)
-    },
+	deleteCourse (courseId) {
+		console.log(courseId)
+		return session.delete(`/course/${courseId}`)
+	},
 	addExamToCourse (courseId, examId) {
 		return session.post('/course/exam/add/', { courseId, examId })
 	}

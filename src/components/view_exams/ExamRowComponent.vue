@@ -80,15 +80,14 @@
 			</v-col>
 
 			<v-col class="centered">
-				<star-rating
-					:rating="examInfo.difficulty"
-					:padding="15"
-                    :star-points=10
-					:increment="0.5"
-					:star-size="15"
-					:read-only="true"
-					:show-rating="false"
-				/>
+                <star-rating 
+                    v-model="rating"
+                    active-color="#3577CC"
+                    :star-size='15'
+                    :star-points="circle_points"
+                    :rounded-corners="true"
+                    :padding="5"
+                />
 			</v-col>
 
 			<v-col>
@@ -124,7 +123,13 @@ export default {
 
 	data () {
 		return {
-			closeOnClick: true
+			closeOnClick: true,    
+		    circle_points: [
+                    0,25, 2,35, 5,40, 10,45, 15,48, 
+                    25,50, 35,48, 40,45, 45,40, 48,35, 
+                    50,25, 48,15, 45,10, 40,5, 35,2, 
+                    25,0, 15,2, 10,5, 5,10, 2,15
+                ]
 		}
 	},
 	computed: {
