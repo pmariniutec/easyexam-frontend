@@ -91,9 +91,9 @@
 															</v-btn>
 														</template>
 														<RateQuestion
-															:question="item.tex"
 															:id="item.id"
-															v-on:close-dialog="closeDialog(item);"
+															:question="item.tex"
+															@close-dialog="closeDialog(item);"
 														/>
 													</v-dialog>
 												</v-col>
@@ -143,8 +143,8 @@ export default {
 		select: ['add-tags-with', 'enter', 'tab', 'paste'],
 		items: [],
 		search: '', // sync search
-		suggestedList: [{ id: 1, dialog:false, mode: 'latex', tex: String.raw`$$x^2$$` },
-			{ id: 2, dialog:false, mode: 'latex', tex: String.raw`
+		suggestedList: [{ id: 1, dialog: false, mode: 'latex', tex: String.raw`$$x^2$$` },
+			{ id: 2, dialog: false, mode: 'latex', tex: String.raw`
 			\documentclass{article}
 				\usepackage[shortlabels]{enumitem}
 			\begin{document}
@@ -220,7 +220,7 @@ export default {
 			this.questionList.push({ 'id': item.id, 'mode': 'latex', 'tex': item.tex })
 		},
 		closeDialog (item) {
-			item.dialog = false;
+			item.dialog = false
 		}
 	}
 }
