@@ -88,10 +88,10 @@ export default {
 	},
 	methods: {
 		...mapActions('course', ['createCourse', 'getCourses']),
-		addCourse: function (event) {
+		addCourse: async function (event) {
 			let payload = { name: this.courseName, code: this.courseCode }
-			this.createCourse(payload)
 			this.dialog = false
+			await this.createCourse(payload)
             this.$emit('refresh')
 		}
 	}
