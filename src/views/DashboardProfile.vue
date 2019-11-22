@@ -34,7 +34,7 @@ export default {
 	data: () => ({}),
 	methods: {
 		changeTab: function (href) {
-			this.$router.push(`/${href}`)
+			this.$router.push({name: href})
 		}
 	}
 }
