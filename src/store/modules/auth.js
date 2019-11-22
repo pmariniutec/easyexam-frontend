@@ -79,6 +79,9 @@ const actions = {
 			.then(({ data }) => {
 				commit(SET_USER_DATA, data)
 			})
+            .catch(error => {
+                console.log(error.response)
+            })
 	}
 }
 
