@@ -14,7 +14,6 @@ export default {
 .container {
   margin: 55px 8% 0 0;
   width: 78%;
-  height: 67%;
   background-color: #FFFFFF;
   padding: 40px 50px;
   border-radius: 14px;
