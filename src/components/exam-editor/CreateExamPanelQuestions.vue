@@ -21,6 +21,8 @@
 								custom-style="width: 90%;"
 								:text.sync="item.tex"
 								:mode="item.mode"
+                                :id="item.id"
+                                @edited="changeQuestion"
 							/>
 						</v-col>
 					</v-row>
@@ -122,18 +124,9 @@ import LaTeXPreviewCard from '@/components/LaTeXPreviewCard'
 import LaTeXPreview from '@/components/LaTeXPreview'
 import RateQuestion from '@/components/RateQuestion'
 import draggable from 'vuedraggable'
-/* TODO
-		- bug #1:
-			- steps:
-				1. move suggested card to question list
-				2. edit newly transferred question
-				3. move newly edited question to other position
-			- result:
-				- changes made in 2 reset
-*/
 
 export default {
-	name: 'CreateExamPanelDetails',
+	name: 'CreateExamPanelQuestions',
 	components: {
 		draggable,
 		RateQuestion,
@@ -160,17 +153,17 @@ export default {
 			\end{document}
 				` }
 		],
-		questionList: [{ id: 3, mode: 'latex', tex: String.raw`
+		questionList: [{ id: '3', mode: 'latex', tex: String.raw`
 				\documentclass{article}
 					\begin{document}
 						Prove or disprove: $O(f(n) + g(n)) = f(n) + O(g(n))$, if $f(n)$ and $g(n)$.
 					\end{document}
-			` }, { id: 4, mode: 'latex', tex: String.raw`
+			` }, { id: '4', mode: 'latex', tex: String.raw`
 				\documentclass{article}
 					\begin{document}
 						If $f = O(g)$ and $g = O(h)$, then $f = O(h)$
 					\end{document}
-			` }, { id: 5, mode: 'latex', tex: String.raw`
+			` }, { id: '5', mode: 'latex', tex: String.raw`
 				\documentclass{article}
 					\begin{document}
 						\noindent Our friend Martin is moving to Barranco. He is a big fan of beer and pretty much anything that contains alcohol. Luckily, he has found a street with $n$ bars. Since he will definitely visit all of them frequently, he wants to find an apartment close to them. 
@@ -227,7 +220,16 @@ export default {
 		},
 		closeDialog (item) {
 			item.dialog = false
-		}
+		},
+        changeQuestion (quest) {
+            this.questionList.map(function(q) {
+                if(quest.id == q.id){
+                    q.tex = quest.tex
+                    q.mode = quest.mode
+                }
+            })
+            console.log(this.questionList)
+        }
 	}
 }
 </script>
