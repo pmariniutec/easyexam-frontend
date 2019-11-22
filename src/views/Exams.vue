@@ -12,7 +12,7 @@
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
-			<div class="exams-container">
+			<BaseContainer>
 				<h1>Exams</h1>
 				<table class="exams-table">
 					<tr class="exams-headers">
@@ -30,7 +30,7 @@
 						<ExamRowComponent :exam-info="data" />
 					</tr>
 				</table>
-			</div>
+			</BaseContainer>
 		</v-row>
 	</v-container>
 </template>
@@ -40,12 +40,14 @@
 import { mapActions, mapGetters } from 'vuex'
 import SideBar from '@/components/SideBar'
 import ExamRowComponent from '@/components/view_exams/ExamRowComponent'
+import BaseContainer from '@/components/BaseContainer'
 
 export default {
 	name: 'ExamsView',
 	components: {
 		ExamRowComponent,
-		SideBar
+		SideBar,
+		BaseContainer
 	},
 	data () {
 		return {
@@ -78,16 +80,6 @@ export default {
 .sidebar-container {
   max-width: 180px;
 }
-	.exams-container {
-		margin: 55px 8% 0 0;
-		width: 78%;
-		max-height: 73%;
-		background-color: #FFFFFF;
-		padding: 40px 50px;
-		border-radius: 14px;
-		box-shadow: 3px 5px 20px 0px rgba(156, 161, 250, 0.16);
-	}
-
 	h1 {
 		font-family: Helvetica;
 		font-size: 16pt;
