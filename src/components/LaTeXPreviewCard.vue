@@ -4,11 +4,11 @@
   >
 		<v-container>
 			<LaTeXPreview
-				:text="text"
+				:text="getText"
 				:class="getMode === 'latex'? 'show' : 'hidden'"
 			/>
 			<v-textarea
-				v-model="temp_text"
+				v-model="myText"
 				auto-grow
 				solo
 				:class="getMode === 'latex' ? 'hidden' : 'show'"
@@ -19,7 +19,7 @@
 			text
 			@click="toggle"
 		>
-			{{ mode === 'txt' ? 'Done' : 'Edit' }}
+			{{ getMode === 'txt' ? 'Done' : 'Edit' }}
 		</v-btn>
 	</v-card>
 </template>
@@ -33,36 +33,42 @@ export default {
 		LaTeXPreview
 	},
 	props: {
-		'customStyle': {
+		customStyle: {
 			type: String,
 			default: ''
 		},
-		'text': {
+		text: {
 			type: String,
 			default: ''
 		},
-		'mode': {
+		mode: {
 			type: String,
 			default: 'latex'
-		}
+		},
+        id: {
+            type: String,
+            default: '0'
+        }
 	},
 	data () {
 		return {
-			'temp_text': this.text
+            myText: this.text,
+            myMode: this.mode
 		}
 	},
 	computed: {
 		getMode: function () {
-			return this.mode
+			return this.myMode
 		},
 		getText: function () {
-			return this.text
+			return this.myText
 		}
 	},
 	methods: {
 		toggle: function (event) {
-			this.mode = this.mode === 'latex'	? 'txt' : 'latex'
-			this.text = this.temp_text
+			this.myMode = this.getMode === 'latex'	? 'txt' : 'latex'
+            let obj = {id: this.id, mode: this.getMode, tex: this.getText}
+            this.$emit('edited', obj)
 		}
 	}
 }
