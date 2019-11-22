@@ -57,7 +57,7 @@ export default {
 	methods: {
 		...mapActions('course', ['createCourse', 'getCourses']),
 		changeTab: function (href) {
-			this.$router.push(`/${href}`)
+			this.$router.push({name: href})
 		},
         forceRender() {
             console.log("Re-render")

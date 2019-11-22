@@ -67,7 +67,7 @@ export default {
 			this.exams.push({ name: 'hola', difficulty: 2.5, number: 10, date_edit: '10/10/10', date_create: '10/10/10' })
 		},
 		changeTab: function (href) {
-			this.$router.push(`/${href}`)
+			this.$router.push({name: href})
 		}
 	}
 }
