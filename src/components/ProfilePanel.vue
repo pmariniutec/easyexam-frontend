@@ -1,48 +1,45 @@
 <template>
-	<v-card
+	<div
 		class="panel-container"
 	>
 		<v-card-title
 			primary-title
 		>
 			<v-row>
-				<v-col cols="10">
-					My profile
-				</v-col>
-				<v-col
-					cols="2"
-					align="right"
-					class="px-6"
-				>
-					<v-btn
-						color="primary"
-					>
-						Save
-					</v-btn>
-				</v-col>
+				<h1>My profile</h1>
 			</v-row>
 		</v-card-title>
 
 		<v-card-text>
 			<v-form v-model="valid">
 				<v-text-field
-					v-model="user.firstName"
+					v-model="getUserObj.firstName"
 					label="First Name"
 				/>
 				<v-text-field
-					v-model="user.lastName"
+					v-model="getUserObj.lastName"
 					label="Last Name"
 				/>
 				<v-text-field
-					v-model="user.email"
+                    disabled="true"
+					v-model="getUserObj.email"
 					label="Email"
 				/>
 			</v-form>
 		</v-card-text>
-	</v-card>
+        <v-btn
+            color="primary"
+            class="profile-btn"
+        >
+            Save
+        </v-btn>
+	</div>
 </template>
 
 <script>
+
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
 	name: 'ProfilePanel',
 	components: {
@@ -53,7 +50,23 @@ export default {
 			lastName: 'lastName',
 			email: 'email'
 		}
-	})
+	}),
+    computed: {
+        ...mapGetters('auth', ['getUser']),
+        getUserObj () {
+                return this.getUser
+        } 
+    },
+      beforeMount () {
+        this.fetchUser()
+      },
+    methods: {
+        ...mapActions('auth', ['userDetail']),
+        fetchUser: async function() {
+            await this.userDetail()
+        }
+    }
+    
 }
 </script>
 
@@ -61,5 +74,8 @@ export default {
 .panel-container {
   height: 96vh;
   overflow-y: auto;
+}
+.profile-btn {
+    float: right;
 }
 </style>

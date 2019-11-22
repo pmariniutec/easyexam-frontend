@@ -12,24 +12,24 @@
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
-			<v-col
-				class="panel-container"
-			>
+			<BaseContainer>
 				<ProfilePanel />
-			</v-col>
+			</BaseContainer>
 		</v-row>
 	</v-container>
 </template>
 
 <script>
+import BaseContainer from '@/components/BaseContainer'
 import SideBar from '@/components/SideBar'
 import ProfilePanel from '@/components/ProfilePanel'
 
 export default {
-	name: 'DashboardProfile',
+	name: 'Profile',
 	components: {
 		SideBar,
-		ProfilePanel
+		ProfilePanel,
+        BaseContainer
 	},
 	data: () => ({}),
 	methods: {
