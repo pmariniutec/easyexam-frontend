@@ -23,7 +23,6 @@
 						>
 							mdi-backburger
 						</v-icon>
-
 					</v-list-item-icon>
 				</v-list-item>
 			</v-list>
@@ -54,6 +53,7 @@
 				</div>
 
 				<div style="position: absolute; bottom: 0; width: 100%; text-align: center;">
+					<!--
 					<v-chip
 						color="secondary"
 					>
@@ -62,6 +62,7 @@
 					<span>
 						points
 					</span>
+					-->
 					<v-list>
 						<v-list-item
 							@click="$emit('change-tab-event', 'profile')"
