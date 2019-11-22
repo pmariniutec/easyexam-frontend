@@ -77,7 +77,7 @@ export default {
 
 <style scoped>
 .sidebar-container {
-  max-width: 85px;
+  max-width: 180px;
 }
 .panel-container {
   padding: 2vh;
