@@ -31,9 +31,9 @@ const actions = {
 	createExam ({ commit }, { title, questions, keywords }) {
 		return examService.createExam(title, questions, keywords)
 			.then(({ data }) => commit(CREATE_EXAM, data))
-            .catch(error => {
-                console.log(error.response)
-            })
+      .catch(error => {
+          console.log(error.response)
+      })
 	},
 	getExams ({ commit }) {
 		return examService.getExams()
