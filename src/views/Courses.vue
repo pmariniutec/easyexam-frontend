@@ -36,6 +36,7 @@ import SideBar from '@/components/SideBar'
 import CourseCard from '@/components/course/CourseCard'
 import CourseNewModal from '@/components/course/CourseNewModal'
 import BaseContainer from '@/components/BaseContainer'
+
 export default {
 	name: 'Courses',
 	components: {

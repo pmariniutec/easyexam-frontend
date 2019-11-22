@@ -47,7 +47,7 @@
 						<v-btn
 							color="primary"
 							class="ma-2"
-							@click="createExam()"
+							@click="saveExam()"
 						>
 							Save
 						</v-btn>
@@ -141,15 +141,15 @@ export default {
 			previewExamAction: 'previewExam'
 		}),
 		...mapActions('course', [
-			'getCourses',
-			'addExamToCourse'
-		]),
-		fetchUser: async function () {
-			await this.userDetail()
-		},
-		createExam: function () {
-			this.createExamAction(this.currentExam)
-			// this.addExamToCourse({ courseId, examId })
+      'getCourses',
+      'addExamToCourse',
+    ]),
+    fetchUser: async function() {
+      await this.userDetail()
+    },
+		saveExam: function () {
+		  this.createExamAction(this.currentExam)
+      // this.addExamToCourse({ courseId, examId })
 		},
 		previewExam: function () {
 			let latexString = '\\documentclass{article}\n' +
