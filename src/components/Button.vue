@@ -1,5 +1,5 @@
 <template>
-  <button class="btn first">{{text}}</button>
+  <button class="btn first" @click.native="handleClick">{{text}}</button>
 </template>
 
 <script>
@@ -9,6 +9,11 @@
       text: {
         type: String,
         required: true
+      }
+    },
+    method: {
+      handleClick() {
+    	   this.$emit('click')
       }
     }
   }
