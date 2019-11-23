@@ -30,10 +30,10 @@ const initialState = {
 	registrationLoading: false,
 	isSocialLogin: '',
 	user: {
-    firstName: '',
-    lastName: '',
-    fullName: ''
-  }
+		firstName: '',
+		lastName: '',
+		fullName: ''
+	}
 }
 
 const getters = {
@@ -83,9 +83,9 @@ const actions = {
 			.then(({ data }) => {
 				commit(SET_USER_DATA, data)
 			})
-            .catch(error => {
-                console.log(error.response)
-            })
+			.catch(error => {
+				console.log(error.response)
+			})
 	}
 }
 

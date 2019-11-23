@@ -5,9 +5,11 @@
 		outlined
 	>
 		<v-app-bar
-            class="course-card-modal"
+			class="course-card-modal"
 		>
-			<v-toolbar-title class="course-card-title" >	{{ courseInfo.name }} : {{ courseInfo.code }} </v-toolbar-title>
+			<v-toolbar-title class="course-card-title">
+				{{ courseInfo.name }} : {{ courseInfo.code }}
+			</v-toolbar-title>
 			<v-spacer />
 			<v-menu
 				left
@@ -47,38 +49,38 @@
 	</v-card>
 </template>
 <script>
-	import { mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
-	export default {
-		name: 'CourseCard',
-		components: {
-		},
-		props: {
-			courseInfo: {
-				type: Object,
-				required: true,
-				default: () => {}
-			}
-		},
+export default {
+	name: 'CourseCard',
+	components: {
+	},
+	props: {
+		courseInfo: {
+			type: Object,
+			required: true,
+			default: () => {}
+		}
+	},
 
-		data: () => ({
-			bgc: {
-				backgroundColor: '#DDDDDD'
-			}
-		}),
-		computed: {
+	data: () => ({
+		bgc: {
+			backgroundColor: '#DDDDDD'
+		}
+	}),
+	computed: {
+	},
+	methods: {
+		...mapActions('course', ['deleteCourse']),
+		viewCourse: function (event, course) {
+			this.$router.push({ path: `/dashboard/exams/${course.id}` })
 		},
-		methods: {
-			...mapActions('course', ['deleteCourse']),
-			viewCourse: function (event, course) {
-				this.$router.push({ path: `/dashboard/courses/${course.id}` })
-			},
-			removeCourse: async function (event, uuid) {
-				await this.deleteCourse(uuid)
+		removeCourse: async function (event, uuid) {
+			await this.deleteCourse(uuid)
 	            this.$emit('refresh')
-			}
 		}
 	}
+}
 </script>
 
 <style lang="scss">

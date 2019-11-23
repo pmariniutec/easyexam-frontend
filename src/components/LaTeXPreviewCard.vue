@@ -1,7 +1,7 @@
 <template>
-	<v-card 
-    :style="customStyle"
-  >
+	<v-card
+		:style="customStyle"
+	>
 		<v-container>
 			<LaTeXPreview
 				:text="getText"
@@ -45,15 +45,15 @@ export default {
 			type: String,
 			default: 'latex'
 		},
-        id: {
-            type: String,
-            default: '0'
-        }
+		id: {
+			type: String,
+			default: '0'
+		}
 	},
 	data () {
 		return {
-            myText: this.text,
-            myMode: this.mode
+			myText: this.text,
+			myMode: this.mode
 		}
 	},
 	computed: {
@@ -67,8 +67,8 @@ export default {
 	methods: {
 		toggle: function (event) {
 			this.myMode = this.getMode === 'latex'	? 'txt' : 'latex'
-            let obj = {id: this.id, mode: this.getMode, tex: this.getText}
-            this.$emit('edited', obj)
+			let obj = { id: this.id, mode: this.getMode, tex: this.getText }
+			this.$emit('edited', obj)
 		}
 	}
 }

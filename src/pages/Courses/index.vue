@@ -22,7 +22,7 @@
 						@refresh="forceRender()"
 					/>
 					<v-row class="justify-center">
-						<CourseNewModal @refresh="forceRender()"/>
+						<CourseNewModal @refresh="forceRender()" />
 					</v-row>
 				</div>
 			</BaseContainer>
@@ -33,8 +33,8 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import SideBar from '@/components/SideBar'
-import CourseCard from '@/components/course/CourseCard'
-import CourseNewModal from '@/components/course/CourseNewModal'
+import CourseCard from '@/pages/Courses/CourseCard'
+import CourseNewModal from '@/pages/Courses/CourseNewModal'
 import BaseContainer from '@/components/BaseContainer'
 
 export default {
@@ -46,26 +46,26 @@ export default {
 		BaseContainer
 	},
 	data: () => ({
-        debugData: true
+		debugData: true
 	}),
 	computed: {
 		...mapGetters('course', ['getCourseList']),
-        listCourses() {
-            return this.getCourseList
-        }
+		listCourses () {
+			return this.getCourseList
+		}
 	},
 	beforeMount () {
-        this.getCourses()
+		this.getCourses()
 	},
 	methods: {
 		...mapActions('course', ['createCourse', 'getCourses']),
 		changeTab: function (href) {
-			this.$router.push({name: href})
+			this.$router.push({ name: href })
 		},
-        forceRender() {
-            console.log("Re-render")
-            this.getCourses()
-        }
+		forceRender () {
+			console.log('Re-render')
+			this.getCourses()
+		}
 	}
 }
 </script>

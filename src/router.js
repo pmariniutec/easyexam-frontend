@@ -1,19 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from './store/store'
+import store from '@/store/store'
 
-import Home from './views/Home'
-import Login from './views/Login'
-import Register from './views/Register'
-import ForgotPassword from './views/ForgotPassword'
-import Dashboard from './views/Dashboard'
-import Courses from './views/Courses'
-import Test from './views/Test'
-import PageNotFound from './views/PageNotFound'
-import ExamEditor from './views/ExamEditor'
-import Profile from './views/Profile'
-import Exams from './views/Exams'
-import CourseExams from './views/CourseExams'
+import LandingPage from '@/pages/LandingPage'
+import Login from '@/pages/Login'
+import Register from '@/pages/Register'
+import ForgotPassword from '@/pages/ForgotPassword'
+import Home from '@/pages/Home'
+import Courses from '@/pages/Courses'
+import PageNotFound from '@/pages/PageNotFound'
+import ExamEditor from '@/pages/ExamEditor'
+import Profile from '@/pages/Profile'
+import Exams from '@/pages/Exams'
 
 Vue.use(Router)
 
@@ -41,7 +39,7 @@ const requireNoAuth = (to, from, next) => {
 
 const redirectLogout = (to, from, next) => {
 	store.dispatch('auth/logout')
-		.then(() => next('/login'))
+		.then(() => document.location.href = '/')
 }
 
 const router = new Router({
@@ -50,8 +48,8 @@ const router = new Router({
 	routes: [
 		{
 			path: '/',
-			name: 'home',
-			component: Home
+			name: 'landingPage',
+			component: LandingPage
 		},
 		{
 			path: '/login',
@@ -78,8 +76,14 @@ const router = new Router({
 		},
 		{
 			path: '/dashboard',
-			name: 'dashboard',
-			component: Dashboard,
+			name: 'home',
+			component: Home,
+			beforeEnter: requireAuth
+		},
+		{
+			path: '/dashboard/courses',
+			name: 'courses',
+			component: Courses,
 			beforeEnter: requireAuth
 		},
 		{
@@ -95,34 +99,22 @@ const router = new Router({
 			beforeEnter: requireAuth
 		},
 		{
-			path: '/dashboard/courses',
-			name: 'courses',
-			component: Courses,
-			beforeEnter: requireAuth
-		},
-		{
 			path: '/dashboard/exams',
 			name: 'exams',
 			component: Exams,
 			beforeEnter: requireAuth
 		},
 		{
-			path: '/dashboard/courses/:id',
-			name: 'courseExams',
-			component: CourseExams,
-			beforeEnter: requireAuth,
-			props: true
+			path: '/dashboard/exams/:id',
+			name: 'examsCourseId',
+			component: Exams,
+			beforeEnter: requireAuth
 		},
 		{
 			path: '/dashboard/profile',
 			name: 'profile',
 			component: Profile,
 			beforeEnter: requireAuth
-		},
-		{
-			path: '/test',
-			name: 'test',
-			component: Test
 		},
 		{
 			path: '*',

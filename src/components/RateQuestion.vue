@@ -20,10 +20,10 @@
 					<v-col
 						cols="12"
 					>
-						<star-rating 
+						<star-rating
 							v-model="rating"
 							active-color="#3577CC"
-							:star-size='15'
+							:star-size="15"
 							:star-points="circle_points"
 							:rounded-corners="true"
 							:padding="5"
@@ -38,7 +38,7 @@
 						cols="12"
 					>
 						<v-textarea
-							v-model = "temp_comment"
+							v-model="temp_comment"
 							auto-grow
 						/>
 					</v-col>
@@ -51,8 +51,8 @@
 			align="right"
 		>
 			<v-btn
-				@click="cancel"
 				class="ma-3"
+				@click="cancel"
 			>
 				Cancel
 			</v-btn>
@@ -70,73 +70,45 @@
 import { mapActions } from 'vuex'
 
 import LaTeXPreview from '@/components/LaTeXPreview'
-import Rating from "vue-star-rating"
-import JQuery from 'jquery'
-let $ = JQuery
+import Rating from 'vue-star-rating'
 
 export default {
 	name: 'CreateQuestionPanel',
-	props: {
-		'question' : {
-			type: String
-		},
-		'questionId' : {
-			type: Number
-		}
-	},
 	components: {
 		LaTeXPreview
+	},
+	props: {
+		'question': {
+			type: String
+		},
+		'questionId': {
+			type: Number
+		}
 	},
 	data: () => ({
 		rating: 1,
 		temp_comment: '',
 		error: '',
 		tab: null,
-		circle_points: [0,25, 2,35, 5,40, 10,45, 15,48, 
-			25,50, 35,48, 40,45, 45,40, 48,35, 
-			50,25, 48,15, 45,10, 40,5, 35,2, 
-			25,0, 15,2, 10,5, 5,10, 2,15],
+		circle_points: [0, 25, 2, 35, 5, 40, 10, 45, 15, 48,
+			25, 50, 35, 48, 40, 45, 45, 40, 48, 35,
+			50, 25, 48, 15, 45, 10, 40, 5, 35, 2,
+			25, 0, 15, 2, 10, 5, 5, 10, 2, 15]
 	}),
 	computed: {
 		getQuestion: function () {
-			return this.question;
+			return this.question
 		}
 	},
 	methods: {
 		rate: function () {
-			this.$emit('close-dialog');
+			this.$emit('close-dialog')
 		},
 		cancel: function () {
-			this.$emit('close-dialog');
+			this.$emit('close-dialog')
 		}
 	}
 }
-
-
-$(function(){
-
-  $('.tags input').on('focusout',function(){
-    var txt= this.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g,''); // allowed characters
-    if(txt) {
-      $(this).before('<span class="tag">'+ txt.toLowerCase() +'</span>');
-    }
-    this.value="";
-  }).on('keyup',function( e ){
-    // if: comma,enter (delimit more keyCodes with | pipe)
-    if(/(188|13|9)/.test(e.which)){ $(this).focusout();
-    }
-  });
-
-
-  $('.tags').on('click','.tag',function(){
-        if(confirm("Really delete this tag?")) $(this).remove();
-  });
-$('.tags').tagcloud({
-    tags: ['Quint', 'USS Indianapolis', 'Orca']
-});
-
-});
-
 </script>
 
 <style lang="scss" scoped>
@@ -175,65 +147,4 @@ $('.tags').tagcloud({
   width: 50%;
 	padding: 0px 20px;
 }
-
-	input.tags {
-	  border: none;
-	  box-shadow: none;
-	  width: auto;
-	  margin: 0;
-	  padding: 0;
-	  border-radius: 4px;
-	  color: #999;
-	  font-size: .9em;
-	  min-height:1.9em;
-	  display: inline-block;
-	  background: transparent;
-	}
-	input.tags:focus {
-	  outline:none;
-	  background: transparent;
-	}
-	.tags-bar{
-		-webkit-appearance: none;
-    width: 100%;
-    border: 1px solid #DBDBDB;
-		border-radius: 12px;
-    font-family: inherit;
-    padding: 7px;
-    height: 48px;
-    font-size: 16px;
-    font-weight: 500;
-    background-color: white;
-    color: #223254;
-  	transition: all .15s ease;
-	}
-
-	.tag {
-		position: relative;
-		display:inline-block;
-		border-radius: 4px;
-		background: red;
-		color: #fff;
-		margin: 0em 0.1em .1em .1em;
-		padding: .2em 1.3em .15em .45em;
-		transition: opacity 1s ease;
-	}
-
-					  .tag:after {
-					  position: absolute;
-					  display:block;
-					  top: .2em;
-					  right: 5px;
-					  content: "×";
-					  font-size: 1em;
-					  line-height: 1em;
-					  color: rgba(255,255,255,0.5);
-					  }
-
-					  .tag:hover{
-					   opacity: .8;
-					   cursor:pointer;
-					    transition: opacity 1s ease;
-					  }
-
 </style>

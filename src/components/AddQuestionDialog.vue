@@ -1,82 +1,95 @@
 <template>
-	<v-card
-		class="panel-card"
+	<v-dialog
+		v-model="dialog"
+		width="70%"
 	>
-		<v-card-text>
-			<v-container fluid>
-				<v-row justify="space-around">
-					<v-col cols="6">
-						<v-textarea
-							v-model="temp_question"
-							auto-grow
-							label="Make your question..."
-							:value="getQuestion"
-						/>
-						<br><br>
-						<v-combobox
-							:items="items"
-							:search-input.sync="search"
-							hide-selected
-							hint="Maximum of 5 tags"
-							label="Tags"
-							multiple
-							persistent-hint
-							small-chips
-						>
-							<template v-slot:no-data>
-								<v-list-item>
-									<v-list-item-content>
-										<v-list-item-title>
-											No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
-										</v-list-item-title>
-									</v-list-item-content>
-								</v-list-item>
-							</template>
-						</v-combobox>
-					</v-col>
-					<v-col cols="6">
-						<b>
-							Preview
-						</b>
-						<LaTeXPreview
-							:text="question"
-						/>
-					</v-col>
-				</v-row>
-			</v-container>
-		</v-card-text>
-		<v-col
-			cols="6"
-			class="px-6"
+		<template v-slot:activator="{ on }">
+			<v-btn
+				class="ma-2"
+				color="red lighten-2"
+				dark
+				v-on="on"
+			>
+				Add Question
+			</v-btn>
+		</template>
+		<v-card
+			class="panel-card"
 		>
-			<v-btn
-				color="secondary"
-				@click="generatePreview"
+			<v-card-text>
+				<v-container fluid>
+					<v-row justify="space-around">
+						<v-col cols="6">
+							<v-textarea
+								v-model="temp_question"
+								auto-grow
+								label="Make your question..."
+								:value="getQuestion"
+							/>
+							<br><br>
+							<v-combobox
+								:items="items"
+								:search-input.sync="search"
+								hide-selected
+								hint="Maximum of 5 tags"
+								label="Tags"
+								multiple
+								persistent-hint
+								small-chips
+							>
+								<template v-slot:no-data>
+									<v-list-item>
+										<v-list-item-content>
+											<v-list-item-title>
+												No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
+											</v-list-item-title>
+										</v-list-item-content>
+									</v-list-item>
+								</template>
+							</v-combobox>
+						</v-col>
+						<v-col cols="6">
+							<b>
+								Preview
+							</b>
+							<LaTeXPreview
+								:text="question"
+							/>
+						</v-col>
+					</v-row>
+				</v-container>
+			</v-card-text>
+			<v-col
+				cols="6"
+				class="px-6"
 			>
-				Generate Preview
-			</v-btn>
-			<span
-				style="width:5px; display: inline-block"
-			/>
-			<v-btn
-				color="primary"
-				@click="createNewQuestion"
-			>
-				Submit
-			</v-btn>
-		</v-col>
-	</v-card>
+				<v-btn
+					color="secondary"
+					@click="generatePreview"
+				>
+					Generate Preview
+				</v-btn>
+				<span
+					style="width:5px; display: inline-block"
+				/>
+				<v-btn
+					color="primary"
+					@click="createNewQuestion"
+				>
+					Submit
+				</v-btn>
+			</v-col>
+		</v-card>
+	</v-dialog>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 
 import LaTeXPreview from '@/components/LaTeXPreview'
-import JQuery from 'jquery'
-let $ = JQuery
 
 export default {
-	name: 'CreateQuestionPanel',
+	name: 'AddQuestionDialog',
 	components: {
 		LaTeXPreview
 	},
@@ -92,7 +105,8 @@ export default {
 		question: '',
 		temp_question: '',
 		error: '',
-		tab: null
+		tab: null,
+		dialog: false
 	}),
 	computed: {
 		getQuestion: function () {

@@ -22,8 +22,9 @@
 <script>
 import { mapActions } from 'vuex'
 
+import ExamEditorPanel from '@/pages/ExamEditor/Panel'
+
 import SideBar from '@/components/SideBar'
-import ExamEditorPanel from '@/components/exam-editor/ExamEditorPanel'
 import BaseContainer from '@/components/BaseContainer'
 
 export default {
@@ -36,9 +37,9 @@ export default {
 	data: () => ({}),
 	beforeMount: function () {
 		let examId = this.$route.params.id
-					if (examId) {
+		if (examId) {
 			this.getExamById({ examId })
-			} else {
+		} else {
 			let newExam = {
 				title: 'New Exam',
 				questions: [],

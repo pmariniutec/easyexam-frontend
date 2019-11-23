@@ -14,19 +14,19 @@
 			</v-col>
 			<BaseContainer>
 				<h1>Exams</h1>
-					<v-row class="exams-headers">
-						<v-col>Name</v-col>
-						<v-col>Questions</v-col>
-						<v-col>Last Modified</v-col>
-						<v-col>Date Created</v-col>
-					</v-row>
-					<div
-						class="exams-data"
-						v-for="data in listExams"
-						:key="data.id"
-					>
-						<ExamRowComponent :exam-info="data" />
-					</div>
+				<v-row class="exams-headers">
+					<v-col>Name</v-col>
+					<v-col>Questions</v-col>
+					<v-col>Last Modified</v-col>
+					<v-col>Date Created</v-col>
+				</v-row>
+				<div
+					v-for="data in exams"
+					:key="data.id"
+					class="exams-data"
+				>
+					<ExamRowComponent :exam-info="data" />
+				</div>
 			</BaseContainer>
 		</v-row>
 	</v-container>
@@ -35,12 +35,12 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex'
+import ExamRowComponent from '@/pages/Exams/ExamRowComponent'
 import SideBar from '@/components/SideBar'
-import ExamRowComponent from '@/components/view_exams/ExamRowComponent'
 import BaseContainer from '@/components/BaseContainer'
 
 export default {
-	name: 'ExamsView',
+	name: 'Exams',
 	components: {
 		ExamRowComponent,
 		SideBar,
@@ -53,17 +53,29 @@ export default {
 	},
 	computed: {
 		...mapGetters('exam', ['getExamList']),
-		listExams() {
-			return this.getExamList
+		...mapGetters('course', ['getCourseExams']),
+		exams: function () {
+			let courseId = this.$route.params.id
+			if (courseId) {
+				return this.getCourseExams
+			} else {
+				return this.getExamList
+			}
 		}
 	},
 	beforeMount () {
-		this.getExams()
+		let courseId = this.$route.params.id
+		if (courseId) {
+		  this.getCourseById({ courseId })
+		} else {
+		  this.getExams()
+		}
 	},
 	methods: {
 		...mapActions('exam', ['getExams']),
+		...mapActions('course', ['getCourseById']),
 		changeTab: function (href) {
-			this.$router.push({name: href})
+			this.$router.push({ name: href })
 		}
 	}
 }
@@ -96,7 +108,7 @@ export default {
     border-bottom-style: solid;
     border-bottom-width: 2px;
 	}
-  
+
 	.exams-data {
 	}
 </style>

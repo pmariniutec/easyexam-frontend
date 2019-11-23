@@ -12,42 +12,44 @@
 			<form>
 				<Input
 					title="First Name"
-					:id="first-name"
 					:data="getUserObj.firstName"
 				/>
 				<Input
 					title="Last Name"
-					:id="last-name"
 					:data="getUserObj.lastName"
 				/>
 				<div class="user-email-container">
-					<p class="user-email-header">Email</p>
-					<p class="user-email">{{ getUserObj.email }}</p>
+					<p class="user-email-header">
+						Email
+					</p>
+					<p class="user-email">
+						{{ getUserObj.email }}
+					</p>
 				</div>
 			</form>
 		</div>
-		<Button text="Save"/>
+		<Button text="Save" />
 	</div>
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	import Input from '@/components/Input'
-	import Button from '@/components/Button'
+import { mapGetters, mapActions } from 'vuex'
+import Input from '@/components/Input'
+import Button from '@/components/Button'
 
-	export default {
-		name: 'ProfilePanel',
-		components: {
-			Input,
-			Button
-		},
-		data: () => ({
-			user: {
-				firstName: 'firstName',
-				lastName: 'lastName',
-				email: 'email'
-			}
-		}),
+export default {
+	name: 'ProfilePanel',
+	components: {
+		Input,
+		Button
+	},
+	data: () => ({
+		user: {
+			firstName: 'firstName',
+			lastName: 'lastName',
+			email: 'email'
+		}
+	}),
 	    computed: {
 	        ...mapGetters('auth', ['getUser']),
 	        getUserObj () {
@@ -59,12 +61,12 @@
 	      },
 	    methods: {
 	        ...mapActions('auth', ['userDetail']),
-	        fetchUser: async function() {
+	        fetchUser: async function () {
 	            await this.userDetail()
 	        }
 	    }
 
-	}
+}
 </script>
 
 <style lang="scss" scoped>

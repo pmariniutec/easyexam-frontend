@@ -1,22 +1,27 @@
 <template>
-  <button class="btn first" @click="handleClick">{{text}}</button>
+	<button
+		class="btn first"
+		@click="handleClick"
+	>
+		{{ text }}
+	</button>
 </template>
 
 <script>
-  export default {
-    name: 'Button',
-    props: {
-      text: {
-        type: String,
-        required: true
-      }
-    },
-    methods: {
-      handleClick() {
+export default {
+	name: 'Button',
+	props: {
+		text: {
+			type: String,
+			required: true
+		}
+	},
+	methods: {
+		handleClick () {
     	   this.$emit('click')
-      }
-    }
-  }
+		}
+	}
+}
 </script>
 
 <style lang="scss" scoped>

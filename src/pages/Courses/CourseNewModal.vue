@@ -6,7 +6,10 @@
 			max-width="600px"
 		>
 			<template v-slot:activator="{ on }">
-				<Button text="New Course" v-on="on"/>
+				<Button
+					text="New Course"
+					v-on="on"
+				/>
 			</template>
 			<v-card>
 				<v-card-title>
@@ -49,17 +52,17 @@
 					>
 						Close
 					</v-btn>
-                    <router-link
-                        :to="{name: 'courses'}"
-                    >
-                        <v-btn
-                            color="blue darken-1"
-                            text
-                            @click="addCourse()"
-                        >
-                            Save
-                        </v-btn>
-                    </router-link>
+					<router-link
+						:to="{name: 'courses'}"
+					>
+						<v-btn
+							color="blue darken-1"
+							text
+							@click="addCourse()"
+						>
+							Save
+						</v-btn>
+					</router-link>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
@@ -67,35 +70,35 @@
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	import Button from '@/components/Button'
+import { mapActions } from 'vuex'
+import Button from '@/components/Button'
 
-	export default {
-		name: 'CourseNewModal',
-		components: {
-			Button
-		},
-		data: () => ({
-			dialog: false,
-			courseName: '',
-			courseCode: ''
-		}),
-		computed: {
-		},
-		methods: {
-			...mapActions('course', ['createCourse', 'getCourses']),
-			addCourse: async function (event) {
-				let payload = { name: this.courseName, code: this.courseCode }
-				this.dialog = false
-				await this.createCourse(payload)
+export default {
+	name: 'CourseNewModal',
+	components: {
+		Button
+	},
+	data: () => ({
+		dialog: false,
+		courseName: '',
+		courseCode: ''
+	}),
+	computed: {
+	},
+	methods: {
+		...mapActions('course', ['createCourse', 'getCourses']),
+		addCourse: async function (event) {
+			let payload = { name: this.courseName, code: this.courseCode }
+			this.dialog = false
+			await this.createCourse(payload)
 	            this.$emit('refresh')
-			},
-			toggleMessage () {
-				console.log('whaaat?')
-				this.showMessage = !this.showMessage
-			}
+		},
+		toggleMessage () {
+			console.log('whaaat?')
+			this.showMessage = !this.showMessage
 		}
 	}
+}
 </script>
 <style lang="scss">
 @import '~vue-context/dist/css/vue-context.css';
