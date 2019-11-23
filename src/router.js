@@ -37,11 +37,6 @@ const requireNoAuth = (to, from, next) => {
 		})
 }
 
-const redirectLogout = (to, from, next) => {
-	store.dispatch('auth/logout')
-		.then(() => document.location.href = '/')
-}
-
 const router = new Router({
 	mode: 'history',
 	base: process.env.BASE_URL,
@@ -66,7 +61,10 @@ const router = new Router({
 		{
 			path: '/logout',
 			name: 'logout',
-			beforeEnter: redirectLogout
+			redirect: to => {
+				store.dispatch('auth/logout');
+				return '/';
+			}
 		},
 		{
 			path: '/forgot-password',
