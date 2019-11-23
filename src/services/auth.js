@@ -5,10 +5,6 @@ const authService = {
 		return session.post('/auth/login/', { email, password })
 	},
 
-	logout () {
-		return session.post('/logout/', {})
-	},
-
 	createAccount (firstName, lastName, email, password, role) {
 		return session.post('/auth/register/', { firstName, lastName, email, password, role })
 	},

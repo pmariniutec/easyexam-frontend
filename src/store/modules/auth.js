@@ -52,9 +52,8 @@ const actions = {
 	},
 
 	logout ({ commit }) {
-		return authService.logout()
-			.then(() => commit(LOGOUT))
-			.finally(() => commit(REMOVE_TOKEN))
+		commit(LOGOUT)
+		commit(REMOVE_TOKEN)
 	},
 
 	checkAuthToken ({ commit }) {
