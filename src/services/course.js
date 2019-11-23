@@ -14,9 +14,9 @@ const courseService = {
 	addExamToCourse (courseId, examId) {
 		return session.post('/course/exam/add/', { courseId, examId })
 	},
-  getCourseById (courseId) {
-    return session.get(`/course/${courseId}`)
-  },
+	getCourseById (courseId) {
+		return session.get(`/course/${courseId}`)
+	}
 }
 
 export default courseService

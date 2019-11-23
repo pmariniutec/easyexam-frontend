@@ -106,7 +106,7 @@ export default {
 		temp_question: '',
 		error: '',
 		tab: null,
-    dialog: false
+		dialog: false
 	}),
 	computed: {
 		getQuestion: function () {

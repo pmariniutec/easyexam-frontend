@@ -13,19 +13,19 @@ import {
 const initialState = {
 	courses: [],
 	currentCourse: {
-    id: '',
-    name: '',
-    code: '',
-    exams: [],
-    created: '',
-    updated: ''
-  }
+		id: '',
+		name: '',
+		code: '',
+		exams: [],
+		created: '',
+		updated: ''
+	}
 }
 
 const getters = {
 	getCourseList: state => state.courses,
 	getCurrentCourse: state => state.currentCourse,
-  getCourseExams: state => state.currentCourse.exams,
+	getCourseExams: state => state.currentCourse.exams
 }
 
 const actions = {
@@ -61,7 +61,7 @@ const actions = {
 	},
 	getCourseById ({ commit }, { courseId }) {
 		return courseService.getCourseById(courseId)
-      .then(({ data }) => commit(SELECT_COURSE, data))
+			.then(({ data }) => commit(SELECT_COURSE, data))
 			.catch(error => {
 				console.log(error.response)
 			})

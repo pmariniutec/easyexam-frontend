@@ -53,27 +53,27 @@ export default {
 	},
 	computed: {
 		...mapGetters('exam', ['getExamList']),
-    ...mapGetters('course', ['getCourseExams']),
-    exams: function () {
-      let courseId = this.$route.params.id
-      if (courseId) { 
-        return this.getCourseExams
-      } else {
-        return this.getExamList
-      }
-    },
+		...mapGetters('course', ['getCourseExams']),
+		exams: function () {
+			let courseId = this.$route.params.id
+			if (courseId) {
+				return this.getCourseExams
+			} else {
+				return this.getExamList
+			}
+		}
 	},
 	beforeMount () {
-    let courseId = this.$route.params.id
-    if (courseId) {
+		let courseId = this.$route.params.id
+		if (courseId) {
 		  this.getCourseById({ courseId })
-    } else {
+		} else {
 		  this.getExams()
-    }
+		}
 	},
 	methods: {
 		...mapActions('exam', ['getExams']),
-    ...mapActions('course', ['getCourseById']),
+		...mapActions('course', ['getCourseById']),
 		changeTab: function (href) {
 			this.$router.push({ name: href })
 		}
