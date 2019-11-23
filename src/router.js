@@ -62,8 +62,14 @@ const router = new Router({
 			path: '/logout',
 			name: 'logout',
 			redirect: to => {
-				store.dispatch('auth/logout');
-				return '/';
+				store.dispatch('auth/logout')
+					.then(() => {
+						if (!store.getters['auth/isAuthenticated']) {
+							return '/';
+						} else {
+							return '';
+						}
+					})
 			}
 		},
 		{
