@@ -31,7 +31,7 @@
 
 <script>
 import SideBar from '@/components/SideBar'
-import HomePanel from '@/components/HomePanel'
+import HomePanel from '@/pages/Home/Panel'
 import RecentExams from '@/components/RecentExams'
 
 export default {

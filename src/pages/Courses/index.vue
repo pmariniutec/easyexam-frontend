@@ -33,8 +33,8 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import SideBar from '@/components/SideBar'
-import CourseCard from '@/components/course/CourseCard'
-import CourseNewModal from '@/components/course/CourseNewModal'
+import CourseCard from '@/pages/Courses/CourseCard'
+import CourseNewModal from '@/pages/Courses/CourseNewModal'
 import BaseContainer from '@/components/BaseContainer'
 
 export default {

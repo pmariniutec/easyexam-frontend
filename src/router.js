@@ -2,11 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store/store'
 
-import Home from '@/pages/Home'
+import LandingPage from '@/pages/LandingPage'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import ForgotPassword from '@/pages/ForgotPassword'
-import Dashboard from '@/pages/Dashboard'
+import Home from '@/pages/Home'
 import Courses from '@/pages/Courses'
 import PageNotFound from '@/pages/PageNotFound'
 import ExamEditor from '@/pages/ExamEditor'
@@ -48,8 +48,8 @@ const router = new Router({
 	routes: [
 		{
 			path: '/',
-			name: 'home',
-			component: Home
+			name: 'landingPage',
+			component: LandingPage
 		},
 		{
 			path: '/login',
@@ -76,8 +76,8 @@ const router = new Router({
 		},
 		{
 			path: '/dashboard',
-			name: 'dashboard',
-			component: Dashboard,
+			name: 'home',
+			component: Home,
 			beforeEnter: requireAuth
 		},
     {
