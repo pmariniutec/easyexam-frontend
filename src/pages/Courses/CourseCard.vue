@@ -1,11 +1,13 @@
 <template>
+	<div class="course-card">
 	<v-card
 		:style="bgc"
-		class="course-card my-2"
+		class="course-card"
 		outlined
 	>
 		<v-app-bar
 			class="course-card-modal"
+			style="box-shadow: unset;"
 		>
 			<v-toolbar-title class="course-card-title">
 				{{ courseInfo.name }} : {{ courseInfo.code }}
@@ -38,16 +40,18 @@
 		<v-card-actions>
 			<v-btn
 				text
-				elevation="5"
 				block
-				color="deep-purple accent-4"
+				color="black accent-4"
 				@click="viewCourse($event, courseInfo)"
+				class="button"
 			>
 				View
 			</v-btn>
 		</v-card-actions>
 	</v-card>
+</div>
 </template>
+
 <script>
 import { mapActions } from 'vuex'
 
@@ -85,18 +89,27 @@ export default {
 
 <style lang="scss">
 @import '~vue-context/dist/css/vue-context.css';
-.course-card{
-    width: 24vw;
-    max-width: 200px;
-}
-.course-card-modal {
+	.course-card{
+	  width: 24vw;
+	  max-width: 200px;
+		display: inline-grid;
+		margin: 10px;
+	}
+
+	.course-card-modal {
     height: 12vw !important;
     max-height: 120px;
-}
-.course-card-title {
+	}
+
+	.course-card-title {
     word-wrap: break-word;
-    white-space: break-spaces;
+    white-space: inherit;
     font-family: Helvetica;
     font-size: 12pt;
-}
+	}
+
+	.button {
+
+	}
+
 </style>
