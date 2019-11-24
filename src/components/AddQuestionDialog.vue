@@ -213,21 +213,21 @@ export default {
 		transition: opacity 1s ease;
 	}
 
-					  .tag:after {
-					  position: absolute;
-					  display:block;
-					  top: .2em;
-					  right: 5px;
-					  content: "×";
-					  font-size: 1em;
-					  line-height: 1em;
-					  color: rgba(255,255,255,0.5);
-					  }
+	.tag:after {
+		position: absolute;
+		display:block;
+		top: .2em;
+		right: 5px;
+		content: "×";
+		font-size: 1em;
+		line-height: 1em;
+		color: rgba(255,255,255,0.5);
+		}
 
-					  .tag:hover{
-					   opacity: .8;
-					   cursor:pointer;
-					    transition: opacity 1s ease;
-					  }
+	.tag:hover{
+	 opacity: .8;
+	 cursor:pointer;
+	  transition: opacity 1s ease;
+	}
 
 </style>
