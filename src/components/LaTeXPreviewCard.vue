@@ -1,8 +1,5 @@
 <template>
-	<v-card
-		:style="customStyle"
-	>
-		<v-container>
+	<div class="card-container">
 			<LaTeXPreview
 				:text="getText"
 				:class="getMode === 'latex'? 'show' : 'hidden'"
@@ -14,14 +11,13 @@
 				:class="getMode === 'latex' ? 'hidden' : 'show'"
 				:value="getText"
 			/>
-		</v-container>
 		<v-btn
 			text
 			@click="toggle"
 		>
 			{{ getMode === 'txt' ? 'Done' : 'Edit' }}
 		</v-btn>
-	</v-card>
+	</div>
 </template>
 
 <script>
@@ -74,8 +70,22 @@ export default {
 }
 </script>
 <style>
-.show{
-display: show}
+	.card-container {
+		width: 100%;
+		padding: 5px;
+	}
+
+	.card-container:hover {
+		border: #FFE3AD solid;
+    border-radius: 6px;
+		cursor: grab;
+	}
+
+	.show {
+		display: show;
+		width: 100%;
+	}
+
 .hidden{
 	display: none
 }

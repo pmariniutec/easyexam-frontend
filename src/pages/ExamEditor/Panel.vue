@@ -1,192 +1,134 @@
 <template>
-	<v-card
-		class="panel-card"
-	>
-		<v-card-title
-			primary-title
-		>
-			<v-container>
-				<v-row>
-					<v-col cols="6">
-						<v-text-field
-							v-model="exam.title"
-							label="Exam Title"
-							append-icon="mdi-pencil"
-							solo
-						/>
-					</v-col>
-					<v-col
-						cols="6"
-						align="right"
+	<div class="panel-card">
+			<div class="editor-exam">
+				<input class="editor-title" value="New Exam"/>
+				<div class="questions">
+					<draggable
+						v-model="questionList"
+						group="people"
+						@start="drag=true"
+						@end="drag=false"
 					>
-						<AddQuestionDialog />
-						<v-btn
-							color="secondary"
-							class="ma-2"
-							@click="previewExam()"
+						<div
+							v-for="item in questionList"
+							:key="item.id"
 						>
-							Preview
-						</v-btn>
-						<v-btn
-							color="primary"
-							class="ma-2"
-							@click="saveExam()"
-						>
-							Save
-						</v-btn>
-					</v-col>
-				</v-row>
-			</v-container>
-		</v-card-title>
-		<v-card-text>
-			<v-container>
-				<v-row>
-					<v-col>
-						<v-text-field
-							v-model="user.fullName"
-							label="Teacher's name"
-							disabled
-						/>
-					</v-col>
-					<v-col>
-						<v-autocomplete
-							ref="course"
-							v-model="course"
-							:items="listCourses"
-							label="Course"
-							placeholder="Select..."
-						/>
-					</v-col>
-				</v-row>
-			</v-container>
-			<v-container fluid>
-				<v-row justify="space-around">
-					<v-col cols="6">
-						<b>
-							Preview
-						</b>
-						<draggable
-							v-model="questionList"
-							group="people"
-							@start="drag=true"
-							@end="drag=false"
-						>
-							<v-row
-								v-for="item in questionList"
-								:key="item.id"
-								cols="6"
-							>
-								<v-col>
-									<LaTeXPreviewCard
-										:id="item.id"
-										custom-style="width: 90%;"
-										:text.sync="item.tex"
-										:mode="item.mode"
-										@edited="changeQuestion"
+							<LaTeXPreviewCard
+								:id="item.id"
+								:text.sync="item.tex"
+								:mode="item.mode"
+								@edited="changeQuestion"
+							/>
+						</div>
+					</draggable>
+				</div>
+				<div class="suggested-questions-container">
+					<b>Suggested questions</b>
+					<AddQuestionDialog />
+					<div
+						class="suggested-questions"
+						v-for="item in suggestedList"
+						:key="item.id"
+					>
+							<div class="suggested-question-card">
+								<div class="icons">
+									<v-btn icon>
+										<v-icon
+											@click="acceptSuggestion(item)"
+										>
+											mdi-menu-left
+										</v-icon>
+									</v-btn>
+									<v-dialog
+										v-model="item.dialog"
+										width="70%"
+										persistent
+									>
+										<template v-slot:activator="{on}">
+											<v-btn
+												icon
+												v-on="on"
+											>
+												<v-icon>
+													mdi-heart
+												</v-icon>
+											</v-btn>
+										</template>
+										<RateQuestion
+											:id="item.id"
+											:question="item.tex"
+											@close-dialog="closeDialog(item);"
+										/>
+									</v-dialog>
+								</div>
+								<v-col cols="10">
+									<LaTeXPreview
+										:text="item.tex"
 									/>
 								</v-col>
-							</v-row>
-						</draggable>
-					</v-col>
-					<v-col cols="6">
-						<b>
-							Suggested questions
-						</b>
-						<v-container>
-							<v-row fluid>
-								<v-combobox
-									:items="items"
-									:search-input.sync="search"
-									hide-selected
-									hint="Maximum of 5 tags"
-									label="Add some tags for a more accurate search..."
-									multiple
-									persistent-hint
-									small-chips
-								>
-									<template v-slot:no-data>
-										<v-list-item>
-											<v-list-item-content>
-												<v-list-item-title>
-													No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
-												</v-list-item-title>
-											</v-list-item-content>
-										</v-list-item>
-									</template>
-								</v-combobox>
-							</v-row>
-
-							<v-row>
-								<v-container>
-									<v-row
-										v-for="item in suggestedList"
-										:key="item.id"
-										no-gutters
-									>
-										<v-col>
-											<v-card>
-												<v-container>
-													<v-row>
-														<v-col
-															cols="2"
-														>
-															<v-btn icon>
-																<v-icon
-																	@click="acceptSuggestion(item)"
-																>
-																	mdi-menu-left
-																</v-icon>
-															</v-btn>
-															<v-dialog
-																v-model="item.dialog"
-																width="70%"
-																persistent
-															>
-																<template v-slot:activator="{on}">
-																	<v-btn
-																		icon
-																		v-on="on"
-																	>
-																		<v-icon>
-																			mdi-heart
-																		</v-icon>
-																	</v-btn>
-																</template>
-																<RateQuestion
-																	:id="item.id"
-																	:question="item.tex"
-																	@close-dialog="closeDialog(item);"
-																/>
-															</v-dialog>
-														</v-col>
-														<v-col cols="10">
-															<LaTeXPreview
-																:text="item.tex"
-															/>
-														</v-col>
-													</v-row>
-												</v-container>
-											</v-card>
-										</v-col>
-									</v-row>
-								</v-container>
-							</v-row>
-						</v-container>
-					</v-col>
-				</v-row>
-			</v-container>
-		</v-card-text>
-	</v-card>
+							</div>
+					</div>
+				</div>
+			</div>
+			<div class="exam-data-container">
+				<p class="label-data">Teacher's Name</p>
+				<input
+					class="input-data"
+					id="fullname"
+					v-model="user.fullName"
+					disabled
+				/>
+				<p class="label-data">Course</p>
+				<v-autocomplete
+					ref="course"
+					v-model="course"
+					:items="listCourses"
+					placeholder="Select..."
+					style="margin: 0; padding: 0"
+				/>
+				<p class="label-data">Keywords</p>
+				<v-combobox
+					:items="items"
+					:search-input.sync="search"
+					hide-selected
+					hint="Maximum of 5 tags"
+					label="Add some tags for a more accurate search..."
+					style="margin: 0; padding: 0"
+					multiple
+					persistent-hint
+					small-chips
+				>
+					<v-list-item>
+						<v-list-item-content>
+							<v-list-item-title>
+								No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
+							</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
+				</v-combobox>
+				<Button
+					text="Preview"
+					@click="previewExam()"
+					style="position: fixed;bottom: 30px;"
+				/>
+				<Button
+					text="Save"
+					@click="saveExam()"
+					style="position: fixed;bottom: 30px;right: 40px"
+				/>
+			</div>
+	</div>
 </template>
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
-
 import draggable from 'vuedraggable'
+
 import AddQuestionDialog from '@/components/AddQuestionDialog'
 import LaTeXPreviewCard from '@/components/LaTeXPreviewCard'
 import LaTeXPreview from '@/components/LaTeXPreview'
 import RateQuestion from '@/components/RateQuestion'
+import Button from '@/components/Button'
 
 export default {
 	name: 'ExamEditorPanel',
@@ -195,7 +137,8 @@ export default {
 		AddQuestionDialog,
 		LaTeXPreviewCard,
 		LaTeXPreview,
-	  RateQuestion
+	  RateQuestion,
+		Button
 	},
 	data: () => ({
 		select: ['add-tags-with', 'enter', 'tab', 'paste'],
@@ -347,9 +290,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.panel-card {
-  min-height: 96vh;
-}
+	.panel-card {
+	  min-height: 96vh;
+		background-color: unset;
+		float: right;
+		width: 100%;
+	}
 
 .tag-input span.chip {
   background-color: #1976d2;
@@ -380,4 +326,75 @@ export default {
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
 }
+	.editor-exam {
+		height: 100%;
+		width: 68%;
+		position: fixed;
+    padding: 25px 0 0 0;
+	}
+
+	.questions {
+		float: left;
+		margin: 20px 10px 20px 0;
+		font-family: "Helvetica";
+	}
+
+	.suggested-questions-container {
+		float: right;
+		width: 35%;
+	}
+
+	.suggested-questions {
+	}
+
+	.exam-data-container {
+		height: 100%;
+		width: 25%;
+		background-color: white;
+		right: 0;
+		position: fixed;
+		padding: 50px 40px 0 40px;
+	}
+
+	.input-data {
+		margin: 0 0 15px 0;
+	}
+
+	.input-data:focus {
+		outline: none;
+	}
+
+	.label-data {
+		color: #23246E;
+		font-weight: 400;
+		margin: 0;
+	}
+
+	.editor-title {
+		width: 100%;
+		color: #23246E;
+		font-family: "Helvetica";
+    font-size: 20px;
+    font-weight: bold;
+	}
+
+	.editor-title:focus {
+		outline: none;
+	}
+
+	.suggested-question-card {
+		background-color: white;
+		border-radius: 20px;
+		margin: 10px;
+		padding: 10px;
+		box-shadow: 3px 5px 20px 0px rgba(156, 161, 250, 0.16);
+	}
+
+	.suggested-question-card:hover {
+		box-shadow: 3px 5px 20px 0px rgba(150, 150, 150, 0.40);
+	}
+
+	.icons {
+		float: left;
+	}
 </style>

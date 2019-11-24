@@ -5,16 +5,16 @@
 		class="pa-0"
 	>
 		<v-row no-gutters>
-			<v-col
-				class="sidebar-container"
-			>
-				<SideBar
-					@change-tab-event="changeTab"
-				/>
-			</v-col>
-			<BaseContainer>
+			<div class="go-back-container">
+				<router-link
+					:to="{name: 'courses'}"
+				>
+					<IconBack />
+				</router-link>
+			</div>
+			<div class="exam-editor-container">
 				<ExamEditorPanel />
-			</BaseContainer>
+			</div>
 		</v-row>
 	</v-container>
 </template>
@@ -23,14 +23,15 @@
 import { mapActions } from 'vuex'
 
 import ExamEditorPanel from '@/pages/ExamEditor/Panel'
-
 import SideBar from '@/components/SideBar'
+import IconBack from '@/components/icons/IconBack'
 import BaseContainer from '@/components/BaseContainer'
 
 export default {
 	name: 'ExamEditor',
 	components: {
 		SideBar,
+		IconBack,
 		ExamEditorPanel,
 		BaseContainer
 	},
@@ -58,16 +59,15 @@ export default {
 </script>
 
 <style scoped>
-.sidebar-container {
-  max-width: 180px;
-}
 	.exam-editor-container {
-		margin: 55px 8% 0 0;
-		width: 78%;
+		width: 93%;
 		height: 67%;
-		background-color: #FFFFFF;
-		padding: 40px 50px;
-		border-radius: 14px;
-		box-shadow: 3px 5px 20px 0px rgba(156, 161, 250, 0.16);
+	}
+
+	.go-back-container {
+		height: 100%;
+		width: 5%;
+		padding: 25px 0 0 10px;
+		margin: 0 20px 0 0;
 	}
 </style>
