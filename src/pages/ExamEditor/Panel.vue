@@ -92,7 +92,7 @@
 					:search-input.sync="search"
 					hide-selected
 					hint="Maximum of 5 tags"
-					label="Add some tags for a more accurate search..."
+					placeholder="Add some tags for a more accurate search..."
 					style="margin: 0; padding: 0"
 					multiple
 					persistent-hint
