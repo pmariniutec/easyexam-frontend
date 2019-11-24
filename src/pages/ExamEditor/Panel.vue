@@ -24,7 +24,7 @@
 			</div>
 			<div class="suggested-questions-container">
 				<b>Suggested questions</b> </br>
-				<AddQuestionDialog />
+				<AddQuestionDialog @submit-question="addLocalQuestion" />
 				<div
 					class="suggested-questions"
 					v-for="item in suggestedList"
@@ -55,7 +55,7 @@
 								<RateQuestion
 									:id="item.id"
 									:question="item.tex"
-									@close-dialog="closeDialog(item);"
+									
 								/>
 							</v-dialog>
 						</div>
@@ -273,8 +273,8 @@ export default {
 			})
 			console.log(this.questionList)
 		},
-		closeDialog: function () {
-			this.dialog = false
+		addLocalQuestion: function (localQuestion) {
+           this.questionList.push(localQuestion) 
 		}
 	},
 	watch: {
