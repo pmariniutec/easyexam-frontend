@@ -1,122 +1,120 @@
 <template>
 	<div class="panel-card">
-			<div class="editor-exam">
-				<input class="editor-title" value="New Exam"/>
-				<div class="questions">
-					<draggable
-						v-model="questionList"
-						group="people"
-						@start="drag=true"
-						@end="drag=false"
-					>
-						<div
-							v-for="item in questionList"
-							:key="item.id"
-						>
-							<LaTeXPreviewCard
-								:id="item.id"
-								:text.sync="item.tex"
-								:mode="item.mode"
-								@edited="changeQuestion"
-							/>
-						</div>
-					</draggable>
-				</div>
-				<div class="suggested-questions-container">
-					<b>Suggested questions</b>
-					<AddQuestionDialog />
+		<div class="editor-exam">
+			<input class="editor-title" value="New Exam"/>
+			<div class="questions">
+				<draggable
+					v-model="questionList"
+					group="people"
+					@start="drag=true"
+					@end="drag=false"
+				>
 					<div
-						class="suggested-questions"
-						v-for="item in suggestedList"
+						v-for="item in questionList"
 						:key="item.id"
 					>
-							<div class="suggested-question-card">
-								<div class="icons">
-									<v-btn icon>
-										<v-icon
-											@click="acceptSuggestion(item)"
-										>
-											mdi-menu-left
-										</v-icon>
-									</v-btn>
-									<v-dialog
-										v-model="item.dialog"
-										width="70%"
-										persistent
+						<LaTeXPreviewCard
+							:id="item.id"
+							:text.sync="item.tex"
+							:mode="item.mode"
+							@edited="changeQuestion"
+						/>
+					</div>
+				</draggable>
+			</div>
+			<div class="suggested-questions-container">
+				<b>Suggested questions</b> </br>
+				<AddQuestionDialog />
+				<div
+					class="suggested-questions"
+					v-for="item in suggestedList"
+					:key="item.id"
+				>
+					<div class="suggested-question-card">
+						<div class="icons">
+							<v-btn icon>
+								<v-icon
+									@click="acceptSuggestion(item)"
+								>
+									mdi-menu-left
+								</v-icon>
+							</v-btn>
+							<v-dialog
+								v-model="item.dialog"
+								width="70%"
+								persistent
+							>
+								<template v-slot:activator="{on}">
+									<v-btn
+										icon
+										v-on="on"
 									>
-										<template v-slot:activator="{on}">
-											<v-btn
-												icon
-												v-on="on"
-											>
-												<v-icon>
-													mdi-heart
-												</v-icon>
-											</v-btn>
-										</template>
-										<RateQuestion
-											:id="item.id"
-											:question="item.tex"
-											@close-dialog="closeDialog(item);"
-										/>
-									</v-dialog>
-								</div>
-								<v-col cols="10">
-									<LaTeXPreview
-										:text="item.tex"
-									/>
-								</v-col>
-							</div>
+										<v-icon>mdi-heart</v-icon>
+									</v-btn>
+								</template>
+								<RateQuestion
+									:id="item.id"
+									:question="item.tex"
+									@close-dialog="closeDialog(item);"
+								/>
+							</v-dialog>
+						</div>
+						<v-col cols="10">
+							<LaTeXPreview
+								:text="item.tex"
+							/>
+						</v-col>
 					</div>
 				</div>
 			</div>
-			<div class="exam-data-container">
-				<p class="label-data">Teacher's Name</p>
-				<input
-					class="input-data"
-					id="fullname"
-					v-model="user.fullName"
-					disabled
-				/>
-				<p class="label-data">Course</p>
-				<v-autocomplete
-					ref="course"
-					v-model="course"
-					:items="listCourses"
-					placeholder="Select..."
-					style="margin: 0; padding: 0"
-				/>
-				<p class="label-data">Keywords</p>
-				<v-combobox
-					:items="items"
-					:search-input.sync="search"
-					hide-selected
-					hint="Maximum of 5 tags"
-					placeholder="Add some tags for a more accurate search..."
-					style="margin: 0; padding: 0"
-					multiple
-					persistent-hint
-					small-chips
-				>
-					<v-list-item>
-						<v-list-item-content>
-							<v-list-item-title>
-								No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
-							</v-list-item-title>
-						</v-list-item-content>
-					</v-list-item>
-				</v-combobox>
-				<Button
-					text="Preview"
-					@click="previewExam()"
-					style="position: fixed;bottom: 30px;"
-				/>
-				<Button
-					text="Save"
-					@click="saveExam()"
-					style="position: fixed;bottom: 30px;right: 40px"
-				/>
-			</div>
+		</div>
+		<div class="exam-data-container">
+			<p class="label-data">Teacher's Name</p>
+			<input
+				class="input-data"
+				id="fullname"
+				v-model="user.fullName"
+				disabled
+			/>
+			<p class="label-data">Course</p>
+			<v-autocomplete
+				ref="course"
+				v-model="course"
+				:items="listCourses"
+				placeholder="Select..."
+				style="margin: 0; padding: 0"
+			/>
+			<p class="label-data">Keywords</p>
+			<v-combobox
+				:items="items"
+				:search-input.sync="search"
+				hide-selected
+				hint="Maximum of 5 tags"
+				placeholder="Add some tags for a more accurate search..."
+				style="margin: 0; padding: 0"
+				multiple
+				persistent-hint
+				small-chips
+			>
+				<v-list-item>
+					<v-list-item-content>
+						<v-list-item-title>
+							No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
+						</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+			</v-combobox>
+			<Button
+				text="Preview"
+				@click="previewExam()"
+				style="position: fixed;bottom: 30px;"
+			/>
+			<Button
+				text="Save"
+				@click="saveExam()"
+				style="position: fixed;bottom: 30px;right: 40px"
+			/>
+		</div>
 	</div>
 </template>
 
@@ -330,7 +328,7 @@ export default {
 		height: 100%;
 		width: 68%;
 		position: fixed;
-    padding: 25px 0 0 0;
+    padding: 70px 0 0 0;
 	}
 
 	.questions {
