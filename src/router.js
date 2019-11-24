@@ -12,6 +12,7 @@ import PageNotFound from '@/pages/PageNotFound'
 import ExamEditor from '@/pages/ExamEditor'
 import Profile from '@/pages/Profile'
 import Exams from '@/pages/Exams'
+import Contribute from '@/pages/Contribute'
 
 Vue.use(Router)
 
@@ -114,6 +115,12 @@ const router = new Router({
 			component: Profile,
 			beforeEnter: requireAuth
 		},
+        {
+            path: '/dashboard/contribute',
+            name: 'contribute',
+            component: Contribute,
+            beforeEnter: requireAuth
+        },
 		{
 			path: '*',
 			name: 'pageNotFound',
