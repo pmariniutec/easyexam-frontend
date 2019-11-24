@@ -1,7 +1,7 @@
 <template>
 	<v-card
 		max-height="100"
-		class="mx-auto"
+		class="mx-auto exam-row"
 	>
 		<vue-context
 			ref="menu"
@@ -142,5 +142,9 @@ export default {
     justify-content: center;
     align-items: center;
 
+}
+.exam-row {
+	box-shadow: unset;
+	border: unset;
 }
 </style>
