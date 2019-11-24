@@ -92,7 +92,8 @@ export default {
             return this.question.tex
          },
 		createNewQuestion: async function () {
-			await this.$emit('submit-question', this.question)
+            console.log(this.temp_tex)
+			await this.$emit('submit-question', {tex: this.temp_tex, mode: this.question.mode})
             this.question.tex = ''
             this.temp_tex = ''
             this.dialog = false
