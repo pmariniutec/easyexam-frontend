@@ -53,17 +53,15 @@
 				</div>
 
 				<div style="position: absolute; bottom: 0; width: 100%; text-align: center;">
-					<!--
-					<v-chip
-						color="secondary"
-					>
-						{{ points }}
-					</v-chip>
-					<span>
-						points
-					</span>
-					-->
 					<v-list>
+                        <v-list-item>
+                            <v-chip
+                                color="secondary"
+                                @click="$emit('change-tab-evemt', 'credits')"
+                            >
+                                {{ getUserObj.points }}
+                            </v-chip>
+                        </v-list-item>
 						<v-list-item
 							@click="$emit('change-tab-event', 'profile')"
 						>
@@ -90,6 +88,9 @@
 </template>
 
 <script>
+
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
 	name: 'SideBar',
 	data: () => ({
@@ -109,12 +110,30 @@ export default {
 				icon: 'mdi-pencil-plus-outline',
 				name: 'examEditor',
 				color: 'primary'
-			}
+			},
+            {
+                title: 'Contribute',
+                icon: 'mdi-hand-heart',
+                name: 'contribute'
+            }
 		],
-		mini: true,
-		points: 30
+		mini: true
 	}),
-	computed: {}
+    beforeMount() {
+        this.fetchUser()
+    },
+    computed: {
+        ...mapGetters('auth', ['getUser']),
+        getUserObj () {
+            return this.getUser
+        }
+    },
+    methods: {
+        ...mapActions('auth', ['userDetail']),
+        fetchUser: async function () {
+            await this.userDetail
+        }
+     }
 }
 </script>
 
