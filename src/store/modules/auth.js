@@ -64,6 +64,7 @@ const actions = {
 		}
 		if (token === null || token.expiration < now) {
 			commit(REMOVE_TOKEN)
+			commit(LOGOUT)
 		}
 	},
 	createAccount ({ commit }, { firstName, lastName, email, password, role }) {
