@@ -230,22 +230,29 @@ export default {
 		  this.createExamAction(newExam)
 		},
 		previewExam: function () {
+      let courseData = this.getCourseList.filter( item => {
+        return item.id == this.course
+      })[0]
+
 			let latexString = '\\documentclass{article}\n' +
          '\\title{' + this.getCurrentExam.title + '}\n' +
          '\\author{' + this.getUser.fullName + '}\n' +
-         '\\begin{document}\n' +
-         '\\maketitle\n' +
-         '\\begin{center}\n' +
-         this.course.name + ' - ' + this.course.code + '\n' +
-         '\\end{center}\n'
+         '\\begin{document}\n'
+
+      if (courseData) {
+         latexString += '\\maketitle\n' +
+          '\\begin{center}\n' +
+          courseData.name + ' - ' + courseData.code + '\n' +
+          '\\end{center}\n'
+      }
 
 			if (this.getCurrentExam.questions.length > 0) {
 				latexString += '\\begin{enumerate}\n'
 			}
 
 			for (var i = 0; i < this.getCurrentExam.questions.length; ++i) {
-				latexString += '\\item ' + this.getCurrentExam.questions[i].title + '\n\n' +
-          this.getCurrentExam.questions[i].content + '\n'
+				latexString += '\\item Question ' + i + '\n\n' +
+          this.getCurrentExam.questions[i].tex + '\n'
 			}
 
 			if (this.getCurrentExam.questions.length > 0) {
