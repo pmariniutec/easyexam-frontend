@@ -12,10 +12,12 @@
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
-			<BaseContainer>
-				<h1>Courses</h1>
-				<div />
-			</BaseContainer>
+			<ContributeContainer>
+				<ContributeCard />
+			</ContributeContainer>
+			<div class="add-menu-container">
+				<AddMenu />
+			</div>
 		</v-row>
 	</v-container>
 </template>
@@ -23,13 +25,17 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import SideBar from '@/components/SideBar'
-import BaseContainer from '@/components/BaseContainer'
+import ContributeContainer from '@/components/ContributeContainer'
+import ContributeCard from '@/pages/Contribute/ContributeCard'
+import AddMenu from '@/components/AddMenu'
 
 export default {
 	name: 'Courses',
 	components: {
 		SideBar,
-		BaseContainer
+		ContributeContainer,
+		ContributeCard,
+		AddMenu
 	},
 	data: () => ({
 		debugData: true
@@ -57,9 +63,17 @@ export default {
 </script>
 
 <style scoped>
-.sidebar-container {
-  max-width: 180px;
-}
+	.add-menu-container {
+		position: fixed;
+		bottom: 26px;
+		right: 24px;
+		width: 7%;
+		height: 11%;
+	}
+
+	.sidebar-container {
+	  max-width: 180px;
+	}
 
 	h1 {
 		font-family: Helvetica;
