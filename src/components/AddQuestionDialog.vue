@@ -21,39 +21,19 @@
 					<v-row justify="space-around">
 						<v-col cols="6">
 							<v-textarea
-								v-model="temp_question"
+								v-model="temp_tex"
 								auto-grow
 								label="Make your question..."
 								:value="getQuestion"
 							/>
 							<br><br>
-							<v-combobox
-								:items="items"
-								:search-input.sync="search"
-								hide-selected
-								hint="Maximum of 5 tags"
-								label="Tags"
-								multiple
-								persistent-hint
-								small-chips
-							>
-								<template v-slot:no-data>
-									<v-list-item>
-										<v-list-item-content>
-											<v-list-item-title>
-												No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
-											</v-list-item-title>
-										</v-list-item-content>
-									</v-list-item>
-								</template>
-							</v-combobox>
 						</v-col>
 						<v-col cols="6">
 							<b>
 								Preview
 							</b>
 							<LaTeXPreview
-								:text="question"
+								:text="question.tex"
 							/>
 						</v-col>
 					</v-row>
@@ -94,39 +74,32 @@ export default {
 		LaTeXPreview
 	},
 	data: () => ({
-		exam: {
-			  title: '',
-			  questions: '',
-			  keywords: ''
-		},
-		select: ['add-tags-with', 'enter', 'tab', 'paste'],
-		items: [],
-		search: '',
-		question: '',
-		temp_question: '',
-		error: '',
-		tab: null,
+        temp_tex: '',
+        question: {
+            tex: '',
+            mode: 'latex'
+        },
 		dialog: false
 	}),
 	computed: {
-		getQuestion: function () {
-			return this.question
-		}
+
 	},
 	methods: {
-		...mapActions('question', ['createQuestion']),
-
-		createExam: function () {
-			this.createExamAction(this.exam).then(() => ({}))
-			  .catch(() => {
-					this.error = 'Invalid Credentials'
-				})
-		},
 		generatePreview: function () {
-			this.question = this.temp_question
+			this.question.tex = this.temp_tex
 		},
-		createNewQuestion: function () {
-			this.$emit('close-dialog')
+        getQuestion: function () {
+            return this.question.tex
+         },
+		createNewQuestion: async function () {
+            console.log(this.temp_tex)
+			await this.$emit('submit-question', {tex: this.temp_tex, mode: this.question.mode})
+            this.question.tex = ''
+            this.temp_tex = ''
+            this.dialog = false
+		},
+		closeDialog: function () {
+			this.dialog = false
 		}
 	}
 }

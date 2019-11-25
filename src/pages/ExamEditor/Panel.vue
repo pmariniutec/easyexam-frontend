@@ -4,13 +4,12 @@
 			<input class="editor-title" value="New Exam"/>
 			<div class="questions">
 				<draggable
-					v-model="questionList"
 					group="people"
 					@start="drag=true"
 					@end="drag=false"
 				>
 					<div
-						v-for="item in questionList"
+						v-for="item in listQuestions"
 						:key="item.id"
 					>
 						<LaTeXPreviewCard
@@ -24,7 +23,7 @@
 			</div>
 			<div class="suggested-questions-container">
 				<b>Suggested questions</b> </br>
-				<AddQuestionDialog />
+				<AddQuestionDialog @submit-question="addLocalQuestion" />
 				<div
 					class="suggested-questions"
 					v-for="item in suggestedList"
@@ -58,7 +57,7 @@
 			<input
 				class="input-data"
 				id="fullname"
-				v-model="user.fullName"
+				v-model="getUser.fullName"
 				disabled
 			/>
 			<p class="label-data">Course</p>
@@ -70,6 +69,7 @@
 				style="margin: 0; padding: 0"
 			/>
 			<p class="label-data">Keywords</p>
+
 			<v-combobox
 				:items="items"
 				:search-input.sync="search"
@@ -89,6 +89,7 @@
 					</v-list-item-content>
 				</v-list-item>
 			</v-combobox>
+
 			<Button
 				text="Preview"
 				@click="previewExam()"
@@ -104,7 +105,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
+import { mapActions,  mapGetters } from 'vuex'
 import draggable from 'vuedraggable'
 
 import AddQuestionDialog from '@/components/AddQuestionDialog'
@@ -120,38 +121,20 @@ export default {
 		AddQuestionDialog,
 		LaTeXPreviewCard,
 		LaTeXPreview,
-	  RateQuestion,
+	    RateQuestion,
 		Button
 	},
 	data: () => ({
 		select: ['add-tags-with', 'enter', 'tab', 'paste'],
 		items: [],
 		search: '', // sync search
-		suggestedList: [
+		suggestedList: [ // Fetch from database
 			{
 				id: 1,
 				mode: 'latex',
 				tex: String.raw`$$x^2$$`
 			}
 		],
-		questionList: [
-			{
-				id: '3',
-				mode: 'latex',
-				tex: String.raw`Prove or disprove: $O(f(n) + g(n)) = f(n) + O(g(n))$, if $f(n)$ and $g(n)$.`
-			}
-		],
-		userName: 'firstName lastName',
-		exam: {
-			  title: 'New Exam',
-			  questions: [
-				  {
-					  title: 'Prove this',
-					  content: 'If $f = O(g)$ and $g = O(h)$, then $f = O(h)$'
-				  }
-			],
-			  keywords: ['ADA']
-		},
 		course: {
 			name: 'Design and Analysis of Algorithms',
 			code: 'CS2101'
@@ -160,13 +143,11 @@ export default {
 		tab: null,
 		dialog: false
 	}),
-	beforeMount: function () {
-		this.fetchUser()
-	},
 	computed: {
-		...mapState('auth', ['user']),
-		...mapState('exam', ['currentExam', 'currentPreview']),
+		...mapGetters('auth', ['getUser']),
+		...mapGetters('exam', ['getCurrentExam']),
 		...mapGetters('course', ['getCourseList']),
+
 		listCourses () {
 			return this.getCourseList.map((courseData) => {
 				return {
@@ -174,45 +155,48 @@ export default {
 					value: courseData.id
 				}
 			})
-		}
+		},
+        listQuestions () {
+            console.log(this.getCurrentExam.questions)
+            return this.getCurrentExam.questions
+        }
+	},
+	beforeMount: function () {
+		this.fetchUser()
 	},
 	methods: {
 		...mapActions('auth', ['userDetail']),
-		...mapActions('exam', {
-			createExamAction: 'createExam',
-			previewExamAction: 'previewExam'
+		...mapActions('exam', {	createExamAction: 'createExam', selectExamAction: 'selectExam', previewExamAction: 'previewExm', addQuestionAction: 'addQuestion'
 		}),
-		...mapActions('course', [
-			'getCourses',
-			'addExamToCourse'
-		]),
+		...mapActions('course', ['getCourses', 'addExamToCourse']),
+
 		fetchUser: async function () {
 			await this.userDetail()
 		},
 		saveExam: function () {
-		  this.createExamAction(this.currentExam)
-			// this.addExamToCourse({ courseId, examId })
+		  this.createExamAction(this.getCurrentExam)
+			//TODO this.addExamToCourse({ courseId, examId })
 		},
 		previewExam: function () {
 			let latexString = '\\documentclass{article}\n' +
-         '\\title{' + this.currentExam.title + '}\n' +
-         '\\author{' + this.user.fullName + '}\n' +
+         '\\title{' + this.getCurrentExam.title + '}\n' +
+         '\\author{' + this.getUser.fullName + '}\n' +
          '\\begin{document}\n' +
          '\\maketitle\n' +
          '\\begin{center}\n' +
          this.course.name + ' - ' + this.course.code + '\n' +
          '\\end{center}\n'
 
-			if (this.currentExam.questions.length > 0) {
+			if (this.getCurrentExam.questions.length > 0) {
 				latexString += '\\begin{enumerate}\n'
 			}
 
-			for (var i = 0; i < this.currentExam.questions.length; ++i) {
-				latexString += '\\item ' + this.currentExam.questions[i].title + '\n\n' +
-          this.currentExam.questions[i].content + '\n'
+			for (var i = 0; i < this.getCurrentExam.questions.length; ++i) {
+				latexString += '\\item ' + this.getCurrentExam.questions[i].title + '\n\n' +
+          this.getCurrentExam.questions[i].content + '\n'
 			}
 
-			if (this.currentExam.questions.length > 0) {
+			if (this.getCurrentExam.questions.length > 0) {
 				latexString += '\\end{enumerate}\n'
 			}
 
@@ -226,8 +210,6 @@ export default {
 				})
 		},
 		changeMode (mode) {
-			console.log(this)
-			console.log(mode)
 			this.mode = mode
 		},
 		updateTags () {
@@ -239,24 +221,31 @@ export default {
 			})
 		},
 		acceptSuggestion (item) {
-			console.log(item)
 			for (var i = 0; i < this.suggestedList.length; i++) {
 				if (this.suggestedList[i].id === item.id) {
 					this.suggestedList.splice(i, 1)
 					break
 				}
 			}
-			this.questionList.push({ 'id': item.id, 'mode': 'latex', 'tex': item.tex })
+            let tmp_exam = this.getCurrentExam
+            tmp_exam.questions.push({ 'id': item.id, 'mode': 'latex', 'tex': item.tex })
+            this.selectExamAction(tmp_exam)
 		},
 		changeQuestion (quest) {
-			this.questionList.map(function (q) {
+			this.getCurrentExam.questions.map(function (q) {
 				if (quest.id == q.id) {
 					q.tex = quest.tex
 					q.mode = quest.mode
 				}
 			})
-			console.log(this.questionList)
 		},
+		addLocalQuestion: function (localQuestion) {
+            console.log(localQuestion)
+            let tmp_exam = this.getCurrentExam
+            tmp_exam.questions.push(localQuestion)
+            this.selectExamAction(tmp_exam)
+            console.log(this.getCurrentExam)
+		}
 	},
 	watch: {
 		model (val) {
