@@ -38,25 +38,10 @@
 									mdi-menu-left
 								</v-icon>
 							</v-btn>
-							<v-dialog
-								v-model="item.dialog"
-								width="70%"
-								persistent
-							>
-								<template v-slot:activator="{on}">
-									<v-btn
-										icon
-										v-on="on"
-									>
-										<v-icon>mdi-heart</v-icon>
-									</v-btn>
-								</template>
-								<RateQuestion
-									:id="item.id"
-									:question="item.tex"
-									
-								/>
-							</v-dialog>
+							<RateQuestion
+								:id="item.id"
+								:question="item.tex"
+							/>
 						</div>
 						<v-col cols="10">
 							<LaTeXPreview
@@ -146,7 +131,6 @@ export default {
 		suggestedList: [ // Fetch from database
 			{
 				id: 1,
-				dialog: false,
 				mode: 'latex',
 				tex: String.raw`$$x^2$$`
 			}
@@ -358,8 +342,8 @@ export default {
 		width: 100%;
 		color: #23246E;
 		font-family: "Helvetica";
-    font-size: 20px;
-    font-weight: bold;
+		font-size: 20px;
+		font-weight: bold;
 	}
 
 	.editor-title:focus {
