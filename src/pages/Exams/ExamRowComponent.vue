@@ -6,6 +6,7 @@
 		<vue-context
 			ref="menu"
 			:close-on-click="closeOnClick"
+			style="padding-left: 0"
 		>
 			<template slot-scoped="child">
 				<li>
