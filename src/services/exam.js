@@ -17,6 +17,9 @@ const examService = {
 				dataType: 'blob'
 			}
 		)
-	}
+	},
+    deleteExam (id){
+        return session.delete(`/exam/${id}`)
+    }
 }
 export default examService

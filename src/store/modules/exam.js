@@ -7,7 +7,8 @@ import {
 	PREVIEW_EXAM_BEGIN,
 	PREVIEW_EXAM_SUCCESS,
 	PREVIEW_EXAM_FAILURE,
-	SET_EXAM_PREVIEW
+	SET_EXAM_PREVIEW,
+    DELETE_EXAM
 } from './types'
 
 const initialState = {
@@ -42,7 +43,7 @@ const actions = {
 				console.log(error.response)
 			})
 	},
-	getExamById ({ commit }, { examId }) {},
+    getExamById ({ commit }, { examId }) {},
 	selectExam ({ commit }, { title, questions, keywords }) {
 		commit(SELECT_EXAM, { title, questions, keywords })
 	},
@@ -52,10 +53,17 @@ const actions = {
 			.then(({ data }) => commit(SET_EXAM_PREVIEW, data))
 			.then(() => commit(PREVIEW_EXAM_SUCCESS))
 			.catch(error => commit(PREVIEW_EXAM_FAILURE))
-	}
+	},
+    deleteExam({commit}, id) {
+        return examService.deleteExam(id)
+            .then( ({data}) => commit(DELETE_EXAM, data))
+    }
 }
 
 const mutations = {
+    [DELETE_EXAM] (state, data){
+        console.log('MUTATION DELETE EXAM: ', data)
+    },
 	[CREATE_EXAM] (state, data) {
 		console.log('MUTATION CREATE_EXAM: ', data)
 	},
