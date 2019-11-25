@@ -44,7 +44,7 @@
 							small
 							left
 						>mdi-lead-pencil</v-icon>
-						Edit Name
+						Edit
 					</a>
 				</li>
 				<v-divider />
