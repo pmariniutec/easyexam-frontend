@@ -28,8 +28,8 @@ const getters = {
 }
 
 const actions = {
-	createExam ({ commit }, { title, questions }) {
-		return examService.createExam(title, questions)
+	createExam ({ commit }, { title, questions, courseId }) {
+		return examService.createExam(title, questions, courseId)
 			.then(({ data }) => commit(CREATE_EXAM, data))
 			.catch(error => {
 				console.log(error.response)
