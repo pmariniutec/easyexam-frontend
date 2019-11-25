@@ -3,7 +3,7 @@
 		<div class="editor-exam">
 			<input
 				class="editor-title"
-				v-model="title"
+				v-model="examTitle"
 			>
 			<div class="questions">
 				<draggable
@@ -163,7 +163,6 @@ export default {
 			}
 		],
 		course: null,
-    title: "New Exam",
 		error: '',
 		tab: null,
 		dialog: false
@@ -183,7 +182,15 @@ export default {
 		},
 		listQuestions () {
 			return this.getCurrentExam.questions
-		}
+		},
+    examTitle: {
+      get () {
+        return this.getCurrentExam.title
+      },
+      set (value) {
+        this.$store.commit('exam/UPDATE_EXAM_TITLE', value)
+      }
+    },
 	},
 	beforeMount: function () {
 		this.fetchUser()
@@ -203,7 +210,7 @@ export default {
 		},
 		saveExam: function () {
 			let newExam = {
-				title: this.title,
+				title: this.getCurrentExam.title,
 				questions: []
 			}
 

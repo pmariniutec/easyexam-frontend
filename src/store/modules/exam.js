@@ -8,7 +8,8 @@ import {
 	PREVIEW_EXAM_SUCCESS,
 	PREVIEW_EXAM_FAILURE,
 	SET_EXAM_PREVIEW,
-	DELETE_EXAM
+	DELETE_EXAM,
+  UPDATE_EXAM_TITLE,
 } from './types'
 
 const initialState = {
@@ -86,7 +87,10 @@ const mutations = {
 	},
 	[SET_EXAM_PREVIEW] (state, data) {
 		state.currentPreview = data
-	}
+	},
+  [UPDATE_EXAM_TITLE] (state, newTitle) {
+    state.currentExam.title = newTitle
+  }
 }
 
 export default {
