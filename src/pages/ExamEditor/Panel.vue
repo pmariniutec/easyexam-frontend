@@ -3,7 +3,7 @@
 		<div class="editor-exam">
 			<input
 				class="editor-title"
-				value="New Exam"
+				v-model="title"
 			>
 			<div class="questions">
 				<draggable
@@ -163,6 +163,7 @@ export default {
 			}
 		],
 		course: null,
+    title: "New Exam",
 		error: '',
 		tab: null,
 		dialog: false
@@ -202,7 +203,7 @@ export default {
 		},
 		saveExam: function () {
 			let newExam = {
-				title: this.getCurrentExam.title,
+				title: this.title,
 				questions: []
 			}
 
@@ -215,13 +216,9 @@ export default {
 				})
 			}
 
-			console.log(this.course)
-
 			if (this.course) {
 				newExam.courseId = this.course
 			}
-
-			console.log(newExam)
 
 		  this.createExamAction(newExam)
 		},
