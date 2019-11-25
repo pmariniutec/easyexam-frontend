@@ -68,7 +68,7 @@ const actions = {
 	},
   getExamsByCourse ({ commit }, { courseId }) {
     return courseService.getCourseExams(courseId)
-      .then(({ data }) => commit(SET_EXAMS_DATA))
+      .then(({ data }) => commit(SET_EXAMS_DATA, data))
       .catch(error => {
         console.log(error.response)
       })
