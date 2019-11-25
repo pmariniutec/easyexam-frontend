@@ -25,7 +25,8 @@ const initialState = {
 
 const getters = {
 	getExamList: state => state.exams,
-	getCurrentExam: state => state.currentExam
+	getCurrentExam: state => state.currentExam,
+    getExamPreview: state => state.currentPreview
 }
 
 const actions = {
@@ -43,11 +44,11 @@ const actions = {
 				console.log(error.response)
 			})
 	},
-	getExamById ({ commit }, { examId }) {},
+	getExamById ({ commit },  examId ) {},
 	selectExam ({ commit }, { title, questions }) {
 		commit(SELECT_EXAM, { title, questions })
 	},
-	previewExam ({ commit }, { latexString }) {
+	previewExam ({ commit }, latexString ) {
 		commit(PREVIEW_EXAM_BEGIN)
 		return examService.previewExam(latexString)
 			.then(({ data }) => commit(SET_EXAM_PREVIEW, data))
