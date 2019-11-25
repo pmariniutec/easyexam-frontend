@@ -38,7 +38,7 @@
 							<v-list-item-icon>
 								<v-icon
 									size="30"
-									:color="item.color"
+									:color="(item.title == currentTab) ? 'primary' : ''"
 								>
 									{{ item.icon }}
 								</v-icon>
@@ -93,6 +93,12 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
 	name: 'SideBar',
+	props: {
+		currentTab: {
+			type: String,
+			default: ''
+		}
+	},
 	data: () => ({
 		items: [
 			{
@@ -109,7 +115,6 @@ export default {
 				title: 'New Exam',
 				icon: 'mdi-pencil-plus-outline',
 				name: 'examEditor',
-				color: 'primary'
 			},
 			{
 				title: 'Contribute',
