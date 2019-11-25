@@ -1,6 +1,6 @@
 <template>
   <div class="menu">
-    <input type="checkbox" id="toggle" />
+    <input class="inputs" type="checkbox" id="toggle" />
     <label id="show-menu" for="toggle">
       <div class="btns">
         <IconAdd class="toggleBtn menuBtn" />
@@ -44,7 +44,7 @@
 </script>
 
 <style>
-  input {
+  inputs. {
     position: absolute;
     display: none;
   }
