@@ -44,7 +44,7 @@
 </script>
 
 <style>
-  inputs. {
+  .inputs {
     position: absolute;
     display: none;
   }
