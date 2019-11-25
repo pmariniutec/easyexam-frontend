@@ -20,6 +20,7 @@
 							:text.sync="item.tex"
 							:mode="item.mode"
 							@edited="changeQuestion"
+							@remove="removeQuestion"
 						/>
 					</div>
 				</draggable>
@@ -130,7 +131,7 @@ export default {
 		AddQuestionDialog,
 		LaTeXPreviewCard,
 		LaTeXPreview,
-	  RateQuestion,
+		RateQuestion,
 		Button
 	},
 	data: () => ({
@@ -262,12 +263,6 @@ export default {
 			})
 		},
 		acceptSuggestion (item) {
-			for (var i = 0; i < this.suggestedList.length; i++) {
-				if (this.suggestedList[i].id === item.id) {
-					this.suggestedList.splice(i, 1)
-					break
-				}
-			}
 			let tmp_exam = this.getCurrentExam
 			tmp_exam.questions.push({ 'id': item.id, 'mode': 'latex', 'tex': item.tex })
 			this.selectExamAction(tmp_exam)
@@ -279,6 +274,21 @@ export default {
 					q.mode = quest.mode
 				}
 			})
+		},
+		removeQuestion (quest) {
+			for (var i = 0; i < this.getCurrentExam.questions.length; i++) {
+				var isEqual = true;
+				for (var key  in quest.keys) {
+					var compKey = this.getCurrentExam.questions[i][key] == quest[key]
+					equal = equal && compKey
+				}
+				if (isEqual) { 
+					let tmp_exam = this.getCurrentExam
+					tmp_exam.questions.splice(i, 1)
+					this.selectExamAction(tmp_exam)
+					break
+				}
+			}
 		},
 		addLocalQuestion: function (localQuestion) {
 			let tmp_exam = this.getCurrentExam

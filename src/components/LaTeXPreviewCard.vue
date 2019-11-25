@@ -17,6 +17,12 @@
 		>
 			{{ getMode === 'txt' ? 'Done' : 'Edit' }}
 		</v-btn>
+		<v-btn
+			text
+			@click="remove"
+		>
+			Delete
+		</v-btn>
 	</div>
 </template>
 
@@ -65,6 +71,10 @@ export default {
 			this.myMode = this.getMode === 'latex'	? 'txt' : 'latex'
 			let obj = { id: this.id, mode: this.getMode, tex: this.getText }
 			this.$emit('edited', obj)
+		},
+		remove: function (event) {
+			let obj = { id: this.id, mode: this.getMode, tex: this.getText }
+			this.$emit('remove', obj)
 		}
 	}
 }
