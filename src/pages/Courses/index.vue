@@ -26,6 +26,9 @@
 					</v-row>
 				</div>
 			</BaseContainer>
+			<div class="add-menu-container">
+				<AddMenu />
+			</div>
 		</v-row>
 	</v-container>
 </template>
@@ -36,6 +39,7 @@ import SideBar from '@/components/SideBar'
 import CourseCard from '@/pages/Courses/CourseCard'
 import CourseNewModal from '@/pages/Courses/CourseNewModal'
 import BaseContainer from '@/components/BaseContainer'
+import AddMenu from '@/components/AddMenu'
 
 export default {
 	name: 'Courses',
@@ -43,7 +47,8 @@ export default {
 		SideBar,
 		CourseCard,
 		CourseNewModal,
-		BaseContainer
+		BaseContainer,
+		AddMenu
 	},
 	data: () => ({
 		debugData: true
@@ -71,9 +76,17 @@ export default {
 </script>
 
 <style scoped>
-.sidebar-container {
-  max-width: 180px;
-}
+	.add-menu-container {
+		position: fixed;
+	  bottom: 26px;
+	  right: 24px;
+	  width: 7%;
+	  height: 11%;
+	}
+
+	.sidebar-container {
+	  max-width: 180px;
+	}
 
 	h1 {
 		font-family: Helvetica;

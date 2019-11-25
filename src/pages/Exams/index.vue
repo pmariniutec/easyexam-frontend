@@ -28,6 +28,9 @@
 					<ExamRowComponent :exam-info="data" />
 				</div>
 			</BaseContainer>
+			<div class="add-menu-container">
+				<AddMenu />
+			</div>
 		</v-row>
 	</v-container>
 </template>
@@ -38,13 +41,15 @@ import { mapActions, mapGetters } from 'vuex'
 import ExamRowComponent from '@/pages/Exams/ExamRowComponent'
 import SideBar from '@/components/SideBar'
 import BaseContainer from '@/components/BaseContainer'
+import AddMenu from '@/components/AddMenu'
 
 export default {
 	name: 'Exams',
 	components: {
 		ExamRowComponent,
 		SideBar,
-		BaseContainer
+		BaseContainer,
+		AddMenu
 	},
 	data () {
 		return {
@@ -83,9 +88,18 @@ export default {
 
 <style lang="scss">
 @import '~vue-context/dist/css/vue-context.css';
-.sidebar-container {
-  max-width: 180px;
-}
+	.sidebar-container {
+	  max-width: 180px;
+	}
+
+	.add-menu-container {
+		position: fixed;
+		bottom: 26px;
+		right: 24px;
+		width: 7%;
+		height: 11%;
+	}
+
 	h1 {
 		font-family: Helvetica;
 		font-size: 16pt;
