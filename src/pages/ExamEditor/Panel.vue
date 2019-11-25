@@ -259,46 +259,46 @@ export default {
 
 <style lang="scss" scoped>
 	.panel-card {
-	  min-height: 96vh;
+		min-height: 96vh;
 		background-color: unset;
 		float: right;
 		width: 100%;
 	}
 
-.tag-input span.chip {
-  background-color: #1976d2;
-  color: #fff;
-  font-size: 1em;
-}
+	.tag-input span.chip {
+		background-color: #1976d2;
+		color: #fff;
+		font-size: 1em;
+	}
 
-.tag-input span.v-chip {
-  background-color: #1976d2;
-  color: #fff;
-  font-size:1em;
-  padding-left:7px;
-}
+	.tag-input span.v-chip {
+		background-color: #1976d2;
+		color: #fff;
+		font-size:1em;
+		padding-left:7px;
+	}
 
-.tag-input span.v-chip::before {
-    content: "label";
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 20px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
-}
+	.tag-input span.v-chip::before {
+		content: "label";
+		font-family: 'Material Icons';
+		font-weight: normal;
+		font-style: normal;
+		font-size: 20px;
+		line-height: 1;
+		letter-spacing: normal;
+		text-transform: none;
+		display: inline-block;
+		white-space: nowrap;
+		word-wrap: normal;
+		direction: ltr;
+		-webkit-font-feature-settings: 'liga';
+		-webkit-font-smoothing: antialiased;
+	}
 	.editor-exam {
 		height: 100%;
 		width: 68%;
 		position: fixed;
-    padding: 70px 0 0 0;
+		padding: 70px 0 0 0;
 	}
 
 	.questions {

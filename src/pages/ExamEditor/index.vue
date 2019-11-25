@@ -60,7 +60,7 @@ export default {
 
 <style scoped>
 	.exam-editor-container {
-		width: 93%;
+		width: 90%;
 		height: 67%;
 	}
 
