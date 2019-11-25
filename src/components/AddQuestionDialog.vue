@@ -43,21 +43,16 @@
 				cols="6"
 				class="px-6"
 			>
-				<v-btn
-					color="secondary"
+				<Button
+					text="Generate Preview"
 					@click="generatePreview"
-				>
-					Generate Preview
-				</v-btn>
-				<span
-					style="width:5px; display: inline-block"
+					style="position: absolute; bottom: 20px; left: 30px"
 				/>
-				<v-btn
-					color="primary"
+				<Button
+					text="Submit"
 					@click="createNewQuestion"
-				>
-					Submit
-				</v-btn>
+					style="position: absolute; bottom: 20px; left: 190px"
+				/>
 			</v-col>
 		</v-card>
 	</v-dialog>
@@ -67,11 +62,13 @@
 import { mapActions } from 'vuex'
 
 import LaTeXPreview from '@/components/LaTeXPreview'
+import Button from '@/components/Button'
 
 export default {
 	name: 'AddQuestionDialog',
 	components: {
-		LaTeXPreview
+		LaTeXPreview,
+		Button
 	},
 	data: () => ({
 		temp_tex: '',
