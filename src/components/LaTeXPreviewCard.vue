@@ -1,16 +1,16 @@
 <template>
 	<div class="card-container">
-			<LaTeXPreview
-				:text="getText"
-				:class="getMode === 'latex'? 'show' : 'hidden'"
-			/>
-			<v-textarea
-				v-model="myText"
-				auto-grow
-				solo
-				:class="getMode === 'latex' ? 'hidden' : 'show'"
-				:value="getText"
-			/>
+		<LaTeXPreview
+			:text="getText"
+			:class="getMode === 'latex'? 'show' : 'hidden'"
+		/>
+		<v-textarea
+			v-model="myText"
+			auto-grow
+			solo
+			:class="getMode === 'latex' ? 'hidden' : 'show'"
+			:value="getText"
+		/>
 		<v-btn
 			text
 			@click="toggle"

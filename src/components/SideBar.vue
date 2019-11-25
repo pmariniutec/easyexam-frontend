@@ -54,14 +54,14 @@
 
 				<div style="position: absolute; bottom: 0; width: 100%; text-align: center;">
 					<v-list>
-                        <v-list-item>
-                            <v-chip
-                                color="secondary"
-                                @click="$emit('change-tab-evemt', 'credits')"
-                            >
-                                {{ getUserObj.points }}
-                            </v-chip>
-                        </v-list-item>
+						<v-list-item>
+							<v-chip
+								color="secondary"
+								@click="$emit('change-tab-evemt', 'credits')"
+							>
+								{{ getUserObj.points }}
+							</v-chip>
+						</v-list-item>
 						<v-list-item
 							@click="$emit('change-tab-event', 'profile')"
 						>
@@ -111,29 +111,29 @@ export default {
 				name: 'examEditor',
 				color: 'primary'
 			},
-            {
-                title: 'Contribute',
-                icon: 'mdi-hand-heart',
-                name: 'contribute'
-            }
+			{
+				title: 'Contribute',
+				icon: 'mdi-hand-heart',
+				name: 'contribute'
+			}
 		],
 		mini: true
 	}),
-    beforeMount() {
-        this.fetchUser()
-    },
-    computed: {
-        ...mapGetters('auth', ['getUser']),
-        getUserObj () {
-            return this.getUser
-        }
-    },
-    methods: {
-        ...mapActions('auth', ['userDetail']),
-        fetchUser: async function () {
-            await this.userDetail
-        }
-     }
+	beforeMount () {
+		this.fetchUser()
+	},
+	computed: {
+		...mapGetters('auth', ['getUser']),
+		getUserObj () {
+			return this.getUser
+		}
+	},
+	methods: {
+		...mapActions('auth', ['userDetail']),
+		fetchUser: async function () {
+			await this.userDetail
+		}
+	}
 }
 </script>
 

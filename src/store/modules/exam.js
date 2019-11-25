@@ -14,8 +14,7 @@ const initialState = {
 	exams: [],
 	currentExam: {
 		title: '',
-		questions: [],
-		keywords: []
+		questions: []
 	},
 	currentPreview: null,
 	loadingPreview: false,
@@ -28,8 +27,8 @@ const getters = {
 }
 
 const actions = {
-	createExam ({ commit }, { title, questions, keywords }) {
-		return examService.createExam(title, questions, keywords)
+	createExam ({ commit }, { title, questions }) {
+		return examService.createExam(title, questions)
 			.then(({ data }) => commit(CREATE_EXAM, data))
 			.catch(error => {
 				console.log(error.response)
@@ -43,8 +42,8 @@ const actions = {
 			})
 	},
 	getExamById ({ commit }, { examId }) {},
-	selectExam ({ commit }, { title, questions, keywords }) {
-		commit(SELECT_EXAM, { title, questions, keywords })
+	selectExam ({ commit }, { title, questions }) {
+		commit(SELECT_EXAM, { title, questions })
 	},
 	previewExam ({ commit }, { latexString }) {
 		commit(PREVIEW_EXAM_BEGIN)
