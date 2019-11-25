@@ -45,13 +45,13 @@
 			>
 				<Button
 					text="Generate Preview"
-					@click="generatePreview"
 					style="position: absolute; bottom: 20px; left: 30px"
+					@click="generatePreview"
 				/>
 				<Button
 					text="Submit"
-					@click="createNewQuestion"
 					style="position: absolute; bottom: 20px; left: 190px"
+					@click="createNewQuestion"
 				/>
 			</v-col>
 		</v-card>

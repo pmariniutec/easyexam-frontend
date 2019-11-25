@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import { mapActions,  mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { VueContext } from 'vue-context'
 
 export default {
@@ -122,32 +122,32 @@ export default {
 		}
 	},
 	computed: {
-        ...mapGetters('exams', ['getCurrentExam', 'getExamList']),
+		...mapGetters('exams', ['getCurrentExam', 'getExamList']),
 
-        listExams () {
-            return this.getExamList
-        }
+		listExams () {
+			return this.getExamList
+		}
 
 	},
 	methods: {
-        ...mapActions('exams', ['deleteExam', 'selectExam', 'previewExam']),
-        deleteExamClick (data) {
-            this.deleteExam(data.id)
-        },
-        previewExamClick (data) {
-            this.previewExam()
-        },
-        editExamClick (data) {
-            this.getExams()
-            this.listExams.map(function(q) {
-                if(q.id == data.id){
-                    this.selectExam(q)
-                }
-            })
-        },
-        downloadExamClick (data) {
+		...mapActions('exams', ['deleteExam', 'selectExam', 'previewExam']),
+		deleteExamClick (data) {
+			this.deleteExam(data.id)
+		},
+		previewExamClick (data) {
+			this.previewExam()
+		},
+		editExamClick (data) {
+			this.getExams()
+			this.listExams.map(function (q) {
+				if (q.id == data.id) {
+					this.selectExam(q)
+				}
+			})
+		},
+		downloadExamClick (data) {
 
-        },
+		},
 		openMenu (event, data) {
 			this.$refs.menu.open(event, data)
 		}

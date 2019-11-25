@@ -18,8 +18,8 @@ const examService = {
 			}
 		)
 	},
-    deleteExam (id){
-        return session.delete(`/exam/${id}`)
-    }
+	deleteExam (id) {
+		return session.delete(`/exam/${id}`)
+	}
 }
 export default examService

@@ -7,7 +7,7 @@ import {
 	ADD_EXAM_COURSE,
 	SELECT_COURSE,
 	DELETE_COURSE,
-  SET_EXAMS_DATA,
+	SET_EXAMS_DATA
 } from './types'
 
 const initialState = {
@@ -19,13 +19,13 @@ const initialState = {
 		created: '',
 		updated: ''
 	},
-  courseExams: []
+	courseExams: []
 }
 
 const getters = {
 	getCourseList: state => state.courses,
 	getCurrentCourse: state => state.currentCourse,
-	getCourseExams: state => state.courseExams,
+	getCourseExams: state => state.courseExams
 }
 
 const actions = {
@@ -66,13 +66,13 @@ const actions = {
 				console.log(error.response)
 			})
 	},
-  getExamsByCourse ({ commit }, { courseId }) {
-    return courseService.getCourseExams(courseId)
-      .then(({ data }) => commit(SET_EXAMS_DATA, data))
-      .catch(error => {
-        console.log(error.response)
-      })
-  },
+	getExamsByCourse ({ commit }, { courseId }) {
+		return courseService.getCourseExams(courseId)
+			.then(({ data }) => commit(SET_EXAMS_DATA, data))
+			.catch(error => {
+				console.log(error.response)
+			})
+	}
 }
 
 const mutations = {
@@ -91,9 +91,9 @@ const mutations = {
 	[DELETE_COURSE] (state, data) {
 		console.log('MUTATION DELETE_COURSE: ', data)
 	},
-  [SET_EXAMS_DATA] (state, data) {
-    state.courseExams = data
-  }
+	[SET_EXAMS_DATA] (state, data) {
+		state.courseExams = data
+	}
 }
 
 export default {

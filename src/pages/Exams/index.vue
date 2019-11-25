@@ -67,7 +67,7 @@ export default {
 		let courseId = this.$route.params.id
 		if (courseId) {
 		  this.getCourseById({ courseId })
-      this.fetchExamsByCourse(courseId)
+			this.fetchExamsByCourse(courseId)
 		} else {
 		  this.fetchExams()
 		}
@@ -75,12 +75,12 @@ export default {
 	methods: {
 		...mapActions('exam', ['getExams']),
 		...mapActions('course', ['getCourseById', 'getExamsByCourse']),
-    fetchExamsByCourse: async function (courseId) {
+		fetchExamsByCourse: async function (courseId) {
 			await this.getExamsByCourse({ courseId })
 		},
-    fetchExams: async function () {
-      await this.getExams()
-    },
+		fetchExams: async function () {
+			await this.getExams()
+		},
 		changeTab: function (href) {
 			this.$router.push({ name: href })
 		}

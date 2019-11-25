@@ -186,7 +186,7 @@ export default {
 	},
 	beforeMount: function () {
 		this.fetchUser()
-    this.fetchCourses()
+		this.fetchCourses()
 	},
 	methods: {
 		...mapActions('auth', ['userDetail']),
@@ -197,9 +197,9 @@ export default {
 		fetchUser: async function () {
 			await this.userDetail()
 		},
-    fetchCourses: async function () {
-      await this.getCourses()
-    },
+		fetchCourses: async function () {
+			await this.getCourses()
+		},
 		saveExam: function () {
 			let newExam = {
 				title: this.getCurrentExam.title,
@@ -214,14 +214,14 @@ export default {
 					keywords: question.keywords
 				})
 			}
-      
-      console.log(this.course)
+
+			console.log(this.course)
 
 			if (this.course) {
 				newExam.courseId = this.course
 			}
 
-      console.log(newExam)
+			console.log(newExam)
 
 		  this.createExamAction(newExam)
 		},
