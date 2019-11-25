@@ -38,7 +38,7 @@
 							<v-list-item-icon>
 								<v-icon
 									size="30"
-									:color="item.color"
+									:color="(item.title == currentTab) ? 'primary' : ''"
 								>
 									{{ item.icon }}
 								</v-icon>
@@ -54,14 +54,14 @@
 
 				<div style="position: absolute; bottom: 0; width: 100%; text-align: center;">
 					<v-list>
-                        <v-list-item>
-                            <v-chip
-                                color="secondary"
-                                @click="$emit('change-tab-evemt', 'credits')"
-                            >
-                                {{ getUserObj.points }}
-                            </v-chip>
-                        </v-list-item>
+						<v-list-item>
+							<v-chip
+								color="secondary"
+								@click="$emit('change-tab-evemt', 'credits')"
+							>
+								{{ getUserObj.points }}
+							</v-chip>
+						</v-list-item>
 						<v-list-item
 							@click="$emit('change-tab-event', 'profile')"
 						>
@@ -93,6 +93,12 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
 	name: 'SideBar',
+	props: {
+		currentTab: {
+			type: String,
+			default: ''
+		}
+	},
 	data: () => ({
 		items: [
 			{
@@ -109,31 +115,30 @@ export default {
 				title: 'New Exam',
 				icon: 'mdi-pencil-plus-outline',
 				name: 'examEditor',
-				color: 'primary'
 			},
-            {
-                title: 'Contribute',
-                icon: 'mdi-hand-heart',
-                name: 'contribute'
-            }
+			{
+				title: 'Contribute',
+				icon: 'mdi-hand-heart',
+				name: 'contribute'
+			}
 		],
 		mini: true
 	}),
-    beforeMount() {
-        this.fetchUser()
-    },
-    computed: {
-        ...mapGetters('auth', ['getUser']),
-        getUserObj () {
-            return this.getUser
-        }
-    },
-    methods: {
-        ...mapActions('auth', ['userDetail']),
-        fetchUser: async function () {
-            await this.userDetail
-        }
-     }
+	beforeMount () {
+		this.fetchUser()
+	},
+	computed: {
+		...mapGetters('auth', ['getUser']),
+		getUserObj () {
+			return this.getUser
+		}
+	},
+	methods: {
+		...mapActions('auth', ['userDetail']),
+		fetchUser: async function () {
+			await this.userDetail
+		}
+	}
 }
 </script>
 

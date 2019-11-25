@@ -1,55 +1,55 @@
 <template>
 	<div class="course-card">
-	<v-card
-		:style="bgc"
-		class="course-card"
-		outlined
-	>
-		<v-app-bar
-			class="course-card-modal"
-			style="box-shadow: unset;"
+		<v-card
+			:style="bgc"
+			class="course-card"
+			outlined
 		>
-			<v-toolbar-title class="course-card-title">
-				{{ courseInfo.name }} : {{ courseInfo.code }}
-			</v-toolbar-title>
-			<v-spacer />
-			<v-menu
-				left
-				bottom
+			<v-app-bar
+				class="course-card-modal"
+				style="box-shadow: unset;"
 			>
-				<template v-slot:activator="{ on }">
-					<v-btn
-						icon
-						v-on="on"
-					>
-						<v-icon>mdi-dots-vertical</v-icon>
-					</v-btn>
-				</template>
-
-				<v-list
-					nav
+				<v-toolbar-title class="course-card-title">
+					{{ courseInfo.name }} : {{ courseInfo.code }}
+				</v-toolbar-title>
+				<v-spacer />
+				<v-menu
+					left
+					bottom
 				>
-					<v-list-item
-						@click="removeCourse($event,courseInfo.id)"
+					<template v-slot:activator="{ on }">
+						<v-btn
+							icon
+							v-on="on"
+						>
+							<v-icon>mdi-dots-vertical</v-icon>
+						</v-btn>
+					</template>
+
+					<v-list
+						nav
 					>
-						<v-list-item-title> Delete </v-list-item-title>
-					</v-list-item>
-				</v-list>
-			</v-menu>
-		</v-app-bar>
-		<v-card-actions>
-			<v-btn
-				text
-				block
-				color="black accent-4"
-				@click="viewCourse($event, courseInfo)"
-				class="button"
-			>
-				View
-			</v-btn>
-		</v-card-actions>
-	</v-card>
-</div>
+						<v-list-item
+							@click="removeCourse($event,courseInfo.id)"
+						>
+							<v-list-item-title> Delete </v-list-item-title>
+						</v-list-item>
+					</v-list>
+				</v-menu>
+			</v-app-bar>
+			<v-card-actions>
+				<v-btn
+					text
+					block
+					color="black accent-4"
+					class="button"
+					@click="viewCourse($event, courseInfo)"
+				>
+					View
+				</v-btn>
+			</v-card-actions>
+		</v-card>
+	</div>
 </template>
 
 <script>

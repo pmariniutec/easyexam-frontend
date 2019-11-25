@@ -1,7 +1,10 @@
 <template>
 	<div class="panel-card">
 		<div class="editor-exam">
-			<input class="editor-title" value="New Exam"/>
+			<input
+				class="editor-title"
+				v-model="examTitle"
+			>
 			<div class="questions">
 				<draggable
 					group="people"
@@ -17,6 +20,7 @@
 							:text.sync="item.tex"
 							:mode="item.mode"
 							@edited="changeQuestion"
+							@remove="removeQuestion"
 						/>
 					</div>
 				</draggable>
@@ -25,9 +29,9 @@
 				<b>Suggested questions</b> </br>
 				<AddQuestionDialog @submit-question="addLocalQuestion" />
 				<div
-					class="suggested-questions"
 					v-for="item in suggestedList"
 					:key="item.id"
+					class="suggested-questions"
 				>
 					<div class="suggested-question-card">
 						<div class="icons">
@@ -38,25 +42,10 @@
 									mdi-menu-left
 								</v-icon>
 							</v-btn>
-							<v-dialog
-								v-model="item.dialog"
-								width="70%"
-								persistent
-							>
-								<template v-slot:activator="{on}">
-									<v-btn
-										icon
-										v-on="on"
-									>
-										<v-icon>mdi-heart</v-icon>
-									</v-btn>
-								</template>
-								<RateQuestion
-									:id="item.id"
-									:question="item.tex"
-									
-								/>
-							</v-dialog>
+							<RateQuestion
+								:id="item.id"
+								:question="item.tex"
+							/>
 						</div>
 						<v-col cols="10">
 							<LaTeXPreview
@@ -68,14 +57,18 @@
 			</div>
 		</div>
 		<div class="exam-data-container">
-			<p class="label-data">Teacher's Name</p>
+			<p class="label-data">
+				Teacher's Name
+			</p>
 			<input
-				class="input-data"
 				id="fullname"
 				v-model="getUser.fullName"
+				class="input-data"
 				disabled
-			/>
-			<p class="label-data">Course</p>
+			>
+			<p class="label-data">
+				Course
+			</p>
 			<v-autocomplete
 				ref="course"
 				v-model="course"
@@ -83,7 +76,9 @@
 				placeholder="Select..."
 				style="margin: 0; padding: 0"
 			/>
-			<p class="label-data">Keywords</p>
+			<p class="label-data">
+				Keywords
+			</p>
 
 			<v-combobox
 				:items="items"
@@ -107,20 +102,20 @@
 
 			<Button
 				text="Preview"
-				@click="previewExam()"
 				style="position: fixed;bottom: 30px;"
+				@click="previewExam()"
 			/>
 			<Button
 				text="Save"
-				@click="saveExam()"
 				style="position: fixed;bottom: 30px;right: 40px"
+				@click="saveExam()"
 			/>
 		</div>
 	</div>
 </template>
 
 <script>
-import { mapActions,  mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import draggable from 'vuedraggable'
 
 import AddQuestionDialog from '@/components/AddQuestionDialog'
@@ -146,71 +141,98 @@ export default {
 		suggestedList: [ // Fetch from database
 			{
 				id: 1,
-				dialog: false,
 				mode: 'latex',
 				tex: String.raw`$$x^2$$`
 			}
 		],
-		course: {
-			name: 'Design and Analysis of Algorithms',
-			code: 'CS2101'
-		},
+		course: null,
 		error: '',
 		tab: null,
 		dialog: false
 	}),
 	computed: {
 		...mapGetters('auth', ['getUser']),
-		...mapGetters('exam', ['getCurrentExam']),
+		...mapGetters('exam', ['getCurrentExam', 'getExamPreview']),
 		...mapGetters('course', ['getCourseList']),
 
 		listCourses () {
 			return this.getCourseList.map((courseData) => {
 				return {
 					text: courseData.name,
-					value: courseData.id
+					value: courseData
 				}
 			})
 		},
-        listQuestions () {
-            console.log(this.getCurrentExam.questions)
-            return this.getCurrentExam.questions
-        }
+		listQuestions () {
+			return this.getCurrentExam.questions
+		},
+    examTitle: {
+      get () {
+        return this.getCurrentExam.title
+      },
+      set (value) {
+        this.$store.commit('exam/UPDATE_EXAM_TITLE', value)
+      }
+    },
 	},
 	beforeMount: function () {
 		this.fetchUser()
+		this.fetchCourses()
 	},
 	methods: {
 		...mapActions('auth', ['userDetail']),
-		...mapActions('exam', {	createExamAction: 'createExam', selectExamAction: 'selectExam', previewExamAction: 'previewExm', addQuestionAction: 'addQuestion'
+		...mapActions('exam', {	createExamAction: 'createExam', selectExamAction: 'selectExam', previewExamAction: 'previewExam', addQuestionAction: 'addQuestion'
 		}),
 		...mapActions('course', ['getCourses', 'addExamToCourse']),
 
 		fetchUser: async function () {
 			await this.userDetail()
 		},
+		fetchCourses: async function () {
+			await this.getCourses()
+		},
 		saveExam: function () {
-		  this.createExamAction(this.getCurrentExam)
-			//TODO this.addExamToCourse({ courseId, examId })
+			let newExam = {
+				title: this.getCurrentExam.title,
+				questions: []
+			}
+
+			for (let i = 0; i < this.getCurrentExam.questions.length; ++i) {
+				let question = this.getCurrentExam.questions[i]
+				newExam.questions.push({
+					title: question.title,
+					content: question.tex,
+					keywords: question.keywords
+				})
+			}
+
+			if (this.course) {
+				newExam.courseId = this.course
+			}
+
+		  this.createExamAction(newExam)
 		},
 		previewExam: function () {
 			let latexString = '\\documentclass{article}\n' +
-         '\\title{' + this.getCurrentExam.title + '}\n' +
-         '\\author{' + this.getUser.fullName + '}\n' +
-         '\\begin{document}\n' +
-         '\\maketitle\n' +
-         '\\begin{center}\n' +
-         this.course.name + ' - ' + this.course.code + '\n' +
-         '\\end{center}\n'
+             '\\title{' + this.getCurrentExam.title + '}\n' +
+             '\\author{' + this.getUser.fullName + '}\n' +
+             '\\begin{document}\n'
 
-			if (this.getCurrentExam.questions.length > 0) {
+          if (this.course) {
+             latexString += '\\maketitle\n' +
+              '\\begin{center}\n' +
+              this.course.name + ' - ' + this.course.code + '\n' +
+              '\\end{center}\n'
+          }
+
+          if (this.getCurrentExam.questions.length > 0) {
 				latexString += '\\begin{enumerate}\n'
-			}
+		  }
 
-			for (var i = 0; i < this.getCurrentExam.questions.length; ++i) {
-				latexString += '\\item ' + this.getCurrentExam.questions[i].title + '\n\n' +
-          this.getCurrentExam.questions[i].content + '\n'
-			}
+		  for (var i = 0; i < this.getCurrentExam.questions.length; ++i) {
+				latexString += '\\item Question ' + i + '\n\n' +
+                this.getCurrentExam.questions[i].tex + '\n'
+	    	}
 
 			if (this.getCurrentExam.questions.length > 0) {
 				latexString += '\\end{enumerate}\n'
@@ -218,9 +240,9 @@ export default {
 
 			latexString += '\\end{document}'
 
-			this.previewExamAction({ latexString })
-				.then(() => {
-					var file = new Blob([(this.currentPreview)], { type: 'application/pdf' })
+			this.previewExamAction(latexString )
+				.then((data) => {
+					var file = new Blob([(this.getExamPreview)], { type: 'application/pdf' })
 					var fileURL = URL.createObjectURL(file)
 					window.open(fileURL, '_blank')
 				})
@@ -237,15 +259,9 @@ export default {
 			})
 		},
 		acceptSuggestion (item) {
-			for (var i = 0; i < this.suggestedList.length; i++) {
-				if (this.suggestedList[i].id === item.id) {
-					this.suggestedList.splice(i, 1)
-					break
-				}
-			}
-            let tmp_exam = this.getCurrentExam
-            tmp_exam.questions.push({ 'id': item.id, 'mode': 'latex', 'tex': item.tex })
-            this.selectExamAction(tmp_exam)
+			let tmp_exam = this.getCurrentExam
+			tmp_exam.questions.push({ 'id': item.id, 'mode': 'latex', 'tex': item.tex })
+			this.selectExamAction(tmp_exam)
 		},
 		changeQuestion (quest) {
 			this.getCurrentExam.questions.map(function (q) {
@@ -255,12 +271,25 @@ export default {
 				}
 			})
 		},
+		removeQuestion (quest) {
+			for (var i = 0; i < this.getCurrentExam.questions.length; i++) {
+				var isEqual = true;
+				for (var key  in quest.keys) {
+					var compKey = this.getCurrentExam.questions[i][key] == quest[key]
+					equal = equal && compKey
+				}
+				if (isEqual) { 
+					let tmp_exam = this.getCurrentExam
+					tmp_exam.questions.splice(i, 1)
+					this.selectExamAction(tmp_exam)
+					break
+				}
+			}
+		},
 		addLocalQuestion: function (localQuestion) {
-            console.log(localQuestion)
-            let tmp_exam = this.getCurrentExam
-            tmp_exam.questions.push(localQuestion)
-            this.selectExamAction(tmp_exam)
-            console.log(this.getCurrentExam)
+			let tmp_exam = this.getCurrentExam
+			tmp_exam.questions.push(localQuestion)
+			this.selectExamAction(tmp_exam)
 		}
 	},
 	watch: {
@@ -275,46 +304,46 @@ export default {
 
 <style lang="scss" scoped>
 	.panel-card {
-	  min-height: 96vh;
+		min-height: 96vh;
 		background-color: unset;
 		float: right;
 		width: 100%;
 	}
 
-.tag-input span.chip {
-  background-color: #1976d2;
-  color: #fff;
-  font-size: 1em;
-}
+	.tag-input span.chip {
+		background-color: #1976d2;
+		color: #fff;
+		font-size: 1em;
+	}
 
-.tag-input span.v-chip {
-  background-color: #1976d2;
-  color: #fff;
-  font-size:1em;
-  padding-left:7px;
-}
+	.tag-input span.v-chip {
+		background-color: #1976d2;
+		color: #fff;
+		font-size:1em;
+		padding-left:7px;
+	}
 
-.tag-input span.v-chip::before {
-    content: "label";
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 20px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
-}
+	.tag-input span.v-chip::before {
+		content: "label";
+		font-family: 'Material Icons';
+		font-weight: normal;
+		font-style: normal;
+		font-size: 20px;
+		line-height: 1;
+		letter-spacing: normal;
+		text-transform: none;
+		display: inline-block;
+		white-space: nowrap;
+		word-wrap: normal;
+		direction: ltr;
+		-webkit-font-feature-settings: 'liga';
+		-webkit-font-smoothing: antialiased;
+	}
 	.editor-exam {
 		height: 100%;
 		width: 68%;
 		position: fixed;
-    padding: 70px 0 0 0;
+		padding: 70px 0 0 0;
 	}
 
 	.questions {
@@ -358,8 +387,8 @@ export default {
 		width: 100%;
 		color: #23246E;
 		font-family: "Helvetica";
-    font-size: 20px;
-    font-weight: bold;
+		font-size: 20px;
+		font-weight: bold;
 	}
 
 	.editor-title:focus {
@@ -379,6 +408,6 @@ export default {
 	}
 
 	.icons {
-		float: left;
-	}
+    float: left;
+  }
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<v-dialog
 		v-model="dialog"
-		width="70%"
+		width="40%"
 	>
 		<template v-slot:activator="{ on }">
 			<v-btn
@@ -43,21 +43,16 @@
 				cols="6"
 				class="px-6"
 			>
-				<v-btn
-					color="secondary"
+				<Button
+					text="Generate Preview"
+					style="position: absolute; bottom: 20px; left: 30px"
 					@click="generatePreview"
-				>
-					Generate Preview
-				</v-btn>
-				<span
-					style="width:5px; display: inline-block"
 				/>
-				<v-btn
-					color="primary"
+				<Button
+					text="Submit"
+					style="position: absolute; bottom: 20px; left: 190px"
 					@click="createNewQuestion"
-				>
-					Submit
-				</v-btn>
+				/>
 			</v-col>
 		</v-card>
 	</v-dialog>
@@ -67,18 +62,20 @@
 import { mapActions } from 'vuex'
 
 import LaTeXPreview from '@/components/LaTeXPreview'
+import Button from '@/components/Button'
 
 export default {
 	name: 'AddQuestionDialog',
 	components: {
-		LaTeXPreview
+		LaTeXPreview,
+		Button
 	},
 	data: () => ({
-        temp_tex: '',
-        question: {
-            tex: '',
-            mode: 'latex'
-        },
+		temp_tex: '',
+		question: {
+			tex: '',
+			mode: 'latex'
+		},
 		dialog: false
 	}),
 	computed: {
@@ -88,15 +85,14 @@ export default {
 		generatePreview: function () {
 			this.question.tex = this.temp_tex
 		},
-        getQuestion: function () {
-            return this.question.tex
-         },
+		getQuestion: function () {
+			return this.question.tex
+		},
 		createNewQuestion: async function () {
-            console.log(this.temp_tex)
-			await this.$emit('submit-question', {tex: this.temp_tex, mode: this.question.mode})
-            this.question.tex = ''
-            this.temp_tex = ''
-            this.dialog = false
+			await this.$emit('submit-question', { tex: this.temp_tex, mode: this.question.mode })
+			this.question.tex = ''
+			this.temp_tex = ''
+			this.dialog = false
 		},
 		closeDialog: function () {
 			this.dialog = false

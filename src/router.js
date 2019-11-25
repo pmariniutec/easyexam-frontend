@@ -115,12 +115,12 @@ const router = new Router({
 			component: Profile,
 			beforeEnter: requireAuth
 		},
-        {
-            path: '/dashboard/contribute',
-            name: 'contribute',
-            component: Contribute,
-            beforeEnter: requireAuth
-        },
+		{
+			path: '/dashboard/contribute',
+			name: 'contribute',
+			component: Contribute,
+			beforeEnter: requireAuth
+		},
 		{
 			path: '*',
 			name: 'pageNotFound',

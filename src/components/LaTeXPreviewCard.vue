@@ -1,21 +1,27 @@
 <template>
 	<div class="card-container">
-			<LaTeXPreview
-				:text="getText"
-				:class="getMode === 'latex'? 'show' : 'hidden'"
-			/>
-			<v-textarea
-				v-model="myText"
-				auto-grow
-				solo
-				:class="getMode === 'latex' ? 'hidden' : 'show'"
-				:value="getText"
-			/>
+		<LaTeXPreview
+			:text="getText"
+			:class="getMode === 'latex'? 'show' : 'hidden'"
+		/>
+		<v-textarea
+			v-model="myText"
+			auto-grow
+			solo
+			:class="getMode === 'latex' ? 'hidden' : 'show'"
+			:value="getText"
+		/>
 		<v-btn
 			text
 			@click="toggle"
 		>
 			{{ getMode === 'txt' ? 'Done' : 'Edit' }}
+		</v-btn>
+		<v-btn
+			text
+			@click="remove"
+		>
+			Delete
 		</v-btn>
 	</div>
 </template>
@@ -42,8 +48,8 @@ export default {
 			default: 'latex'
 		},
 		id: {
-			type: String,
-			default: '0'
+			type: Number,
+			default: 0
 		}
 	},
 	data () {
@@ -65,6 +71,10 @@ export default {
 			this.myMode = this.getMode === 'latex'	? 'txt' : 'latex'
 			let obj = { id: this.id, mode: this.getMode, tex: this.getText }
 			this.$emit('edited', obj)
+		},
+		remove: function (event) {
+			let obj = { id: this.id, mode: this.getMode, tex: this.getText }
+			this.$emit('remove', obj)
 		}
 	}
 }

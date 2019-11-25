@@ -7,15 +7,16 @@ import {
 	PREVIEW_EXAM_BEGIN,
 	PREVIEW_EXAM_SUCCESS,
 	PREVIEW_EXAM_FAILURE,
-	SET_EXAM_PREVIEW
+	SET_EXAM_PREVIEW,
+	DELETE_EXAM,
+  UPDATE_EXAM_TITLE,
 } from './types'
 
 const initialState = {
 	exams: [],
 	currentExam: {
 		title: '',
-		questions: [],
-		keywords: []
+		questions: []
 	},
 	currentPreview: null,
 	loadingPreview: false,
@@ -24,12 +25,13 @@ const initialState = {
 
 const getters = {
 	getExamList: state => state.exams,
-	getCurrentExam: state => state.currentExam
+	getCurrentExam: state => state.currentExam,
+    getExamPreview: state => state.currentPreview
 }
 
 const actions = {
-	createExam ({ commit }, { title, questions, keywords }) {
-		return examService.createExam(title, questions, keywords)
+	createExam ({ commit }, { title, questions, courseId }) {
+		return examService.createExam(title, questions, courseId)
 			.then(({ data }) => commit(CREATE_EXAM, data))
 			.catch(error => {
 				console.log(error.response)
@@ -42,20 +44,27 @@ const actions = {
 				console.log(error.response)
 			})
 	},
-	getExamById ({ commit }, { examId }) {},
-	selectExam ({ commit }, { title, questions, keywords }) {
-		commit(SELECT_EXAM, { title, questions, keywords })
+	getExamById ({ commit },  examId ) {},
+	selectExam ({ commit }, { title, questions }) {
+		commit(SELECT_EXAM, { title, questions })
 	},
-	previewExam ({ commit }, { latexString }) {
+	previewExam ({ commit }, latexString ) {
 		commit(PREVIEW_EXAM_BEGIN)
 		return examService.previewExam(latexString)
 			.then(({ data }) => commit(SET_EXAM_PREVIEW, data))
 			.then(() => commit(PREVIEW_EXAM_SUCCESS))
 			.catch(error => commit(PREVIEW_EXAM_FAILURE))
+	},
+	deleteExam ({ commit }, id) {
+		return examService.deleteExam(id)
+			.then(({ data }) => commit(DELETE_EXAM, data))
 	}
 }
 
 const mutations = {
+	[DELETE_EXAM] (state, data) {
+		console.log('MUTATION DELETE EXAM: ', data)
+	},
 	[CREATE_EXAM] (state, data) {
 		console.log('MUTATION CREATE_EXAM: ', data)
 	},
@@ -79,7 +88,10 @@ const mutations = {
 	},
 	[SET_EXAM_PREVIEW] (state, data) {
 		state.currentPreview = data
-	}
+	},
+  [UPDATE_EXAM_TITLE] (state, newTitle) {
+    state.currentExam.title = newTitle
+  }
 }
 
 export default {

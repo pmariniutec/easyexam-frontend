@@ -1,9 +1,9 @@
 import session from './session'
 
 const examService = {
-	createExam (title, questions, keywords) {
+	createExam (title, questions, courseId) {
 		// TODO: this possible need a stringify
-		return session.post('/exam/create/', { title, questions, keywords })
+		return session.post('/exam/create/', { title, questions, courseId })
 	},
 	getExams () {
 		return session.get('/exam/')
@@ -17,6 +17,9 @@ const examService = {
 				dataType: 'blob'
 			}
 		)
+	},
+	deleteExam (id) {
+		return session.delete(`/exam/${id}`)
 	}
 }
 export default examService

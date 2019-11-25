@@ -9,11 +9,13 @@
 				class="sidebar-container"
 			>
 				<SideBar
+					currentTab="Exams"
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
 			<BaseContainer>
-				<h1>Exams</h1>
+				<h1 v-if="$route.params.id"> {{ getCurrentCourse.name }} Exams </h1>
+        <h1 v-else> Exams </h1>
 				<v-row class="exams-headers">
 					<v-col>Name</v-col>
 					<v-col>Questions</v-col>
@@ -58,7 +60,7 @@ export default {
 	},
 	computed: {
 		...mapGetters('exam', ['getExamList']),
-		...mapGetters('course', ['getCourseExams']),
+		...mapGetters('course', ['getCurrentCourse', 'getCourseExams']),
 		exams: function () {
 			let courseId = this.$route.params.id
 			if (courseId) {
@@ -68,17 +70,24 @@ export default {
 			}
 		}
 	},
-	beforeMount () {
+	beforeMount: function () {
 		let courseId = this.$route.params.id
 		if (courseId) {
 		  this.getCourseById({ courseId })
+			this.fetchExamsByCourse(courseId)
 		} else {
-		  this.getExams()
+		  this.fetchExams()
 		}
 	},
 	methods: {
 		...mapActions('exam', ['getExams']),
-		...mapActions('course', ['getCourseById']),
+		...mapActions('course', ['getCourseById', 'getExamsByCourse']),
+		fetchExamsByCourse: async function (courseId) {
+			await this.getExamsByCourse({ courseId })
+		},
+		fetchExams: async function () {
+			await this.getExams()
+		},
 		changeTab: function (href) {
 			this.$router.push({ name: href })
 		}

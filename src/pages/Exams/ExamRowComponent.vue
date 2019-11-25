@@ -6,14 +6,14 @@
 		<vue-context
 			ref="menu"
 			:close-on-click="closeOnClick"
+			style="padding-left: 0"
 		>
 			<template slot-scoped="child">
 				<li>
 					<a
 						href="#"
-						@click.prevent="onClick($event.target.innerText, child.data)"
+						@click.prevent="previewExamClick(child.data)"
 					>
-
 						<v-icon
 							small
 							left
@@ -24,7 +24,7 @@
 				<li>
 					<a
 						href="#"
-						@click.prevent="onClick($event.target.innerText, child.data)"
+						@click.prevent="downloadExamClick(child.data)"
 					>
 
 						<v-icon
@@ -37,21 +37,21 @@
 				<li>
 					<a
 						href="#"
-						@click.prevent="onClick($event.target.innerText, data)"
+						@click.prevent="editExamClick(child.data)"
 					>
 
 						<v-icon
 							small
 							left
 						>mdi-lead-pencil</v-icon>
-						Edit Name
+						Edit
 					</a>
 				</li>
 				<v-divider />
 				<li>
 					<a
 						href="#"
-						@click.prevent="onClick($event.target.innerText, data)"
+						@click.prevent="deleteExamClick(data)"
 					>
 
 						<v-icon
@@ -93,8 +93,9 @@
 		</v-row>
 	</v-card>
 </template>
-<script>
 
+<script>
+import { mapActions, mapGetters } from 'vuex'
 import { VueContext } from 'vue-context'
 
 export default {
@@ -122,11 +123,31 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters('exams', ['getCurrentExam', 'getExamList']),
+
+		listExams () {
+			return this.getExamList
+		}
 
 	},
 	methods: {
-		onClick (text, data) {
-			console.log(data)
+		...mapActions('exams', ['deleteExam', 'selectExam', 'previewExam']),
+		deleteExamClick (data) {
+			this.deleteExam(data.id)
+		},
+		previewExamClick (data) {
+			this.previewExam()
+		},
+		editExamClick (data) {
+			this.getExams()
+			this.listExams.map(function (q) {
+				if (q.id == data.id) {
+					this.selectExam(q)
+				}
+			})
+		},
+		downloadExamClick (data) {
+
 		},
 		openMenu (event, data) {
 			this.$refs.menu.open(event, data)
