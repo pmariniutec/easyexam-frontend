@@ -43,9 +43,10 @@ export default {
     text-decoration: none;
     text-align: center;
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: #fff;
+    };
+    &:focus {
       outline: 0;
     }
   }
