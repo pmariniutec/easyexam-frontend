@@ -41,24 +41,6 @@
 									mdi-menu-left
 								</v-icon>
 							</v-btn>
-							<v-dialog
-								v-model="item.dialog"
-								width="70%"
-								persistent
-							>
-								<template v-slot:activator="{on}">
-									<v-btn
-										icon
-										v-on="on"
-									>
-										<v-icon>mdi-heart</v-icon>
-									</v-btn>
-								</template>
-								<RateQuestion
-									:id="item.id"
-									:question="item.tex"
-								/>
-							</v-dialog>
 							<RateQuestion
 								:id="item.id"
 								:question="item.tex"
