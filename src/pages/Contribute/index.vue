@@ -14,9 +14,7 @@
 			</v-col>
 			<BaseContainer>
 				<h1>Courses</h1>
-				<div>
-
-				</div>
+				<div />
 			</BaseContainer>
 		</v-row>
 	</v-container>

@@ -45,13 +45,13 @@
 			>
 				<Button
 					text="Generate Preview"
-					@click="generatePreview"
 					style="position: absolute; bottom: 20px; left: 30px"
+					@click="generatePreview"
 				/>
 				<Button
 					text="Submit"
-					@click="createNewQuestion"
 					style="position: absolute; bottom: 20px; left: 190px"
+					@click="createNewQuestion"
 				/>
 			</v-col>
 		</v-card>
@@ -71,11 +71,11 @@ export default {
 		Button
 	},
 	data: () => ({
-        temp_tex: '',
-        question: {
-            tex: '',
-            mode: 'latex'
-        },
+		temp_tex: '',
+		question: {
+			tex: '',
+			mode: 'latex'
+		},
 		dialog: false
 	}),
 	computed: {
@@ -85,15 +85,15 @@ export default {
 		generatePreview: function () {
 			this.question.tex = this.temp_tex
 		},
-        getQuestion: function () {
-            return this.question.tex
-         },
+		getQuestion: function () {
+			return this.question.tex
+		},
 		createNewQuestion: async function () {
-            console.log(this.temp_tex)
-			await this.$emit('submit-question', {tex: this.temp_tex, mode: this.question.mode})
-            this.question.tex = ''
-            this.temp_tex = ''
-            this.dialog = false
+			console.log(this.temp_tex)
+			await this.$emit('submit-question', { tex: this.temp_tex, mode: this.question.mode })
+			this.question.tex = ''
+			this.temp_tex = ''
+			this.dialog = false
 		},
 		closeDialog: function () {
 			this.dialog = false

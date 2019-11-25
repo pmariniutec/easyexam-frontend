@@ -69,13 +69,13 @@
 			>
 				<Button
 					text="Cancel"
-					@click="cancel"
 					style="position: absolute; bottom: 20px; right: 130px"
+					@click="cancel"
 				/>
 				<Button
 					text="Rate"
-					@click="rate"
 					style="position: absolute; bottom: 20px; right: 40px"
+					@click="rate"
 				/>
 			</v-col>
 		</v-card>
@@ -172,5 +172,5 @@ export default {
 	padding: 20px 0;
 	font-size: 15px
 }
-	
+
 </style>

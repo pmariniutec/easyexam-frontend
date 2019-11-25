@@ -16,6 +16,9 @@ const courseService = {
 	},
 	getCourseById (courseId) {
 		return session.get(`/course/${courseId}`)
+	},
+	getCourseExams (courseId) {
+		return session.get(`/course/${courseId}/exams`)
 	}
 }
 
