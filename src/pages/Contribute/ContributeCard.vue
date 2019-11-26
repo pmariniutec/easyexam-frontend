@@ -24,9 +24,6 @@ export default {
 	},
 
 	data: () => ({
-		bgc: {
-			backgroundColor: '#DDDDDD'
-		}
 	}),
 	computed: {
 	},

@@ -2,6 +2,7 @@ import questionService from '@/services/question'
 import session from '@/services/session'
 
 import {
+  ADD_RATING_TO_QUESTION,
 	CREATE_QUESTION,
 	SET_QUESTION_DATA,
 	ADD_QUESTION_EXAM,
@@ -10,28 +11,38 @@ import {
 } from './types'
 
 const initialState = {
-	currentQuestion: null,
-	suggestedQuestions: []
+	selectedQuestion: {
+    content: null,
+    id: null,
+    keywords: [],
+    ratings: []
+  },
+	suggestedQuestions: [],
 }
 
 const getters = {
-	getCurrentQuestion: state => state.currentQuestion
 }
 
 const actions = {
-	createQuestion ({ commit }, { title, content }) {
-		return questionService.createQuestion(title, content)
+  addRatingToQuestion ({ commit }, { questionId, rating }) {
+    return questionService.addRating(questionId, rating)
+      .then(({ data }) => commit(ADD_RATING_TO_QUESTION, data))
+      .catch(error => console.log(error.response))
+  },
+	createQuestion ({ commit }, { content, keywords }) {
+		return questionService.createQuestion(content, keywords)
 			.then(({ data }) => commit(CREATE_QUESTION, data))
-			.catch(error => {
-				console.log(error.response)
-			})
-	}
+			.catch(error => console.log(error.response))
+	},
 }
 
 const mutations = {
+  [ADD_RATING_TO_QUESTION] (state, data) {
+    console.log('MUTATION ADD_RATING_TO_QUESTION: ', data)
+  },
 	[CREATE_QUESTION] (state, data) {
 		console.log('MUTATION CREATE_QUESTION: ', data)
-	}
+	},
 }
 
 export default {
