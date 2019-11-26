@@ -45,7 +45,6 @@ const actions = {
 				console.log(error.response)
 			})
 	},
-<<<<<<< HEAD
 	fetchAndSelectExam ({ commit }, { id }) {
 		return examService.getExamById(id)
 			.then(({ data }) => commit(SELECT_EXAM, data))
@@ -59,12 +58,6 @@ const actions = {
 	selectExam ({ commit }, exam) {
 		commit(SELECT_EXAM, exam)
 	},
-=======
-	getExamById ({ commit }, examId) {},
-	selectExam ({ commit }, { title, questions }) {
-		commit(SELECT_EXAM, { title, questions })
-	},
->>>>>>> b9650e3d1fe7ea79b5fe0404ba34174824ae23ad
 	previewExam ({ commit }, latexString) {
 		commit(PREVIEW_EXAM_BEGIN)
 		return examService.previewExam(latexString)
