@@ -1,44 +1,40 @@
 <template>
-	<v-container
-		d-flex
-		fluid
-		class="pa-0"
-	>
-		<v-row no-gutters>
-			<v-col
-				class="sidebar-container"
-			>
-				<SideBar
-					current-tab="Exams"
-					@change-tab-event="changeTab"
-				/>
-			</v-col>
-			<BaseContainer>
+	<div>
+		<div
+			class="sidebar-container"
+		>
+			<SideBar
+				current-tab="Exams"
+				@change-tab-event="changeTab"
+			/>
+		</div>
+		<BaseContainer style="margin-left: auto; margin-right: auto;">
+			<v-row>
 				<h1 v-if="$route.params.id">
 					{{ getCurrentCourse.name }} Exams
 				</h1>
 				<h1 v-else>
 					Exams
 				</h1>
-				<v-row class="exams-headers">
-					<v-col>Name</v-col>
-					<v-col>Questions</v-col>
-					<v-col>Last Modified</v-col>
-					<v-col>Date Created</v-col>
-				</v-row>
-				<div
-					v-for="data in exams"
-					:key="data.id"
-					class="exams-data"
-				>
-					<ExamRowComponent :exam-info="data" />
-				</div>
-			</BaseContainer>
-			<div class="add-menu-container">
-				<AddMenu />
-			</div>
-		</v-row>
-	</v-container>
+			</v-row>
+			<v-row class="exams-headers">
+				<v-col>Name</v-col>
+				<v-col>Questions</v-col>
+				<v-col>Last Modified</v-col>
+				<v-col>Date Created</v-col>
+				<v-col cols="1" />
+			</v-row>
+			<ExamRowComponent
+				v-for="data in exams"
+				:key="data.id"
+				:exam-info="data"
+				class="exams-data"
+			/>
+		</BaseContainer>
+		<div class="add-menu-container">
+			<AddMenu />
+		</div>
+	</div>
 </template>
 
 <script>
@@ -65,16 +61,8 @@ export default {
 	computed: {
 		...mapGetters('exam', ['getExamList']),
 		...mapGetters('course', ['getCurrentCourse']),
+		...mapState('course', ['currentCourse']),
 		...mapState('exam', ['exams'])
-		/*
-		exams: function () {
-			let courseId = this.$route.params.id
-			if (courseId) {
-				return this.getCourseExams
-			} else {
-				return this.getExamList
-			}
-		} */
 	},
 	beforeMount: function () {
 		let courseId = this.$route.params.id
@@ -89,6 +77,7 @@ export default {
 	methods: {
 		...mapActions('exam', ['getExams']),
 		...mapActions('course', ['getCourseById', 'getExamsByCourse']),
+		...mapActions('exam', ['deleteExam']),
 		fetchExamsByCourse: async function (courseId) {
 			await this.getExamsByCourse({ courseId })
 		},

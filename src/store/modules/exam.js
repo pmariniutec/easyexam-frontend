@@ -65,6 +65,10 @@ const actions = {
 			.then(() => commit(PREVIEW_EXAM_SUCCESS))
 			.catch(error => commit(PREVIEW_EXAM_FAILURE))
 	},
+	previewCurrentExam ({ commit }) {
+		commit(PREVIEW_EXAM_BEGIN)
+		commit(PREVIEW_CURRENT_EXAM)
+	},
 	deleteExam ({ commit }, id) {
 		return examService.deleteExam(id)
 			.then(({ data }) => commit(DELETE_EXAM, data))

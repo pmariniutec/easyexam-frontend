@@ -3,66 +3,12 @@
 		max-height="100"
 		class="mx-auto exam-row"
 	>
-		<vue-context
-			ref="menu"
-			:close-on-click="closeOnClick"
-			style="padding-left: 0"
-		>
-			<template slot-scoped="child">
-				<li>
-					<a
-						href="#"
-						@click.prevent="previewExamClick(child.data)"
-					>
-						<v-icon
-							small
-							left
-						>mdi-eye</v-icon>
-						Preview
-					</a>
-				</li>
-				<li>
-					<a
-						href="#"
-						@click.prevent="downloadExamClick(child.data)"
-					>
-
-						<v-icon
-							small
-							left
-						>mdi-download</v-icon>
-						Download
-					</a>
-				</li>
-				<li>
-					<a
-						href="#"
-						@click.prevent="editExamClick(child)"
-					>
-
-						<v-icon
-							small
-							left
-						>mdi-lead-pencil</v-icon>
-						Edit
-					</a>
-				</li>
-				<v-divider />
-				<li>
-					<a
-						href="#"
-						@click.prevent="deleteExamClick(data)"
-					>
-
-						<v-icon
-							small
-							left
-						>mdi-delete</v-icon>
-						Delete
-					</a>
-				</li>
-			</template>
-		</vue-context>
+		<AreYouSureDialog
+			:title="title"
+			:dialog="deleteDialog"
+			:on-accept="onAcceptDelete"
+			:on-decline="onDeclineDelete"
+		/>
 		<v-row
 			class="grey--text text--darken-1 text-center"
 			flat
@@ -80,7 +26,7 @@
 			</v-col>
 
 			<v-col>
-				{{ examInfo.questions.length }} questions
+				{{ examInfo.questions.length }} question(s)
 			</v-col>
 
 			<v-col>
@@ -90,7 +36,7 @@
 			<v-col>
 				{{ (new Date(examInfo.created)).toLocaleString() }}
 			</v-col>
-			<v-col>
+			<v-col cols="1">
 				<div class="text-center">
 					<v-menu offset-y>
 						<template v-slot:activator="{ on }">
@@ -127,12 +73,12 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
-import { VueContext } from 'vue-context'
+import AreYouSureDialog from '@/components/AreYouSureDialog'
 
 export default {
 	name: 'ExamRowComponent',
 	components: {
-		VueContext
+		AreYouSureDialog
 	},
 	props: {
 		examInfo: {
@@ -141,9 +87,9 @@ export default {
 			default: () => {}
 		}
 	},
-
 	data () {
 		return {
+			deleteDialog: false,
 			closeOnClick: true,
 		    circle_points: [
 				0, 25, 2, 35, 5, 40, 10, 45, 15, 48,
@@ -162,16 +108,15 @@ export default {
 	computed: {
 		...mapGetters('exams', ['getCurrentExam']),
 		...mapState('course', ['currentCourse']),
-		...mapState('exam', ['currentExam'])
-
+		...mapState('exam', ['currentExam', 'previewExamById']),
+		title () {
+			return 'Are you sure you want to delete ' + this.examInfo.title + '?'
+		}
 	},
 	methods: {
-		...mapActions('exam', ['deleteExam', 'selectExamById', 'previewExam']),
-		deleteExamClick (data) {
-			this.deleteExam(data.id)
-		},
+		...mapActions('exam', ['deleteExam', 'selectExamById', 'previewExam', 'getExams']),
 		previewExamClick (data) {
-			this.previewExam()
+			this.previewExamById({ id: data.id })
 		},
 		editExamClick (data) {
 			this.selectExamById({ id: data.id })
@@ -179,11 +124,23 @@ export default {
 					this.$router.push({ path: `/dashboard/exam-editor/${this.currentExam.id}` })
 				})
 		},
+		deleteExamClick (data) {
+			this.deleteDialog = true
+		},
 		downloadExamClick (data) {
-
 		},
 		openMenu (event, data) {
 			this.$refs.menu.open(event, data)
+		},
+		onAcceptDelete () {
+			this.deleteExam(this.examInfo.id)
+				.then(() => {
+					this.getExams({ courseId: this.currentCourse.id })
+					this.deleteDialog = false
+				})
+		},
+		onDeclineDelete () {
+			this.deleteDialog = false
 		}
 	}
 }
@@ -200,5 +157,8 @@ export default {
 .exam-row {
 	box-shadow: unset;
 	border: unset;
+	width: 100%;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 </style>
