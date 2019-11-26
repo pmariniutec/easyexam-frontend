@@ -6,6 +6,7 @@
 				type="text"
 				:value="data"
 				placeholder=" "
+				@input="update($event.target.value)"
 			>
 			<span class="label">{{ title }}</span>
 		</label>
@@ -15,6 +16,10 @@
 <script>
 export default {
 	name: 'Input',
+	model: {
+		prop: 'data',
+		event: 'input'
+	},
 	props: {
 		title: {
 			type: String,
@@ -26,6 +31,11 @@ export default {
 		data: {
 			type: String,
 			default: ''
+		}
+	},
+	methods: {
+		update: function (value) {
+			this.$emit('input', value)
 		}
 	}
 }
