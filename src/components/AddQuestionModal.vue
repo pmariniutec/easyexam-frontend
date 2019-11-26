@@ -26,7 +26,9 @@
 			</div>
 			<div class="question-data">
 				<Input
-					title="Question"
+          model="question.content" 
+          title="Question"
+          v-on:input="question.content = $event"
 				/>
 				<TextArea
 					title="Answer"
@@ -68,23 +70,23 @@ export default {
   	},
   	data: () => ({
   		dialog: false,
-  		courseName: '',
-  		courseCode: ''
+  		question: {
+        content: '',
+        keywords: [],
+      },
   	}),
   	computed: {
   	},
   	methods: {
-  		...mapActions('course', ['createCourse', 'getCourses']),
+  		...mapActions('question', ['createQuestion']),
   		addQuestion: async function (event) {
-  			let payload = { name: this.courseName, code: this.courseCode }
   			this.dialog = false
-  			await this.createCourse(payload)
-  	            this.$emit('refresh')
+  			await this.createQuestion(this.question)
+  	    this.$emit('refresh')
   		},
-  		toggleMessage () {
-  			console.log('whaaat?')
-  			this.showMessage = !this.showMessage
-  		}
+      updateQuestionContent: function (event) {
+        this.question.content = event.target.value
+      },
   	}
 }
 </script>
