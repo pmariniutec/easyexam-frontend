@@ -11,12 +11,12 @@
 		<div class="profile-container">
 			<form>
 				<Input
+					v-model="user.firstName"
 					title="First Name"
-					:data="getUserObj.firstName"
 				/>
 				<Input
+					v-model="user.lastName"
 					title="Last Name"
-					:data="getUserObj.lastName"
 				/>
 				<div class="user-email-container">
 					<p class="user-email-header">
@@ -28,7 +28,10 @@
 				</div>
 			</form>
 		</div>
-		<Button text="Save" />
+		<Button
+			text="Save"
+			@click="updateUser"
+		/>
 	</div>
 </template>
 
@@ -45,26 +48,36 @@ export default {
 	},
 	data: () => ({
 		user: {
-			firstName: 'firstName',
-			lastName: 'lastName',
-			email: 'email'
+			firstName: '',
+			lastName: '',
+			email: ''
 		}
 	}),
-	    computed: {
-	        ...mapGetters('auth', ['getUser']),
-	        getUserObj () {
-	                return this.getUser
-	        }
-	    },
-	      beforeMount () {
-	        this.fetchUser()
-	      },
-	    methods: {
-	        ...mapActions('auth', ['userDetail']),
-	        fetchUser: async function () {
-	            await this.userDetail()
-	        }
-	    }
+	computed: {
+		...mapGetters('auth', ['getUser']),
+		getUserObj () {
+			return this.getUser
+		}
+	},
+	beforeMount () {
+		this.fetchUser()
+			.then(() => {
+				this.user = this.getUser
+			})
+	},
+	methods: {
+		...mapActions('auth', ['userDetail', 'updateAccount']),
+		fetchUser: async function () {
+			await this.userDetail()
+		},
+		updateUser: function () {
+			let obj = {'firstName' : this.user.firstName, 'lastName' : this.user.lastName}
+			this.updateAccount(obj)
+				.then(() => {
+					this.fetchUser()
+				})
+		}
+	}
 
 }
 </script>
@@ -93,7 +106,7 @@ export default {
 		position: relative;
 		top: -10px;
 		border: 1px solid #DBDBDB;
-    border-radius: 12px;
+		border-radius: 12px;
 		padding: 7px;
 		height: 40px;
 		margin-bottom: 0;
