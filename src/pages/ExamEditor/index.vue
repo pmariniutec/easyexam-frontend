@@ -14,8 +14,8 @@
 			</div>
 			<div class="exam-editor-container">
 				<ExamEditorPanel
-          @save-success="$router.push({ name: 'home' })"
-        />
+					@save-success="$router.push({ name: 'home' })"
+				/>
 			</div>
 		</v-row>
 	</v-container>

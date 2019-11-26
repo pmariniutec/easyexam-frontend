@@ -151,7 +151,7 @@ export default {
 		...mapGetters('exam', ['getCurrentExam', 'getExamPreview']),
 		...mapGetters('course', ['getCourseList']),
 		...mapState('question', ['suggestedQuestions']),
-    ...mapState('exam', { examError: 'error' }),
+		...mapState('exam', { examError: 'error' }),
 
 		listCourses () {
 			return this.getCourseList.map((courseData) => {
@@ -212,9 +212,9 @@ export default {
 			}
 
 		  this.createExamAction(examToSave)
-        .then(() => {
-          this.$emit('save-success')
-        }) 
+				.then(() => {
+					this.$emit('save-success')
+				})
 		},
 		previewExam: function () {
 			let latexString = '\\documentclass{article}\n' +
