@@ -5,8 +5,15 @@ const examService = {
 		// TODO: this possible need a stringify
 		return session.post('/exam/create/', { title, questions, courseId })
 	},
-	getExams () {
-		return session.get('/exam/')
+	getExams (courseId) {
+		if (courseId) {
+			return session.get(`/course/${courseId}/exams`)
+		} else {
+			return session.get('/exam/')
+		}
+	},
+	getExamById (id) {
+		return session.get(`/exam/${id}`)
 	},
 	previewExam (latexString) {
 		return session.post(

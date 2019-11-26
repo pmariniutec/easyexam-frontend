@@ -37,7 +37,7 @@
 				<li>
 					<a
 						href="#"
-						@click.prevent="editExamClick(child.data)"
+						@click.prevent="editExamClick(child)"
 					>
 
 						<v-icon
@@ -90,12 +90,43 @@
 			<v-col>
 				{{ (new Date(examInfo.created)).toLocaleString() }}
 			</v-col>
+			<v-col>
+				<div class="text-center">
+					<v-menu offset-y>
+						<template v-slot:activator="{ on }">
+							<v-btn
+								icon
+								v-on="on"
+							>
+								<v-icon>
+									mdi-dots-vertical
+								</v-icon>
+							</v-btn>
+						</template>
+						<v-list>
+							<v-list-item
+								v-for="(item, index) in menu_items"
+								:key="index"
+								@click="item.onclick(examInfo)"
+							>
+								<v-icon
+									small
+									left
+								>
+									{{ item.icon }}
+								</v-icon>
+								<v-list-item-title>{{ item.title }}</v-list-item-title>
+							</v-list-item>
+						</v-list>
+					</v-menu>
+				</div>
+			</v-col>
 		</v-row>
 	</v-card>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import { VueContext } from 'vue-context'
 
 export default {
@@ -119,19 +150,23 @@ export default {
 				25, 50, 35, 48, 40, 45, 45, 40, 48, 35,
 				50, 25, 48, 15, 45, 10, 40, 5, 35, 2,
 				25, 0, 15, 2, 10, 5, 5, 10, 2, 15
+			],
+			menu_items: [
+				{ 'title': 'Preview', 'icon': 'mdi-eye', 'onclick': this.previewExamClick },
+				{ 'title': 'Download', 'icon': 'mdi-download', 'onclick': this.downloadExamClick },
+				{ 'title': 'Edit', 'icon': 'mdi-lead-pencil', 'onclick': this.editExamClick },
+				{ 'title': 'Delete', 'icon': 'mdi-delete', 'onclick': this.deleteExamClick }
 			]
 		}
 	},
 	computed: {
-		...mapGetters('exams', ['getCurrentExam', 'getExamList']),
-
-		listExams () {
-			return this.getExamList
-		}
+		...mapGetters('exams', ['getCurrentExam']),
+		...mapState('course', ['currentCourse']),
+		...mapState('exam', ['currentExam'])
 
 	},
 	methods: {
-		...mapActions('exams', ['deleteExam', 'selectExam', 'previewExam']),
+		...mapActions('exam', ['deleteExam', 'selectExamById', 'previewExam']),
 		deleteExamClick (data) {
 			this.deleteExam(data.id)
 		},
@@ -139,12 +174,10 @@ export default {
 			this.previewExam()
 		},
 		editExamClick (data) {
-			this.getExams()
-			this.listExams.map(function (q) {
-				if (q.id == data.id) {
-					this.selectExam(q)
-				}
-			})
+			this.selectExamById({ id: data.id })
+				.then(() => {
+					this.$router.push({ path: `/dashboard/exam-editor/${this.currentExam.id}` })
+				})
 		},
 		downloadExamClick (data) {
 

@@ -12,7 +12,6 @@ const questionService = {
 		return session.get('/question')
 	},
 	getQuestions (keywords) {
-		console.log('KEYWORDS M: ', keywords)
 		if (keywords) {
 			return session.get('/question', {
 				'params': { 'keywords': keywords },
