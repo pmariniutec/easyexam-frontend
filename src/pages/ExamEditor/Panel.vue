@@ -6,75 +6,79 @@
 					v-model="examTitle"
 					class="editor-title"
 				>
-				<AddQuestionDialog @submit-question="addLocalQuestion" />
+				<AddQuestionDialog
+					@submit-question="addLocalQuestion"
+				/>
 			</div>
-			<div class="questions">
-				<draggable
-					group="people"
-					@start="drag=true"
-					@end="drag=false"
-				>
-					<div
-						v-for="item in listQuestions"
-						:key="item.id"
+			<div class="grid-container">
+				<div class="questions-container">
+					<draggable
+						group="people"
+						@start="drag=true"
+						@end="drag=false"
 					>
-						<LaTeXPreviewCard
-							:id="item.id"
-							:text.sync="item.content"
-							:mode="item.mode"
-							@edited="changeQuestion"
-							@remove="removeQuestion"
-						/>
-					</div>
-				</draggable>
-			</div>
-			<div class="suggested-questions-container">
-				<b>Suggested questions</b>
-				<div>
-					<v-combobox
-						v-model="keywords"
-						:items="possibleKeywords"
-						:search-input.sync="search"
-						hide-selected
-						placeholder="Search"
-						multiple
-						outlined
-						small-chips
-						return-object
-					/>
-					<v-btn
-						block
-						@click="fetchSuggestedQuestionsHandler"
-					>
-						<v-icon>
-							mdi-send
-						</v-icon>
-					</v-btn>
-				</div>
-				<div
-					v-for="item in suggestedQuestions"
-					:key="item.id"
-					class="suggested-questions"
-				>
-					<div class="suggested-question-card">
-						<div class="icons">
-							<v-btn icon>
-								<v-icon
-									@click="acceptSuggestion(item)"
-								>
-									mdi-menu-left
-								</v-icon>
-							</v-btn>
-							<RateQuestion
+						<div
+							v-for="item in listQuestions"
+							:key="item.id"
+						>
+							<LaTeXPreviewCard
 								:id="item.id"
-								:question="item.content"
+								:text.sync="item.content"
+								:mode="item.mode"
+								@edited="changeQuestion"
+								@remove="removeQuestion"
 							/>
 						</div>
-						<v-col cols="10">
-							<LaTeXPreview
-								:text="item.content"
-							/>
-						</v-col>
+					</draggable>
+				</div>
+				<div class="suggested-questions-container">
+					<b>Suggested questions</b>
+					<div>
+						<v-combobox
+							v-model="keywords"
+							:items="possibleKeywords"
+							:search-input.sync="search"
+							hide-selected
+							placeholder="Search"
+							multiple
+							outlined
+							small-chips
+							return-object
+						/>
+						<v-btn
+							block
+							@click="fetchSuggestedQuestionsHandler"
+						>
+							<v-icon>
+								mdi-send
+							</v-icon>
+						</v-btn>
+					</div>
+					<div
+						v-for="item in suggestedQuestions"
+						:key="item.id"
+						class="suggested-questions"
+					>
+						<div class="suggested-question-card">
+							<div class="icons">
+								<v-btn icon>
+									<v-icon
+										@click="acceptSuggestion(item)"
+									>
+										mdi-menu-left
+									</v-icon>
+								</v-btn>
+								<RateQuestion
+									:id="item.id"
+									:question="item.content"
+								/>
+							</div>
+							<v-col cols="10">
+								<LaTeXPreview
+									:text="item.content"
+								/>
+							</v-col>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -84,8 +88,7 @@
 				Teacher's Name
 			</p>
 			<input
-				id="fullname"
-				v-model="getUser.fullName"
+				:value="getUser.firstName + ' ' + getUser.lastName"
 				class="input-data"
 				disabled
 			>
@@ -99,29 +102,6 @@
 				placeholder="Select..."
 				style="margin: 0; padding: 0"
 			/>
-			<p class="label-data">
-				Keywords
-			</p>
-
-			<v-combobox
-				v-model="keywords"
-				:items="possibleKeywords"
-				:search-input.sync="search"
-				hide-selected
-				placeholder="Add some tags for a more accurate search..."
-				style="margin: 0; padding: 0"
-				multiple
-				persistent-hint
-				small-chips
-			>
-				<v-list-item>
-					<v-list-item-content>
-						<v-list-item-title>
-							No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
-						</v-list-item-title>
-					</v-list-item-content>
-				</v-list-item>
-			</v-combobox>
 
 			<Button
 				text="Preview"
@@ -171,6 +151,7 @@ export default {
 		...mapGetters('exam', ['getCurrentExam', 'getExamPreview']),
 		...mapGetters('course', ['getCourseList']),
 		...mapState('question', ['suggestedQuestions']),
+		...mapState('exam', { examError: 'error' }),
 
 		listCourses () {
 			return this.getCourseList.map((courseData) => {
@@ -214,28 +195,32 @@ export default {
 			await this.getCourses()
 		},
 		saveExam: function () {
-			let newExam = {
+			let examToSave = {
 				title: this.getCurrentExam.title,
 				questions: []
 			}
 
 			for (let i = 0; i < this.getCurrentExam.questions.length; ++i) {
 				let question = this.getCurrentExam.questions[i]
-				newExam.questions.push({
+				examToSave.questions.push({
 					content: question.content
 				})
 			}
 
 			if (this.course) {
-				newExam.courseId = this.course
+				examToSave.courseId = this.course.id
 			}
 
-		  this.createExamAction(newExam)
+		  this.createExamAction(examToSave)
+				.then(() => {
+					this.$emit('save-success')
+				})
 		},
 		previewExam: function () {
 			let latexString = '\\documentclass{article}\n' +
              '\\title{' + this.getCurrentExam.title + '}\n' +
-             '\\author{' + this.getUser.fullName + '}\n' +
+             '\\author{' + this.getUser.firstName + ' ' +
+             this.getUser.lastName + '}\n' +
              '\\begin{document}\n'
 
 			if (this.course) {
@@ -250,8 +235,7 @@ export default {
 		  }
 
 		  for (var i = 0; i < this.getCurrentExam.questions.length; ++i) {
-				latexString += '\\item Question ' + i + '\n\n' +
-          this.getCurrentExam.questions[i].content + '\n'
+				latexString += '\\item ' + this.getCurrentExam.questions[i].content + '\n'
 			}
 
 			if (this.getCurrentExam.questions.length > 0) {
@@ -372,16 +356,24 @@ export default {
 		padding: 70px 0 0 0;
 	}
 
-	.questions {
-		float: left;
+  .grid-container {
+    display: flex;
+  }
+
+	.questions-container {
+    flex: 50%;
 		margin: 20px 10px 20px 0;
 		font-family: "Helvetica";
 	}
 
 	.suggested-questions-container {
-		float: right;
-		width: 35%;
+    flex: 50%;
+    margin: 20px 40px;
 	}
+
+  .suggested-questions-container > div > .v-input {
+    height: 65px;
+  }
 
 	.suggested-questions {
 	}
@@ -410,7 +402,7 @@ export default {
 	}
 
 	.editor-title {
-		width: 100%;
+		width: calc(100% - 199px);
 		color: #23246E;
 		font-family: "Helvetica";
 		font-size: 20px;
