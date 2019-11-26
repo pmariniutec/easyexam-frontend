@@ -2,6 +2,7 @@ import examService from '@/services/exam'
 
 import {
 	CREATE_EXAM,
+	CREATE_EXAM_FAILURE,
 	SET_EXAMS,
 	SELECT_EXAM,
 	SELECT_EXAM_BY_ID,
@@ -35,6 +36,7 @@ const actions = {
 		return examService.createExam(title, questions, courseId)
 			.then(({ data }) => commit(CREATE_EXAM, data))
 			.catch(error => {
+				commit(CREATE_EXAM_FAILURE, error.response)
 				console.log(error.response)
 			})
 	},
@@ -80,7 +82,12 @@ const mutations = {
 		console.log('MUTATION DELETE EXAM: ', data)
 	},
 	[CREATE_EXAM] (state, data) {
+		state.error = false
 		console.log('MUTATION CREATE_EXAM: ', data)
+	},
+	[CREATE_EXAM_FAILURE] (state, data) {
+		state.error = true
+		console.log('error: ', data)
 	},
 	[SET_EXAMS] (state, data) {
 		state.exams = data

@@ -96,7 +96,7 @@ export default {
 		width: 100%;
 	}
 
-.hidden{
-	display: none
-}
+  .hidden{
+	  display: none
+  }
 </style>

@@ -13,7 +13,9 @@
 				</router-link>
 			</div>
 			<div class="exam-editor-container">
-				<ExamEditorPanel />
+				<ExamEditorPanel
+					@save-success="$router.push({ name: 'home' })"
+				/>
 			</div>
 		</v-row>
 	</v-container>
@@ -36,7 +38,10 @@ export default {
 		...mapState('exam', ['currentExam'])
 	},
 	beforeMount: function () {
-		if (!this.currentExam) {
+		let examId = this.$route.params.id
+		if (examId) {
+			this.fetchAndSelectExam({ id: examId })
+		} else {
 			let newExam = {
 				title: 'New Exam',
 				questions: []
@@ -52,7 +57,7 @@ export default {
 		this.selectExam(nullExam)
 	},
 	methods: {
-		...mapActions('exam', ['selectExam'])
+		...mapActions('exam', ['selectExam', 'fetchAndSelectExam'])
 	}
 }
 </script>
@@ -66,7 +71,7 @@ export default {
 	.go-back-container {
 		height: 100%;
 		width: 5%;
-		padding: 25px 0 0 10px;
+		padding: 25px 0 0 25px;
 		margin: 0 20px 0 0;
 	}
 </style>
