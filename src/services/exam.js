@@ -25,6 +25,16 @@ const examService = {
 			}
 		)
 	},
+	compileExam (title, questions, courseId) {
+		return session.post(
+			'/latex/compile/exam',
+			{ title, questions, courseId },
+			{
+				responseType: 'arraybuffer',
+				dataType: 'blob'
+			}
+		)
+	},
 	deleteExam (id) {
 		return session.delete(`/exam/${id}`)
 	}

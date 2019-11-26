@@ -106,7 +106,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters('exams', ['getCurrentExam']),
+		...mapGetters('exam', ['getCurrentExam', 'getExamPreview']),
 		...mapState('course', ['currentCourse']),
 		...mapState('exam', ['currentExam', 'previewExamById']),
 		title () {
@@ -114,9 +114,15 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('exam', ['deleteExam', 'selectExamById', 'previewExam', 'getExams']),
-		previewExamClick (data) {
-			this.previewExamById({ id: data.id })
+		...mapActions('exam', ['deleteExam', 'selectExamById', 'previewExam', 'getExams', 'compileExam']),
+		previewExamClick (exam) {
+			console.log(exam.title, exam.questions, exam.course.id)
+			this.compileExam({ title: exam.title, questions: exam.questions, courseId: exam.course.id })
+				.then((data) => {
+					var file = new Blob([(this.getExamPreview)], { type: 'application/pdf' })
+					var fileURL = URL.createObjectURL(file)
+					window.open(fileURL, '_blank')
+				})
 		},
 		editExamClick (data) {
 			this.selectExamById({ id: data.id })
@@ -127,7 +133,19 @@ export default {
 		deleteExamClick (data) {
 			this.deleteDialog = true
 		},
-		downloadExamClick (data) {
+		downloadExamClick (exam) {
+			console.log('Downloading')
+			this.compileExam({ title: exam.title, questions: exam.questions, courseId: exam.course.id })
+				.then((data) => {
+					var file = new Blob([(this.getExamPreview)], { type: 'application/pdf' })
+					var fileURL = URL.createObjectURL(file)
+					var link = document.createElement('a')
+					link.setAttribute('href', fileURL)
+					link.setAttribute('download', 'document.pdf')
+					var event = document.createEvent('MouseEvents')
+					event.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null)
+					link.dispatchEvent(event)
+				})
 		},
 		openMenu (event, data) {
 			this.$refs.menu.open(event, data)
