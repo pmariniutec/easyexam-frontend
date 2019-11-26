@@ -21,7 +21,7 @@
 					<v-row justify="space-around">
 						<v-col cols="6">
 							<v-textarea
-								v-model="temp_tex"
+								v-model="temp_content"
 								auto-grow
 								label="Make your question..."
 								:value="getQuestion"
@@ -33,7 +33,7 @@
 								Preview
 							</b>
 							<LaTeXPreview
-								:text="question.tex"
+								:text="question.content"
 							/>
 						</v-col>
 					</v-row>
@@ -71,9 +71,9 @@ export default {
 		Button
 	},
 	data: () => ({
-		temp_tex: '',
+		temp_content: '',
 		question: {
-			tex: '',
+			content: '',
 			mode: 'latex'
 		},
 		dialog: false
@@ -83,15 +83,16 @@ export default {
 	},
 	methods: {
 		generatePreview: function () {
-			this.question.tex = this.temp_tex
+			this.question.content =
+				this.temp_content
 		},
 		getQuestion: function () {
-			return this.question.tex
+			return this.question.content
 		},
 		createNewQuestion: async function () {
-			await this.$emit('submit-question', { tex: this.temp_tex, mode: this.question.mode })
-			this.question.tex = ''
-			this.temp_tex = ''
+			await this.$emit('submit-question', { content: this.temp_content, mode: this.question.mode })
+			this.question.content = ''
+			this.temp_content = ''
 			this.dialog = false
 		},
 		closeDialog: function () {

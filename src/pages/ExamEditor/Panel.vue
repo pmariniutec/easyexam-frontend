@@ -221,11 +221,11 @@ export default {
              '\\title{' + this.getCurrentExam.title + '}\n' +
              '\\author{' + this.getUser.firstName + ' ' +
              this.getUser.lastName + '}\n' +
-             '\\begin{document}\n'
+             '\\begin{document}\n' +
+							'\\maketitle\n'
 
 			if (this.course) {
-				latexString += '\\maketitle\n' +
-              '\\begin{center}\n' +
+				latexString += '\\begin{center}\n' +
               this.course.name + ' - ' + this.course.code + '\n' +
               '\\end{center}\n'
 			}
