@@ -26,14 +26,26 @@
 			</div>
 			<div class="question-data">
 				<Input
-          model="question.content" 
-          title="Question"
-          v-on:input="question.content = $event"
+					 v-model="question.content" 
+					 title="Question"
 				/>
 				<TextArea
 					title="Answer"
 					:cols="68"
 					:rows="5"
+				/>
+				<v-combobox
+					v-model="keywords"
+					:items="possibleKeywords"
+					:search-input.sync="search"
+					hide-selected
+					placeholder="Search"
+					multiple
+					background-color="#FFF"
+					label="Keywords"
+					outlined
+					small-chips
+					return-object
 				/>
 			</div>
 			<v-card-actions>
