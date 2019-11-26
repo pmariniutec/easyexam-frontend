@@ -8,21 +8,13 @@
 			<div
 				class="icon"
 				v-on="on"
-        style="height: 56%;"
 			>
-				<v-icon
-					color="#fff"
-					size="28"
-				>
-					mdi-hand-heart
-				</v-icon>
+				<IconQuestion />
 			</div>
 		</template>
 		<div class="question-container">
 			<div class="question-title-container">
-				<h1 class="question-title">
-					Add question
-				</h1>
+				<h1 class="question-title">Add question</h1>
 			</div>
 			<div class="question-data">
 				<Input
@@ -83,9 +75,9 @@ export default {
   	data: () => ({
   		dialog: false,
   		question: {
-        content: '',
-        keywords: [],
-      },
+			content: '',
+			keywords: []
+		}
   	}),
   	computed: {
   	},
@@ -96,9 +88,9 @@ export default {
   			await this.createQuestion(this.question)
   	    this.$emit('refresh')
   		},
-      updateQuestionContent: function (event) {
-        this.question.content = event.target.value
-      },
+		updateQuestionContent: function (event) {
+			this.question.content = event.target.value
+		}
   	}
 }
 </script>

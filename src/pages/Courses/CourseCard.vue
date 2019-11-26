@@ -75,8 +75,9 @@ export default {
 	computed: {
 	},
 	methods: {
-		...mapActions('course', ['deleteCourse']),
+		...mapActions('course', ['deleteCourse', 'selectCourse']),
 		viewCourse: function (event, course) {
+			this.selectCourse({ 'id': course.id })
 			this.$router.push({ path: `/dashboard/exams/${course.id}` })
 		},
 		removeCourse: async function (event, uuid) {
@@ -102,6 +103,8 @@ export default {
 	}
 
 	.course-card-title {
+    width: 120px;
+    height: inherit;
     word-wrap: break-word;
     white-space: inherit;
     font-family: Helvetica;

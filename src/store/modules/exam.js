@@ -2,8 +2,9 @@ import examService from '@/services/exam'
 
 import {
 	CREATE_EXAM,
-	SET_EXAMS_DATA,
+	SET_EXAMS,
 	SELECT_EXAM,
+	SELECT_EXAM_BY_ID,
 	PREVIEW_EXAM_BEGIN,
 	PREVIEW_EXAM_SUCCESS,
 	PREVIEW_EXAM_FAILURE,
@@ -37,16 +38,25 @@ const actions = {
 				console.log(error.response)
 			})
 	},
-	getExams ({ commit }) {
-		return examService.getExams()
-			.then(({ data }) => commit(SET_EXAMS_DATA, data))
+	getExams ({ commit }, { courseId }) {
+		return examService.getExams(courseId)
+			.then(({ data }) => commit(SET_EXAMS, data))
 			.catch(error => {
 				console.log(error.response)
 			})
 	},
-	getExamById ({ commit }, examId) {},
-	selectExam ({ commit }, { title, questions }) {
-		commit(SELECT_EXAM, { title, questions })
+	fetchAndSelectExam ({ commit }, { id }) {
+		return examService.getExamById(id)
+			.then(({ data }) => commit(SELECT_EXAM, data))
+			.catch(error => {
+				console.log(error.response)
+			})
+	},
+	selectExamById ({ commit }, { id }) {
+		commit(SELECT_EXAM_BY_ID, id)
+	},
+	selectExam ({ commit }, exam) {
+		commit(SELECT_EXAM, exam)
 	},
 	previewExam ({ commit }, latexString) {
 		commit(PREVIEW_EXAM_BEGIN)
@@ -68,11 +78,18 @@ const mutations = {
 	[CREATE_EXAM] (state, data) {
 		console.log('MUTATION CREATE_EXAM: ', data)
 	},
-	[SET_EXAMS_DATA] (state, data) {
+	[SET_EXAMS] (state, data) {
 		state.exams = data
 	},
 	[SELECT_EXAM] (state, exam) {
+		console.log('EXAM IS BEING SELECTED: ', exam)
 		state.currentExam = exam
+	},
+	[SELECT_EXAM_BY_ID] (state, id) {
+		state.currentExam = state.exams.find(e => {
+			return e.id == id
+		})
+		console.log('SELECTED CURRENT EXAM: ', state.currentExam)
 	},
 	[PREVIEW_EXAM_BEGIN] (state) {
 		state.loadingPreview = true

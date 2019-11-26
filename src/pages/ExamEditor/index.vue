@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 import ExamEditorPanel from '@/pages/ExamEditor/Panel'
 import IconBack from '@/components/icons/IconBack'
@@ -32,7 +32,28 @@ export default {
 		ExamEditorPanel
 	},
 	data: () => ({}),
-	methods: {}
+	computed: {
+		...mapState('exam', ['currentExam'])
+	},
+	beforeMount: function () {
+		if (!this.currentExam) {
+			let newExam = {
+				title: 'New Exam',
+				questions: []
+			}
+			this.selectExam(newExam)
+		}
+	},
+	destroyed: function () {
+		let nullExam = {
+		  title: '',
+		  questions: []
+	  }
+		this.selectExam(nullExam)
+	},
+	methods: {
+		...mapActions('exam', ['selectExam'])
+	}
 }
 </script>
 
