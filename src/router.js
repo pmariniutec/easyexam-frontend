@@ -76,7 +76,7 @@ const router = new Router({
 			path: '/dashboard',
 			name: 'home',
 			// component: Home,
-      component: Courses,
+			component: Courses,
 			beforeEnter: requireAuth
 		},
 		{

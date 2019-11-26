@@ -7,8 +7,8 @@
 		<template v-slot:activator="{ on }">
 			<div
 				class="icon"
+				style="height: 56%;"
 				v-on="on"
-        style="height: 56%;"
 			>
 				<v-icon
 					color="#fff"
@@ -26,9 +26,9 @@
 			</div>
 			<div class="question-data">
 				<Input
-          model="question.content" 
-          title="Question"
-          v-on:input="question.content = $event"
+					model="question.content"
+					title="Question"
+					@input="question.content = $event"
 				/>
 				<TextArea
 					title="Answer"
@@ -71,9 +71,9 @@ export default {
   	data: () => ({
   		dialog: false,
   		question: {
-        content: '',
-        keywords: [],
-      },
+			content: '',
+			keywords: []
+		}
   	}),
   	computed: {
   	},
@@ -84,9 +84,9 @@ export default {
   			await this.createQuestion(this.question)
   	    this.$emit('refresh')
   		},
-      updateQuestionContent: function (event) {
-        this.question.content = event.target.value
-      },
+		updateQuestionContent: function (event) {
+			this.question.content = event.target.value
+		}
   	}
 }
 </script>
