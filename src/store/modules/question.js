@@ -4,10 +4,7 @@ import session from '@/services/session'
 import {
   ADD_RATING_TO_QUESTION,
 	CREATE_QUESTION,
-	SET_QUESTION_DATA,
-	ADD_QUESTION_EXAM,
-	DELETE_QUESTION,
-	FETCH_QUESTIONS
+	GET_QUESTIONS
 } from './types'
 
 const initialState = {
@@ -34,6 +31,14 @@ const actions = {
 			.then(({ data }) => commit(CREATE_QUESTION, data))
 			.catch(error => console.log(error.response))
 	},
+	fetchSuggestedQuestions ({ commit }, { keywords }) {
+		console.log('TRYING TO FETCH: ', keywords)
+		return questionService.getQuestions(keywords)
+			.then(({ data }) => commit(GET_QUESTIONS, data))
+			.catch(error => {
+				console.log(error.response)
+			})
+	}
 }
 
 const mutations = {
@@ -42,6 +47,10 @@ const mutations = {
   },
 	[CREATE_QUESTION] (state, data) {
 		console.log('MUTATION CREATE_QUESTION: ', data)
+	},
+	[GET_QUESTIONS] (state, data) {
+		console.log('MUTATION GET_QUESTIONS: ', data)
+		state.suggestedQuestions = data
 	},
 }
 

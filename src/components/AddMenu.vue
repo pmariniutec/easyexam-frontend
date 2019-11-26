@@ -15,18 +15,14 @@
         </router-link>
       </div>
       <div class="btns">
-        <router-link
-          :to="{name: 'contribute'}"
-          style="height: 57%; text-decoration: none;"
-        >
-          <v-icon color="#fff" size="28">mdi-hand-heart</v-icon>
-        </router-link>
+          <QuestionNewModal @refresh="forceRender()" />
       </div>
     </label>
   </div>
 </template>
 
 <script>
+  import QuestionNewModal from '@/pages/Contribute/QuestionNewModal'
   import IconAdd from '@/components/icons/IconAdd'
   import IconClose from '@/components/icons/IconClose'
   import IconEdit from '@/components/icons/IconEdit'
@@ -35,6 +31,7 @@
   export default {
     name: 'AddMenu',
     components: {
+      QuestionNewModal,
       IconAdd,
       IconClose,
       IconEdit,

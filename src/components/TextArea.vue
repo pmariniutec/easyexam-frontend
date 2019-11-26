@@ -1,13 +1,13 @@
 <template>
 	<div class="input-container">
 		<label for="idt">
-			<input
-				id="idt"
-				type="text"
-				:value="data"
-				placeholder=" "
-				@input="update($event.target.value)"
+			<textarea
+				:id="id"
+				:cols="cols"
+				:rows="rows"
+				:name="name"
 			>
+			</textarea>
 			<span class="label">{{ title }}</span>
 		</label>
 	</div>
@@ -15,27 +15,27 @@
 
 <script>
 export default {
-	name: 'Input',
-	model: {
-		prop: 'data',
-		event: 'input'
-	},
+	name: 'TextArea',
 	props: {
 		title: {
 			type: String,
 			required: true
 		},
-		idt: {
+		id: {
 			type: String
 		},
 		data: {
 			type: String,
 			default: ''
-		}
-	},
-	methods: {
-		update: function (value) {
-			this.$emit('input', value)
+		},
+		cols: {
+			type: Number
+		},
+		rows: {
+			type: Number
+		},
+		name: {
+			type: String
 		}
 	}
 }
@@ -64,7 +64,8 @@ export default {
     transform-origin: 0 0;
     transition: all .2s ease;
 	}
-  .border {
+
+	.border {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -75,7 +76,8 @@ export default {
     transform-origin: 0 0;
     transition: all .15s ease;
 	}
-  input {
+
+	textarea {
     -webkit-appearance: none;
     width: 100%;
     border: 1px solid #DBDBDB;
@@ -84,25 +86,32 @@ export default {
     font-weight: 400;
     font-size: 16px;
     padding: 7px;
-    height: 40px;
     background-color: white;
     color: #223254;
   	transition: all .15s ease;
 	}
-  input:hover {
-      background-color: white;
-		}
-  input:not(:placeholder-shown) + span {
+
+	textarea:hover {
+  	background-color: white;
+	}
+
+	textarea:not(:placeholder-shown) + span {
   	color: #5A667F;
     transform: translateY(-32px) translatex(-10px) scale(1);
 	}
-	input:focus {
+
+	textarea:focus {
 		outline: none;
 	}
-  input:focus + span {
+
+	textarea:focus + span {
       background: none;
       outline: none;
       color: #67707D;
       transform: translateY(-32px) translatex(-10px) scale(1);
+	}
+
+	textarea:active + span {
+		transform: translateY(-32px) translatex(-10px) scale(1);
 	}
 </style>

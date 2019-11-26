@@ -1,10 +1,13 @@
 <template>
 	<div class="panel-card">
 		<div class="editor-exam">
-			<input
-				class="editor-title"
-				v-model="examTitle"
-			>
+			<div>
+				<input
+					v-model="examTitle"
+					class="editor-title"
+				>
+				<AddQuestionDialog @submit-question="addLocalQuestion" />
+			</div>
 			<div class="questions">
 				<draggable
 					group="people"
@@ -17,7 +20,7 @@
 					>
 						<LaTeXPreviewCard
 							:id="item.id"
-							:text.sync="item.tex"
+							:text.sync="item.content"
 							:mode="item.mode"
 							@edited="changeQuestion"
 							@remove="removeQuestion"
@@ -26,10 +29,30 @@
 				</draggable>
 			</div>
 			<div class="suggested-questions-container">
-				<b>Suggested questions</b> </br>
-				<AddQuestionDialog @submit-question="addLocalQuestion" />
+				<b>Suggested questions</b>
+				<div>
+					<v-combobox
+						v-model="keywords"
+						:items="possibleKeywords"
+						:search-input.sync="search"
+						hide-selected
+						placeholder="Search"
+						multiple
+						outlined
+						small-chips
+						return-object
+					/>
+					<v-btn
+						block
+						@click="fetchSuggestedQuestionsHandler"
+					>
+						<v-icon>
+							mdi-send
+						</v-icon>
+					</v-btn>
+				</div>
 				<div
-					v-for="item in suggestedList"
+					v-for="item in suggestedQuestions"
 					:key="item.id"
 					class="suggested-questions"
 				>
@@ -44,12 +67,12 @@
 							</v-btn>
 							<RateQuestion
 								:id="item.id"
-								:question="item.tex"
+								:question="item.content"
 							/>
 						</div>
 						<v-col cols="10">
 							<LaTeXPreview
-								:text="item.tex"
+								:text="item.content"
 							/>
 						</v-col>
 					</div>
@@ -81,10 +104,10 @@
 			</p>
 
 			<v-combobox
-				:items="items"
+				v-model="keywords"
+				:items="possibleKeywords"
 				:search-input.sync="search"
 				hide-selected
-				hint="Maximum of 5 tags"
 				placeholder="Add some tags for a more accurate search..."
 				style="margin: 0; padding: 0"
 				multiple
@@ -115,7 +138,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import draggable from 'vuedraggable'
 
 import AddQuestionDialog from '@/components/AddQuestionDialog'
@@ -135,16 +158,9 @@ export default {
 		Button
 	},
 	data: () => ({
-		select: ['add-tags-with', 'enter', 'tab', 'paste'],
-		items: [],
+		possibleKeywords: [],
+		keywords: [],
 		search: '', // sync search
-		suggestedList: [ // Fetch from database
-			{
-				id: 1,
-				mode: 'latex',
-				tex: String.raw`$$x^2$$`
-			}
-		],
 		course: null,
 		error: '',
 		tab: null,
@@ -154,6 +170,7 @@ export default {
 		...mapGetters('auth', ['getUser']),
 		...mapGetters('exam', ['getCurrentExam', 'getExamPreview']),
 		...mapGetters('course', ['getCourseList']),
+		...mapState('question', ['suggestedQuestions']),
 
 		listCourses () {
 			return this.getCourseList.map((courseData) => {
@@ -166,14 +183,14 @@ export default {
 		listQuestions () {
 			return this.getCurrentExam.questions
 		},
-    examTitle: {
-      get () {
-        return this.getCurrentExam.title
-      },
-      set (value) {
-        this.$store.commit('exam/UPDATE_EXAM_TITLE', value)
-      }
-    },
+		examTitle: {
+			get () {
+				return this.getCurrentExam.title
+			},
+			set (value) {
+				this.$store.commit('exam/UPDATE_EXAM_TITLE', value)
+			}
+		}
 	},
 	beforeMount: function () {
 		this.fetchUser()
@@ -184,7 +201,12 @@ export default {
 		...mapActions('exam', {	createExamAction: 'createExam', selectExamAction: 'selectExam', previewExamAction: 'previewExam', addQuestionAction: 'addQuestion'
 		}),
 		...mapActions('course', ['getCourses', 'addExamToCourse']),
+		...mapActions('question', ['fetchSuggestedQuestions']),
 
+		fetchSuggestedQuestionsHandler (data) {
+			console.log('KEYWORDS: ', this.keywords)
+			this.fetchSuggestedQuestions({ 'keywords': this.keywords })
+		},
 		fetchUser: async function () {
 			await this.userDetail()
 		},
@@ -200,9 +222,7 @@ export default {
 			for (let i = 0; i < this.getCurrentExam.questions.length; ++i) {
 				let question = this.getCurrentExam.questions[i]
 				newExam.questions.push({
-					title: question.title,
-					content: question.tex,
-					keywords: question.keywords
+					content: question.content
 				})
 			}
 
@@ -218,21 +238,21 @@ export default {
              '\\author{' + this.getUser.fullName + '}\n' +
              '\\begin{document}\n'
 
-          if (this.course) {
-             latexString += '\\maketitle\n' +
+			if (this.course) {
+				latexString += '\\maketitle\n' +
               '\\begin{center}\n' +
               this.course.name + ' - ' + this.course.code + '\n' +
               '\\end{center}\n'
-          }
+			}
 
-          if (this.getCurrentExam.questions.length > 0) {
+			if (this.getCurrentExam.questions.length > 0) {
 				latexString += '\\begin{enumerate}\n'
 		  }
 
 		  for (var i = 0; i < this.getCurrentExam.questions.length; ++i) {
 				latexString += '\\item Question ' + i + '\n\n' +
-                this.getCurrentExam.questions[i].tex + '\n'
-	    	}
+          this.getCurrentExam.questions[i].content + '\n'
+			}
 
 			if (this.getCurrentExam.questions.length > 0) {
 				latexString += '\\end{enumerate}\n'
@@ -240,7 +260,7 @@ export default {
 
 			latexString += '\\end{document}'
 
-			this.previewExamAction(latexString )
+			this.previewExamAction(latexString)
 				.then((data) => {
 					var file = new Blob([(this.getExamPreview)], { type: 'application/pdf' })
 					var fileURL = URL.createObjectURL(file)
@@ -259,26 +279,32 @@ export default {
 			})
 		},
 		acceptSuggestion (item) {
+			for (var i = 0; i < this.suggestedQuestions.length; i++) {
+				if (this.suggestedQuestions[i].id === item.id) {
+					this.suggestedQuestions.splice(i, 1)
+					break
+				}
+			}
 			let tmp_exam = this.getCurrentExam
-			tmp_exam.questions.push({ 'id': item.id, 'mode': 'latex', 'tex': item.tex })
+			tmp_exam.questions.push({ 'id': item.id, 'mode': 'latex', 'content': item.content })
 			this.selectExamAction(tmp_exam)
 		},
 		changeQuestion (quest) {
 			this.getCurrentExam.questions.map(function (q) {
 				if (quest.id == q.id) {
-					q.tex = quest.tex
+					q.content = quest.content
 					q.mode = quest.mode
 				}
 			})
 		},
 		removeQuestion (quest) {
 			for (var i = 0; i < this.getCurrentExam.questions.length; i++) {
-				var isEqual = true;
-				for (var key  in quest.keys) {
+				var isEqual = true
+				for (var key in quest.keys) {
 					var compKey = this.getCurrentExam.questions[i][key] == quest[key]
 					equal = equal && compKey
 				}
-				if (isEqual) { 
+				if (isEqual) {
 					let tmp_exam = this.getCurrentExam
 					tmp_exam.questions.splice(i, 1)
 					this.selectExamAction(tmp_exam)

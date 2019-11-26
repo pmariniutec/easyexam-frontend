@@ -86,6 +86,16 @@ const actions = {
 			.catch(error => {
 				console.log(error.response)
 			})
+	},
+
+	updateAccount ({ commit }, obj) {
+		return authService.updateAccountDetails(obj)
+			.then(({ data }) => {
+				commit(SET_USER_DATA, data)
+			})
+			.catch(error => {
+				console.log(error.response)
+			})
 	}
 }
 

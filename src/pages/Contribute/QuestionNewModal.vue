@@ -1,0 +1,108 @@
+<template>
+	<v-dialog
+		v-model="dialog"
+		persistent
+		max-width="600px"
+	>
+		<template v-slot:activator="{ on }">
+      <div v-on="on" class="icon">
+        <v-icon color="#fff" size="28">mdi-hand-heart</v-icon>
+      </div>
+		</template>
+		<div class="question-container">
+      <div class="question-title-container">
+        <h1 class="question-title">Create a question</h1>
+      </div>
+      <div class="question-data">
+        <Input
+					title="Question"
+				/>
+        <TextArea
+          title="Answer"
+          :cols="68"
+          :rows="5"
+        />
+      </div>
+			<v-card-actions>
+				<v-spacer />
+				<Button
+          text="Close"
+					@click="dialog = false"
+				/>
+				<Button
+          text="Save"
+					@click="addQuestion()"
+          style="margin: 4px;"
+				/>
+			</v-card-actions>
+		</div>
+	</v-dialog>
+</template>
+
+<script>
+  import { mapActions } from 'vuex'
+
+  import Button from '@/components/Button'
+  import Input from '@/components/Input'
+  import IconQuestion from '@/components/icons/IconQuestion'
+  import TextArea from '@/components/TextArea'
+
+  export default {
+  	name: 'QuestionNewModal',
+  	components: {
+  		Button,
+      Input,
+      IconQuestion,
+      TextArea
+  	},
+  	data: () => ({
+  		dialog: false,
+  		courseName: '',
+  		courseCode: ''
+  	}),
+  	computed: {
+  	},
+  	methods: {
+  		...mapActions('course', ['createCourse', 'getCourses']),
+  		addQuestion: async function (event) {
+  			let payload = { name: this.courseName, code: this.courseCode }
+  			this.dialog = false
+  			await this.createCourse(payload)
+  	            this.$emit('refresh')
+  		},
+  		toggleMessage () {
+  			console.log('whaaat?')
+  			this.showMessage = !this.showMessage
+  		}
+  	}
+  }
+</script>
+
+<style lang="scss" scoped>
+@import '~vue-context/dist/css/vue-context.css';
+  .icon {
+    height: 100%;
+    width: 100%;
+    align-self: center;
+    text-align: center;
+  }
+
+  .question-container {
+    background-color: #F3F3F6;
+    border-radius: 20px;
+  }
+
+  .question-title-container {
+    padding: 25px;
+  }
+
+  .question-title {
+    border-bottom: #23246E solid;
+    padding: 0 0 10px 0;
+  }
+
+  .question-data {
+    padding: 20px;
+  }
+
+</style>

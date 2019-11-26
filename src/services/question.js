@@ -1,4 +1,5 @@
 import session from './session'
+var qs = require('qs')
 
 const questionService = {
   addRating(questionId, rating) {
@@ -9,6 +10,19 @@ const questionService = {
 	},
 	getQuestions () {
 		return session.get('/question')
+	},
+	getQuestions (keywords) {
+		console.log('KEYWORDS M: ', keywords)
+		if (keywords) {
+			return session.get('/question', {
+				'params': { 'keywords': keywords },
+				'paramsSerializer': function (keywords) {
+					return qs.stringify(keywords, { arrayFormat: 'repeat' })
+				}
+			})
+		} else {
+			return session.get('/question')
+		}
 	},
 }
 
