@@ -23,17 +23,13 @@
 import { mapActions, mapState } from 'vuex'
 
 import ExamEditorPanel from '@/pages/ExamEditor/Panel'
-import SideBar from '@/components/SideBar'
 import IconBack from '@/components/icons/IconBack'
-import BaseContainer from '@/components/BaseContainer'
 
 export default {
 	name: 'ExamEditor',
 	components: {
-		SideBar,
 		IconBack,
-		ExamEditorPanel,
-		BaseContainer
+		ExamEditorPanel
 	},
 	data: () => ({}),
 	computed: {

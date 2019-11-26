@@ -1,46 +1,53 @@
 <template>
-  <div class="menu">
-    <input class="inputs" type="checkbox" id="toggle" />
-    <label id="show-menu" for="toggle">
-      <div class="btns">
-        <IconAdd class="toggleBtn menuBtn" />
-        <IconClose class="toggleBtn closeBtn" />
-      </div>
-      <div class="btns">
-        <router-link
-          :to="{name: 'examEditor'}"
-          style="height: 44%;"
-        >
-          <IconEdit />
-        </router-link>
-      </div>
-      <div class="btns">
-        <router-link
-          :to="{name: 'contribute'}"
-          style="height: 57%;"
-        >
-          <IconQuestion />
-        </router-link>
-      </div>
-    </label>
-  </div>
+	<div class="menu">
+		<input
+			id="toggle"
+			class="inputs"
+			type="checkbox"
+		>
+		<label
+			id="show-menu"
+			for="toggle"
+		>
+			<div class="btns">
+				<IconAdd class="toggleBtn menuBtn" />
+				<IconClose class="toggleBtn closeBtn" />
+			</div>
+			<div class="btns">
+				<router-link
+					:to="{name: 'examEditor'}"
+					style="height: 49%; text-decoration: none;"
+				>
+					<v-icon
+						color="#fff"
+						size="28"
+					>mdi-pencil-plus-outline</v-icon>
+				</router-link>
+			</div>
+			<div class="btns">
+				<AddQuestionModal @refresh="forceRender()" />
+			</div>
+		</label>
+	</div>
 </template>
 
 <script>
-  import IconAdd from '@/components/icons/IconAdd'
-  import IconClose from '@/components/icons/IconClose'
-  import IconEdit from '@/components/icons/IconEdit'
-  import IconQuestion from '@/components/icons/IconQuestion'
+import AddQuestionModal from '@/components/AddQuestionModal'
+import IconAdd from '@/components/icons/IconAdd'
+import IconClose from '@/components/icons/IconClose'
+import IconEdit from '@/components/icons/IconEdit'
+import IconQuestion from '@/components/icons/IconQuestion'
 
-  export default {
-    name: 'AddMenu',
-    components: {
-      IconAdd,
-      IconClose,
-      IconEdit,
-      IconQuestion
-    }
-  }
+export default {
+	name: 'AddMenu',
+	components: {
+		AddQuestionModal,
+		IconAdd,
+		IconClose,
+		IconEdit,
+		IconQuestion
+	}
+}
 </script>
 
 <style>
@@ -146,4 +153,5 @@
     transform: translateY(0px);
     opacity: 1;
   }
+
 </style>

@@ -9,7 +9,7 @@
 				class="sidebar-container"
 			>
 				<SideBar
-					currentTab="Home"
+					current-tab="Home"
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
