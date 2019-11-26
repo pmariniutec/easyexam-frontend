@@ -14,12 +14,14 @@
 		</template>
 		<div class="question-container">
 			<div class="question-title-container">
-				<h1 class="question-title">Add question</h1>
+				<h1 class="question-title">
+					Add question
+				</h1>
 			</div>
 			<div class="question-data">
 				<Input
-					 v-model="question.content" 
-					 title="Question"
+					v-model="question.content"
+					title="Question"
 				/>
 				<TextArea
 					title="Answer"

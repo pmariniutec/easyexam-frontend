@@ -1,18 +1,13 @@
 <template>
 	<div class="course-card">
 		<v-card
-			:style="bgc"
 			class="course-card"
 			outlined
 		>
-			<v-app-bar
-				class="course-card-modal"
-				style="box-shadow: unset;"
-			>
-				<v-toolbar-title class="course-card-title">
-					{{ courseInfo.name }} : {{ courseInfo.code }}
-				</v-toolbar-title>
-				<v-spacer />
+			<v-card-title class="course-card-title">
+				{{ courseInfo.name }} : {{ courseInfo.code }}
+			</v-card-title>
+			<v-card-actions class="course-card-actions">
 				<v-menu
 					left
 					bottom
@@ -36,16 +31,14 @@
 						</v-list-item>
 					</v-list>
 				</v-menu>
-			</v-app-bar>
-			<v-card-actions>
+
 				<v-btn
 					text
-					block
 					color="black accent-4"
 					class="button"
 					@click="viewCourse($event, courseInfo)"
 				>
-					View
+					View exams
 				</v-btn>
 			</v-card-actions>
 		</v-card>
@@ -67,11 +60,7 @@ export default {
 		}
 	},
 
-	data: () => ({
-		bgc: {
-			backgroundColor: '#DDDDDD'
-		}
-	}),
+	data: () => ({}),
 	computed: {
 	},
 	methods: {
@@ -97,22 +86,17 @@ export default {
 		margin: 10px;
 	}
 
-	.course-card-modal {
+	.course-card-title {
     height: 12vw !important;
     max-height: 120px;
-	}
-
-	.course-card-title {
-    width: 120px;
-    height: inherit;
-    word-wrap: break-word;
-    white-space: inherit;
     font-family: Helvetica;
     font-size: 12pt;
+    align-items: unset;
+    word-break: break-word;
 	}
 
-	.button {
-
-	}
+  .course-card-actions {
+    background-color: #ddd;
+  }
 
 </style>
