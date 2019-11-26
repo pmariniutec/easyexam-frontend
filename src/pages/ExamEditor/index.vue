@@ -36,7 +36,6 @@ export default {
 		...mapState('exam', ['currentExam'])
 	},
 	beforeMount: function () {
-		// TODO: clear currentExam when out of this view
 		if (!this.currentExam) {
 			let newExam = {
 				title: 'New Exam',
@@ -45,11 +44,15 @@ export default {
 			this.selectExam(newExam)
 		}
 	},
+	destroyed: function () {
+		let nullExam = {
+		  title: '',
+		  questions: []
+	  }
+		this.selectExam(nullExam)
+	},
 	methods: {
-		...mapActions('exam', ['fetchAndSelectExam', 'selectExam']),
-		changeTab: function (href) {
-		  this.$router.push({ name: href })
-		}
+		...mapActions('exam', ['selectExam'])
 	}
 }
 </script>
