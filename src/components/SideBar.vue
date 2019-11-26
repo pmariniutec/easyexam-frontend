@@ -110,7 +110,7 @@ export default {
 				title: 'Exams',
 				icon: 'mdi-library-books',
 				name: 'exams'
-			},
+			}
 		],
 		mini: true
 	}),
