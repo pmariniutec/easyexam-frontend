@@ -1,5 +1,6 @@
 <template>
 	<div
+		style="word-break: break-word;"
 		v-html="generateLaTeX"
 	/>
 </template>

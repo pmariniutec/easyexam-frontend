@@ -7,7 +7,7 @@ import {
 	ADD_EXAM_COURSE,
 	SELECT_COURSE,
 	DELETE_COURSE,
-	SET_EXAMS_DATA
+	SET_EXAMS
 } from './types'
 
 const initialState = {
@@ -75,7 +75,7 @@ const actions = {
 	},
 	getExamsByCourse ({ commit }, { courseId }) {
 		return courseService.getCourseExams(courseId)
-			.then(({ data }) => commit(SET_EXAMS_DATA, data))
+			.then(({ data }) => commit(SET_EXAMS, data))
 			.catch(error => {
 				console.log(error.response)
 			})
@@ -98,7 +98,7 @@ const mutations = {
 	[DELETE_COURSE] (state, data) {
 		console.log('MUTATION DELETE_COURSE: ', data)
 	},
-	[SET_EXAMS_DATA] (state, data) {
+	[SET_EXAMS] (state, data) {
 		state.courseExams = data
 	}
 }
