@@ -12,8 +12,7 @@
 					<IconBack />
 				</router-link>
 			</div>
-			<div class="exam-editor-container">
-				<ExamEditorPanel />
+			<div class="exam-editor-container"> <ExamEditorPanel />
 			</div>
 		</v-row>
 	</v-container>

@@ -23,6 +23,7 @@
 							:text.sync="item.content"
 							:mode="item.mode"
 							@edited="changeQuestion"
+							@remove="removeQuestion"
 						/>
 					</div>
 				</draggable>
@@ -153,7 +154,7 @@ export default {
 		AddQuestionDialog,
 		LaTeXPreviewCard,
 		LaTeXPreview,
-	  RateQuestion,
+	    RateQuestion,
 		Button
 	},
 	data: () => ({
@@ -167,7 +168,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters('auth', ['getUser']),
-		...mapGetters('exam', ['getCurrentExam']),
+		...mapGetters('exam', ['getCurrentExam', 'getExamPreview']),
 		...mapGetters('course', ['getCourseList']),
 		...mapState('question', ['suggestedQuestions']),
 
@@ -175,7 +176,7 @@ export default {
 			return this.getCourseList.map((courseData) => {
 				return {
 					text: courseData.name,
-					value: courseData.id
+					value: courseData
 				}
 			})
 		},
@@ -232,27 +233,23 @@ export default {
 		  this.createExamAction(newExam)
 		},
 		previewExam: function () {
-			let courseData = this.getCourseList.filter(item => {
-				return item.id == this.course
-			})[0]
-
 			let latexString = '\\documentclass{article}\n' +
-         '\\title{' + this.getCurrentExam.title + '}\n' +
-         '\\author{' + this.getUser.fullName + '}\n' +
-         '\\begin{document}\n'
+             '\\title{' + this.getCurrentExam.title + '}\n' +
+             '\\author{' + this.getUser.fullName + '}\n' +
+             '\\begin{document}\n'
 
-			if (courseData) {
+			if (this.course) {
 				latexString += '\\maketitle\n' +
-          '\\begin{center}\n' +
-          courseData.name + ' - ' + courseData.code + '\n' +
-          '\\end{center}\n'
+              '\\begin{center}\n' +
+              this.course.name + ' - ' + this.course.code + '\n' +
+              '\\end{center}\n'
 			}
 
 			if (this.getCurrentExam.questions.length > 0) {
 				latexString += '\\begin{enumerate}\n'
-			}
+		  }
 
-			for (var i = 0; i < this.getCurrentExam.questions.length; ++i) {
+		  for (var i = 0; i < this.getCurrentExam.questions.length; ++i) {
 				latexString += '\\item Question ' + i + '\n\n' +
           this.getCurrentExam.questions[i].content + '\n'
 			}
@@ -263,9 +260,9 @@ export default {
 
 			latexString += '\\end{document}'
 
-			this.previewExamAction({ latexString })
-				.then(() => {
-					var file = new Blob([(this.currentPreview)], { type: 'application/pdf' })
+			this.previewExamAction(latexString)
+				.then((data) => {
+					var file = new Blob([(this.getExamPreview)], { type: 'application/pdf' })
 					var fileURL = URL.createObjectURL(file)
 					window.open(fileURL, '_blank')
 				})
@@ -299,6 +296,21 @@ export default {
 					q.mode = quest.mode
 				}
 			})
+		},
+		removeQuestion (quest) {
+			for (var i = 0; i < this.getCurrentExam.questions.length; i++) {
+				var isEqual = true
+				for (var key in quest.keys) {
+					var compKey = this.getCurrentExam.questions[i][key] == quest[key]
+					equal = equal && compKey
+				}
+				if (isEqual) {
+					let tmp_exam = this.getCurrentExam
+					tmp_exam.questions.splice(i, 1)
+					this.selectExamAction(tmp_exam)
+					break
+				}
+			}
 		},
 		addLocalQuestion: function (localQuestion) {
 			let tmp_exam = this.getCurrentExam
