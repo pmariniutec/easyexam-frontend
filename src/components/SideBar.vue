@@ -115,11 +115,6 @@ export default {
 				title: 'New Exam',
 				icon: 'mdi-pencil-plus-outline',
 				name: 'examEditor',
-			},
-			{
-				title: 'Contribute',
-				icon: 'mdi-hand-heart',
-				name: 'contribute'
 			}
 		],
 		mini: true
