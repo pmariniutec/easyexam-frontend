@@ -104,7 +104,7 @@ export default {
 			{
 				title: 'Home',
 				icon: 'mdi-home',
-				name: 'courses'
+				name: 'home'
 			},
 			{
 				title: 'Exams',
