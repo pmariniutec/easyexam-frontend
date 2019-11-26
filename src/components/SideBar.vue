@@ -104,17 +104,12 @@ export default {
 			{
 				title: 'Home',
 				icon: 'mdi-home',
-				name: 'courses'
+				name: 'home'
 			},
 			{
 				title: 'Exams',
 				icon: 'mdi-library-books',
 				name: 'exams'
-			},
-			{
-				title: 'New Exam',
-				icon: 'mdi-pencil-plus-outline',
-				name: 'examEditor',
 			}
 		],
 		mini: true

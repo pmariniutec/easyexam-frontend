@@ -71,7 +71,7 @@ export default {
 			await this.userDetail()
 		},
 		updateUser: function () {
-			let obj = {'firstName' : this.user.firstName, 'lastName' : this.user.lastName}
+			let obj = { 'firstName': this.user.firstName, 'lastName': this.user.lastName }
 			this.updateAccount(obj)
 				.then(() => {
 					this.fetchUser()

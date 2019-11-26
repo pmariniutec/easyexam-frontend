@@ -9,13 +9,17 @@
 				class="sidebar-container"
 			>
 				<SideBar
-					currentTab="Exams"
+					current-tab="Exams"
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
 			<BaseContainer>
-				<h1 v-if="$route.params.id"> {{ getCurrentCourse.name }} Exams </h1>
-        <h1 v-else> Exams </h1>
+				<h1 v-if="$route.params.id">
+					{{ getCurrentCourse.name }} Exams
+				</h1>
+				<h1 v-else>
+					Exams
+				</h1>
 				<v-row class="exams-headers">
 					<v-col>Name</v-col>
 					<v-col>Questions</v-col>

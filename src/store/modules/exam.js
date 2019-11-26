@@ -9,7 +9,7 @@ import {
 	PREVIEW_EXAM_FAILURE,
 	SET_EXAM_PREVIEW,
 	DELETE_EXAM,
-  UPDATE_EXAM_TITLE,
+	UPDATE_EXAM_TITLE
 } from './types'
 
 const initialState = {
@@ -26,7 +26,7 @@ const initialState = {
 const getters = {
 	getExamList: state => state.exams,
 	getCurrentExam: state => state.currentExam,
-    getExamPreview: state => state.currentPreview
+	getExamPreview: state => state.currentPreview
 }
 
 const actions = {
@@ -44,11 +44,11 @@ const actions = {
 				console.log(error.response)
 			})
 	},
-	getExamById ({ commit },  examId ) {},
+	getExamById ({ commit }, examId) {},
 	selectExam ({ commit }, { title, questions }) {
 		commit(SELECT_EXAM, { title, questions })
 	},
-	previewExam ({ commit }, latexString ) {
+	previewExam ({ commit }, latexString) {
 		commit(PREVIEW_EXAM_BEGIN)
 		return examService.previewExam(latexString)
 			.then(({ data }) => commit(SET_EXAM_PREVIEW, data))
@@ -89,9 +89,9 @@ const mutations = {
 	[SET_EXAM_PREVIEW] (state, data) {
 		state.currentPreview = data
 	},
-  [UPDATE_EXAM_TITLE] (state, newTitle) {
-    state.currentExam.title = newTitle
-  }
+	[UPDATE_EXAM_TITLE] (state, newTitle) {
+		state.currentExam.title = newTitle
+	}
 }
 
 export default {

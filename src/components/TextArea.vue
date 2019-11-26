@@ -6,8 +6,7 @@
 				:cols="cols"
 				:rows="rows"
 				:name="name"
-			>
-			</textarea>
+			/>
 			<span class="label">{{ title }}</span>
 		</label>
 	</div>
