@@ -7,33 +7,37 @@
 		<template v-slot:activator="{ on }">
 			<div
 				class="icon"
-				style="height: 56%;"
 				v-on="on"
 			>
-				<v-icon
-					color="#fff"
-					size="28"
-				>
-					mdi-hand-heart
-				</v-icon>
+				<IconQuestion />
 			</div>
 		</template>
 		<div class="question-container">
 			<div class="question-title-container">
-				<h1 class="question-title">
-					Add question
-				</h1>
+				<h1 class="question-title">Add question</h1>
 			</div>
 			<div class="question-data">
 				<Input
-					model="question.content"
-					title="Question"
-					@input="question.content = $event"
+					 v-model="question.content" 
+					 title="Question"
 				/>
 				<TextArea
 					title="Answer"
 					:cols="68"
 					:rows="5"
+				/>
+				<v-combobox
+					v-model="keywords"
+					:items="possibleKeywords"
+					:search-input.sync="search"
+					hide-selected
+					placeholder="Search"
+					multiple
+					background-color="#FFF"
+					label="Keywords"
+					outlined
+					small-chips
+					return-object
 				/>
 			</div>
 			<v-card-actions>

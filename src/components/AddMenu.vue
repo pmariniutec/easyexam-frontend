@@ -18,10 +18,7 @@
 					:to="{name: 'examEditor'}"
 					style="height: 49%; text-decoration: none;"
 				>
-					<v-icon
-						color="#fff"
-						size="28"
-					>mdi-pencil-plus-outline</v-icon>
+					<IconEdit />
 				</router-link>
 			</div>
 			<div class="btns">
