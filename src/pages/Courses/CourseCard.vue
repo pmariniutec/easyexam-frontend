@@ -102,6 +102,8 @@ export default {
 	}
 
 	.course-card-title {
+    width: 120px;
+    height: inherit;
     word-wrap: break-word;
     white-space: inherit;
     font-family: Helvetica;
