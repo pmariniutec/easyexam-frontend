@@ -36,6 +36,13 @@ const actions = {
 				console.log(error.response)
 			})
 	},
+	selectCourse ({ commit }, { id }) {
+		return courseService.getCourseById(id)
+			.then(({ data }) => commit(SELECT_COURSE, data))
+			.catch(error => {
+				console.log(error.response)
+			})
+	},
 	deleteCourse ({ commit }, id) {
 		return courseService.deleteCourse(id)
 			.then(({ data }) => commit(DELETE_COURSE, data))

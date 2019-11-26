@@ -6,7 +6,6 @@ const questionService = {
 		return session.post('/question/create', { title, content })
 	},
 	getQuestions (keywords) {
-		console.log('KEYWORDS M: ', keywords)
 		if (keywords) {
 			return session.get('/question', {
 				'params': { 'keywords': keywords },

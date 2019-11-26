@@ -12,14 +12,15 @@
 					<IconBack />
 				</router-link>
 			</div>
-			<div class="exam-editor-container"> <ExamEditorPanel />
+			<div class="exam-editor-container">
+				<ExamEditorPanel />
 			</div>
 		</v-row>
 	</v-container>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 import ExamEditorPanel from '@/pages/ExamEditor/Panel'
 import SideBar from '@/components/SideBar'
@@ -35,11 +36,12 @@ export default {
 		BaseContainer
 	},
 	data: () => ({}),
+	computed: {
+		...mapState('exam', ['currentExam'])
+	},
 	beforeMount: function () {
-		let examId = this.$route.params.id
-		if (examId) {
-			this.getExamById({ examId })
-		} else {
+		// TODO: clear currentExam when out of this view
+		if (!this.currentExam) {
 			let newExam = {
 				title: 'New Exam',
 				questions: []
@@ -48,7 +50,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('exam', ['getExamById', 'selectExam']),
+		...mapActions('exam', ['fetchAndSelectExam', 'selectExam']),
 		changeTab: function (href) {
 		  this.$router.push({ name: href })
 		}

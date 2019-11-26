@@ -9,13 +9,17 @@
 				class="sidebar-container"
 			>
 				<SideBar
-					currentTab="Exams"
+					current-tab="Exams"
 					@change-tab-event="changeTab"
 				/>
 			</v-col>
 			<BaseContainer>
-				<h1 v-if="$route.params.id"> {{ getCurrentCourse.name }} Exams </h1>
-        <h1 v-else> Exams </h1>
+				<h1 v-if="$route.params.id">
+					{{ getCurrentCourse.name }} Exams
+				</h1>
+				<h1 v-else>
+					Exams
+				</h1>
 				<v-row class="exams-headers">
 					<v-col>Name</v-col>
 					<v-col>Questions</v-col>
@@ -39,7 +43,7 @@
 
 <script>
 
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import ExamRowComponent from '@/pages/Exams/ExamRowComponent'
 import SideBar from '@/components/SideBar'
 import BaseContainer from '@/components/BaseContainer'
@@ -60,7 +64,9 @@ export default {
 	},
 	computed: {
 		...mapGetters('exam', ['getExamList']),
-		...mapGetters('course', ['getCurrentCourse', 'getCourseExams']),
+		...mapGetters('course', ['getCurrentCourse']),
+		...mapState('exam', ['exams'])
+		/*
 		exams: function () {
 			let courseId = this.$route.params.id
 			if (courseId) {
@@ -68,15 +74,16 @@ export default {
 			} else {
 				return this.getExamList
 			}
-		}
+		} */
 	},
 	beforeMount: function () {
 		let courseId = this.$route.params.id
+
 		if (courseId) {
 		  this.getCourseById({ courseId })
-			this.fetchExamsByCourse(courseId)
+			this.fetchExams({ courseId })
 		} else {
-		  this.fetchExams()
+			this.fetchExams({ courseId: null })
 		}
 	},
 	methods: {
@@ -85,8 +92,8 @@ export default {
 		fetchExamsByCourse: async function (courseId) {
 			await this.getExamsByCourse({ courseId })
 		},
-		fetchExams: async function () {
-			await this.getExams()
+		fetchExams: async function (payload) {
+			await this.getExams(payload)
 		},
 		changeTab: function (href) {
 			this.$router.push({ name: href })
