@@ -25,14 +25,14 @@
 				</router-link>
 			</div>
 			<div class="btns">
-				<QuestionNewModal @refresh="forceRender()" />
+				<AddQuestionModal @refresh="forceRender()" />
 			</div>
 		</label>
 	</div>
 </template>
 
 <script>
-import QuestionNewModal from '@/pages/Contribute/QuestionNewModal'
+import AddQuestionModal from '@/components/AddQuestionModal'
 import IconAdd from '@/components/icons/IconAdd'
 import IconClose from '@/components/icons/IconClose'
 import IconEdit from '@/components/icons/IconEdit'
@@ -41,7 +41,7 @@ import IconQuestion from '@/components/icons/IconQuestion'
 export default {
 	name: 'AddMenu',
 	components: {
-		QuestionNewModal,
+		AddQuestionModal,
 		IconAdd,
 		IconClose,
 		IconEdit,

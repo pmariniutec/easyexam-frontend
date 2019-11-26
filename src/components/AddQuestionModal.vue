@@ -8,6 +8,7 @@
 			<div
 				class="icon"
 				v-on="on"
+        style="height: 56%;"
 			>
 				<v-icon
 					color="#fff"
@@ -20,7 +21,7 @@
 		<div class="question-container">
 			<div class="question-title-container">
 				<h1 class="question-title">
-					Create a question
+					Add question
 				</h1>
 			</div>
 			<div class="question-data">
@@ -40,7 +41,7 @@
 					@click="dialog = false"
 				/>
 				<Button
-					text="Save"
+					text="Add"
 					style="margin: 4px;"
 					@click="addQuestion()"
 				/>
@@ -58,7 +59,7 @@ import IconQuestion from '@/components/icons/IconQuestion'
 import TextArea from '@/components/TextArea'
 
 export default {
-  	name: 'QuestionNewModal',
+  	name: 'AddQuestionModal',
   	components: {
   		Button,
 		Input,
