@@ -111,16 +111,6 @@ export default {
 				icon: 'mdi-library-books',
 				name: 'exams'
 			},
-			{
-				title: 'New Exam',
-				icon: 'mdi-pencil-plus-outline',
-				name: 'examEditor',
-			},
-			{
-				title: 'Contribute',
-				icon: 'mdi-hand-heart',
-				name: 'contribute'
-			}
 		],
 		mini: true
 	}),
