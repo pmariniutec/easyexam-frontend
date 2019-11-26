@@ -9,17 +9,17 @@
       <div class="btns">
         <router-link
           :to="{name: 'examEditor'}"
-          style="height: 44%;"
+          style="height: 44%; text-decoration: none;"
         >
-          <IconEdit />
+          <v-icon color="#fff">mdi-pencil-plus-outline</v-icon>
         </router-link>
       </div>
       <div class="btns">
         <router-link
           :to="{name: 'contribute'}"
-          style="height: 57%;"
+          style="height: 57%; text-decoration: none;"
         >
-          <IconQuestion />
+          <v-icon color="#fff">mdi-hand-heart</v-icon>
         </router-link>
       </div>
     </label>
@@ -146,4 +146,5 @@
     transform: translateY(0px);
     opacity: 1;
   }
+    
 </style>
