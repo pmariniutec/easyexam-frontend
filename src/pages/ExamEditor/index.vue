@@ -43,8 +43,7 @@ export default {
 		} else {
 			let newExam = {
 				title: 'New Exam',
-				questions: [],
-				keywords: []
+				questions: []
 			}
 			this.selectExam(newExam)
 		}
