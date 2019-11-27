@@ -2,10 +2,11 @@
 	<div class="input-container">
 		<label for="idt">
 			<textarea
-				:id="id"
 				:cols="cols"
 				:rows="rows"
 				:name="name"
+        :value="data"
+				@input="update($event.target.value)"
 			/>
 			<span class="label">{{ title }}</span>
 		</label>
@@ -20,9 +21,6 @@ export default {
 			type: String,
 			required: true
 		},
-		id: {
-			type: String
-		},
 		data: {
 			type: String,
 			default: ''
@@ -35,6 +33,11 @@ export default {
 		},
 		name: {
 			type: String
+		}
+	},
+  methods: {
+		update: function (value) {
+			this.$emit('input', value)
 		}
 	}
 }

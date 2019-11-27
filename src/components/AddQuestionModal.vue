@@ -19,28 +19,46 @@
 				</h1>
 			</div>
 			<div class="question-data">
-				<Input
-					v-model="question.content"
-					title="Question"
-				/>
 				<TextArea
-					title="Answer"
+					title="Question"
+          value="question.content"
 					:cols="68"
-					:rows="5"
+					:rows="3"
+          @input="question.content = $event"
+          class="my-3"
 				/>
-				<v-combobox
-					v-model="keywords"
-					:items="possibleKeywords"
-					:search-input.sync="search"
-					hide-selected
-					placeholder="Search"
+        <div style="height: 22px;">
+          <Button
+            text="Generate"
+            @click="tex = question.content" 
+          />
+        </div>
+        <div>
+          <span class="latex-preview-label">
+            Preview
+          </span> 
+          <div class="latex-preview-container">
+            <LaTeXPreview
+				      :text="tex"
+				    />
+          </div>
+        </div>
+        <v-checkbox
+          v-model="isShareable"
+          label="Share?"
+        />
+	 			<v-combobox
+          v-if="isShareable"
+					v-model="question.keywords"
+          label="Keywords"
+          background-color="#FFF"
+          placeholder="Select"
+          hide-selected	
 					multiple
-					background-color="#FFF"
-					label="Keywords"
 					outlined
 					small-chips
 					return-object
-				/>
+        />
 			</div>
 			<v-card-actions>
 				<v-spacer />
@@ -65,21 +83,24 @@ import Button from '@/components/Button'
 import Input from '@/components/Input'
 import IconQuestion from '@/components/icons/IconQuestion'
 import TextArea from '@/components/TextArea'
+import LaTeXPreview from '@/components/LaTeXPreview'
 
 export default {
   	name: 'AddQuestionModal',
   	components: {
   		Button,
-		Input,
-		IconQuestion,
-		TextArea
+		  IconQuestion,
+		  TextArea,
+      LaTeXPreview,
   	},
   	data: () => ({
   		dialog: false,
   		question: {
-			content: '',
-			keywords: []
-		}
+			  content: '',
+			  keywords: [], 
+		  },
+      tex: '',
+      isShareable: true,
   	}),
   	computed: {
   	},
@@ -90,9 +111,6 @@ export default {
   			await this.createQuestion(this.question)
   	    this.$emit('refresh')
   		},
-		updateQuestionContent: function (event) {
-			this.question.content = event.target.value
-		}
   	}
 }
 </script>
@@ -122,6 +140,19 @@ export default {
 
   .question-data {
     padding: 20px;
+  }
+
+  .latex-preview-label {
+    color: #5A667F;
+    font-size: 12px;     
+  }
+
+  .latex-preview-container {
+    background-color: white;
+    border: 1px solid #DBDBDB;
+    border-radius: 12px;
+    min-height: 88px;
+    padding: 10px;
   }
 
 </style>
