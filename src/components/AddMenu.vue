@@ -22,14 +22,23 @@
 				</router-link>
 			</div>
 			<div class="btns">
-				<AddQuestionModal @refresh="forceRender()" />
+        <div
+          class="icon"
+          @click="questionDialog = true"
+        >
+          <IconQuestion />
+        </div> 
+				<AddQuestionDialog 
+          :dialog="questionDialog" 
+          @change="questionDialog = $event"
+        /> 
 			</div>
 		</label>
 	</div>
 </template>
 
 <script>
-import AddQuestionModal from '@/components/AddQuestionModal'
+import AddQuestionDialog from '@/components/AddQuestionDialog'
 import IconAdd from '@/components/icons/IconAdd'
 import IconClose from '@/components/icons/IconClose'
 import IconEdit from '@/components/icons/IconEdit'
@@ -38,12 +47,15 @@ import IconQuestion from '@/components/icons/IconQuestion'
 export default {
 	name: 'AddMenu',
 	components: {
-		AddQuestionModal,
+		AddQuestionDialog,
 		IconAdd,
 		IconClose,
 		IconEdit,
 		IconQuestion
-	}
+	},
+  data: () => ({
+    questionDialog: false,
+  }),
 }
 </script>
 
@@ -59,6 +71,13 @@ export default {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+  }
+
+  .icon {
+    height: 100%;
+    width: 100%;
+    align-self: center;
+    text-align: center;
   }
 
   .menu {
