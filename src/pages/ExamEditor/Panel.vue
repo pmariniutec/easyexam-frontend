@@ -109,13 +109,13 @@
 				color="secondary"
 				class="my-3"
 			>
-				{{ getUser.points }}
+				{{ user.points }}
 			</v-chip>
 			<p class="label-data">
 				Teacher's Name
 			</p>
 			<input
-				:value="getUser.firstName + ' ' + getUser.lastName"
+				:value="user.firstName + ' ' + user.lastName"
 				class="input-data"
 				disabled
 			>
@@ -171,13 +171,12 @@ export default {
 		course: null,
 		error: '',
 		tab: null,
-		addQuestionDialog: false,
-		notEnoughPoints: false
+		addQuestionDialog: false
 	}),
 	computed: {
-		...mapGetters('auth', ['getUser']),
 		...mapGetters('exam', ['getCurrentExam', 'getExamPreview']),
 		...mapGetters('course', ['getCourseList']),
+		...mapState('auth', ['user', 'notEnoughPoints']),
 		...mapState('question', ['suggestedQuestions']),
 		...mapState('exam', { examError: 'error' }),
 
@@ -213,13 +212,10 @@ export default {
 		...mapActions('question', ['fetchSuggestedQuestions']),
 
 		fetchSuggestedQuestionsHandler (data) {
-			if (this.getUser.points < 10) {
-				this.notEnoughPoints = true
-				return
+			this.updateUserPoints({ points: this.user.points - 10 })
+			if (!this.notEnoughPoints) {
+				this.fetchSuggestedQuestions({ 'keywords': this.keywords })
 			}
-			this.notEnoughPoints = false
-			this.updateUserPoints({ points: this.getUser.points - 10 })
-			this.fetchSuggestedQuestions({ 'keywords': this.keywords })
 		},
 		fetchUser: async function () {
 			await this.userDetail()

@@ -14,7 +14,8 @@ import {
 	REGISTRATION_CLEAR,
 	SET_USER_DATA,
 	UNSET_USER_DATA,
-	UPDATE_USER_POINTS
+	UPDATE_USER_POINTS,
+	NOT_ENOUGH_POINTS
 } from './types'
 
 const TOKEN_STORAGE_KEY = 'easyexam_token'
@@ -32,8 +33,10 @@ const initialState = {
 	isSocialLogin: '',
 	user: {
 		firstName: '',
-		lastName: ''
-	}
+		lastName: '',
+		points: 0
+	},
+	notEnoughPoints: false
 }
 
 const getters = {
@@ -94,6 +97,10 @@ const actions = {
 			})
 	},
 	updateUserPoints ({ commit }, { points }) {
+		if (points < 0) {
+			commit(NOT_ENOUGH_POINTS)
+			return
+		}
 		return authService.updateAccountDetails({ points })
 			.then(({ data }) => {
 				commit(UPDATE_USER_POINTS, points)
@@ -156,7 +163,11 @@ const mutations = {
 		state.user = {}
 	},
 	[UPDATE_USER_POINTS] (state, data) {
+		state.notEnoughPoints = false
 		state.user.points = data
+	},
+	[NOT_ENOUGH_POINTS] (state) {
+		state.notEnoughPoints = true
 	}
 }
 
