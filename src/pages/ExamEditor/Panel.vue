@@ -115,12 +115,12 @@
 
 			<Button
 				text="Preview"
-				style="position: fixed;bottom: 30px;"
+				class="preview-btn"
 				@click="previewExam()"
 			/>
 			<Button
 				text="Save"
-				style="position: fixed;bottom: 30px;right: 40px"
+				class="save-btn"
 				@click="saveExam()"
 			/>
 		</div>
@@ -411,5 +411,31 @@ export default {
 
 	.icons {
     float: left;
+  }
+
+  .preview-btn {
+    width: 90px;
+    position: fixed;
+    bottom: 30px;
+  }
+
+  .save-btn {
+    width: 90px;
+    padding-left: 27px;
+    position: fixed;
+    bottom: 30px;
+    right: 40px;
+  }
+
+  @media screen and (max-width: 1100px) {
+    .preview-btn {
+      bottom: 65px;
+      right: 6vw;
+    }
+
+    .save-btn {
+      bottom: 20px;
+      right: 6vw;
+    }
   }
 </style>
