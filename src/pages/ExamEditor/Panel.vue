@@ -217,41 +217,6 @@ export default {
 				})
 		},
 		previewExam: function () {
-			/*
-			let latexString = '\\documentclass{article}\n' +
-             '\\title{' + this.getCurrentExam.title + '}\n' +
-             '\\author{' + this.getUser.firstName + ' ' +
-             this.getUser.lastName + '}\n' +
-             '\\begin{document}\n' +
-							'\\maketitle\n'
-
-			if (this.course) {
-				latexString += '\\begin{center}\n' +
-              this.course.name + ' - ' + this.course.code + '\n' +
-              '\\end{center}\n'
-			}
-
-			if (this.getCurrentExam.questions.length > 0) {
-				latexString += '\\begin{enumerate}\n'
-		  }
-
-		  for (var i = 0; i < this.getCurrentExam.questions.length; ++i) {
-				latexString += '\\item ' + this.getCurrentExam.questions[i].content + '\n'
-			}
-
-			if (this.getCurrentExam.questions.length > 0) {
-				latexString += '\\end{enumerate}\n'
-			}
-
-			latexString += '\\end{document}'
-
-			this.previewExamAction(latexString)
-				.then((data) => {
-					var file = new Blob([(this.getExamPreview)], { type: 'application/pdf' })
-					var fileURL = URL.createObjectURL(file)
-					window.open(fileURL, '_blank')
-				})
-			*/
 			this.compileExam({ title: this.getCurrentExam.title, questions: this.getCurrentExam.questions, courseId: this.course.id })
 				.then((data) => {
 					var file = new Blob([(this.getExamPreview)], { type: 'application/pdf' })
