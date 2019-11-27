@@ -116,8 +116,8 @@ export default {
 	methods: {
 		...mapActions('exam', ['deleteExam', 'selectExamById', 'previewExam', 'getExams', 'compileExam']),
 		previewExamClick (exam) {
-			console.log(exam.title, exam.questions, exam.course.id)
-			this.compileExam({ title: exam.title, questions: exam.questions, courseId: exam.course.id })
+      let courseId = exam.course ? exam.course.id : null
+			this.compileExam({ title: exam.title, questions: exam.questions, courseId })
 				.then((data) => {
 					var file = new Blob([(this.getExamPreview)], { type: 'application/pdf' })
 					var fileURL = URL.createObjectURL(file)
