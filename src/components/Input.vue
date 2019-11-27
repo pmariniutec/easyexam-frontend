@@ -2,10 +2,9 @@
 	<div class="input-container">
 		<label for="idt">
 			<input
-				id="idt"
 				type="text"
+				placeholder=""
 				:value="data"
-				placeholder=" "
 				@input="update($event.target.value)"
 			>
 			<span class="label">{{ title }}</span>
@@ -24,9 +23,6 @@ export default {
 		title: {
 			type: String,
 			required: true
-		},
-		idt: {
-			type: String
 		},
 		data: {
 			type: String,

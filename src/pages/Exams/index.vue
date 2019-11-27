@@ -85,6 +85,9 @@ export default {
 			await this.getExams(payload)
 		},
 		changeTab: function (href) {
+			if (href === 'exams') {
+				this.fetchExams({ courseId: null })
+			}
 			this.$router.push({ name: href })
 		}
 	}

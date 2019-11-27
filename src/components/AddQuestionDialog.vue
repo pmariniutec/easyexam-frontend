@@ -1,203 +1,192 @@
 <template>
 	<v-dialog
-		v-model="dialog"
-		width="40%"
+		v-model="model"
+		persistent
+		max-width="600px"
 	>
-		<template v-slot:activator="{ on }">
-			<v-btn
-				class="ma-3"
-				color="red lighten-2"
-				dark
-				v-on="on"
-			>
-				Add Question
-			</v-btn>
-		</template>
-		<v-card
-			class="panel-card"
-		>
-			<v-card-text>
-				<v-container fluid>
-					<v-row justify="space-around">
-						<v-col cols="6">
-							<v-textarea
-								v-model="temp_content"
-								auto-grow
-								label="Make your question..."
-								:value="getQuestion"
-							/>
-							<br><br>
-						</v-col>
-						<v-col cols="6">
-							<b>
-								Preview
-							</b>
-							<LaTeXPreview
-								:text="question.content"
-							/>
-						</v-col>
-					</v-row>
-				</v-container>
-			</v-card-text>
-			<v-col
-				cols="6"
-				class="px-6"
-			>
+		<div class="question-container">
+			<div class="question-title-container">
+				<h1 class="question-title">
+					Add question
+				</h1>
+			</div>
+			<div class="question-data">
+				<TextArea
+					title="Question"
+					:data="question.content"
+					:cols="68"
+					:rows="3"
+					class="my-3"
+					@input="question.content = $event"
+				/>
+				<div style="height: 22px;">
+					<Button
+						text="Generate"
+						@click="tex = question.content"
+					/>
+				</div>
+				<div>
+					<span class="latex-preview-label">
+						Preview
+					</span>
+					<div class="latex-preview-container">
+						<LaTeXPreview
+							:text="tex"
+						/>
+					</div>
+				</div>
+				<div style="display: flex;">
+					<v-checkbox
+						v-model="isShareable"
+						label="Share"
+					/>
+					<v-tooltip right>
+						<template v-slot:activator="{ on }">
+							<v-btn
+								icon
+								style="margin-top: 13px;"
+								v-on="on"
+							>
+								<v-icon color="grey">
+									mdi-help-circle-outline
+								</v-icon>
+							</v-btn>
+						</template>
+						<span>Earn 5 points by sharing one question, you must fill the question's keywords.</span>
+					</v-tooltip>
+				</div>
+				<v-combobox
+					v-if="isShareable"
+					v-model="question.keywords"
+					label="Keywords"
+					background-color="#FFF"
+					placeholder="Select"
+					hide-selected
+					multiple
+					outlined
+					small-chips
+					return-object
+				/>
+			</div>
+			<v-card-actions>
+				<v-spacer />
 				<Button
-					text="Generate Preview"
-					style="position: absolute; bottom: 20px; left: 30px"
-					@click="generatePreview"
+					text="Close"
+					@click="model = false"
 				/>
 				<Button
-					text="Submit"
-					style="position: absolute; bottom: 20px; left: 190px"
-					@click="createNewQuestion"
+					text="Add"
+					style="margin: 4px;"
+					@click="addQuestion()"
 				/>
-			</v-col>
-		</v-card>
+			</v-card-actions>
+		</div>
 	</v-dialog>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
-import LaTeXPreview from '@/components/LaTeXPreview'
 import Button from '@/components/Button'
+import Input from '@/components/Input'
+import TextArea from '@/components/TextArea'
+import LaTeXPreview from '@/components/LaTeXPreview'
+
+function initialState () {
+	return {
+		question: {
+		  content: '',
+			keywords: []
+		},
+		tex: '',
+		isShareable: true
+	}
+}
 
 export default {
 	name: 'AddQuestionDialog',
 	components: {
-		LaTeXPreview,
-		Button
+		Button,
+		TextArea,
+		LaTeXPreview
 	},
-	data: () => ({
-		temp_content: '',
-		question: {
-			content: '',
-			mode: 'latex'
-		},
-		dialog: false
-	}),
+	props: {
+		dialog: {
+			type: Boolean,
+			default: false
+		}
+	},
+	data: function () {
+		return initialState()
+	},
 	computed: {
-
+		...mapState('auth', ['user']),
+		model: {
+			get: function () {
+				return this.dialog
+			},
+			set: function (newValue) {
+				this.$emit('change', newValue)
+			}
+		}
 	},
 	methods: {
-		generatePreview: function () {
-			this.question.content =
-				this.temp_content
-		},
-		getQuestion: function () {
-			return this.question.content
-		},
-		createNewQuestion: async function () {
-			await this.$emit('submit-question', { content: this.temp_content, mode: this.question.mode })
-			this.question.content = ''
-			this.temp_content = ''
-			this.dialog = false
-		},
-		closeDialog: function () {
-			this.dialog = false
+		...mapActions('auth', ['updateUserPoints']),
+  	...mapActions('question', ['createQuestion']),
+  	addQuestion: async function (event) {
+  	  this.model = false
+		  if (this.isShareable) {
+			  await this.createQuestion(this.question)
+				this.updateUserPoints({ points: this.user.points + 5 })
+		  }
+		  this.$emit('submit-question', this.question)
+		  this.resetData()
+  	},
+		resetData: function () {
+			Object.assign(this.$data, initialState())
 		}
 	}
 }
-
 </script>
 
 <style lang="scss" scoped>
-.create-exam-card {
-	background-color: #F3F3F6;
-	width: 80%;
-	left: 8%;
-	margin: 20px 0;
-	border-radius: 5% !important;
-	padding: 0 30px;
-  overflow-y: auto;
-}
-.title {
-	color: #23246E;
-  font-weight: 700 !important;
-  border-bottom-color: #23246E;
-  border-bottom-style: solid;
-	border-radius: 1px;
-  width: 100%;
-  margin: 20px 0px 10px 0px;
-  padding-bottom: 8px;
-}
-.input-card {
-	padding-top: 20px;
-}
-.row {
-	margin-bottom: 5px;
-}
-.row:after {
-	content: "";
-  display: table;
-  clear: both;
-}
-.column {
-  float: left;
-  width: 50%;
-	padding: 0px 20px;
-}
-
-	input.tags {
-	  border: none;
-	  box-shadow: none;
-	  width: auto;
-	  margin: 0;
-	  padding: 0;
-	  border-radius: 4px;
-	  color: #999;
-	  font-size: .9em;
-	  min-height:1.9em;
-	  display: inline-block;
-	  background: transparent;
-	}
-	input.tags:focus {
-	  outline:none;
-	  background: transparent;
-	}
-	.tags-bar{
-		-webkit-appearance: none;
+@import '~vue-context/dist/css/vue-context.css';
+  .icon {
+    height: 100%;
     width: 100%;
-    border: 1px solid #DBDBDB;
-		border-radius: 12px;
-    font-family: inherit;
-    padding: 7px;
-    height: 48px;
-    font-size: 16px;
-    font-weight: 500;
+    align-self: center;
+    text-align: center;
+  }
+
+  .question-container {
+    background-color: #F3F3F6;
+    border-radius: 20px;
+  }
+
+  .question-title-container {
+    padding: 25px;
+  }
+
+  .question-title {
+    border-bottom: #23246E solid;
+    padding: 0 0 10px 0;
+  }
+
+  .question-data {
+    padding: 20px;
+  }
+
+  .latex-preview-label {
+    color: #5A667F;
+    font-size: 12px;
+  }
+
+  .latex-preview-container {
     background-color: white;
-    color: #223254;
-  	transition: all .15s ease;
-	}
-
-	.tag {
-		position: relative;
-		display:inline-block;
-		border-radius: 4px;
-		background: red;
-		color: #fff;
-		margin: 0em 0.1em .1em .1em;
-		padding: .2em 1.3em .15em .45em;
-		transition: opacity 1s ease;
-	}
-
-	.tag:after {
-		position: absolute;
-		display:block;
-		top: .2em;
-		right: 5px;
-		content: "×";
-		font-size: 1em;
-		line-height: 1em;
-		color: rgba(255,255,255,0.5);
-		}
-
-	.tag:hover{
-	 opacity: .8;
-	 cursor:pointer;
-	  transition: opacity 1s ease;
-	}
+    border: 1px solid #DBDBDB;
+    border-radius: 12px;
+    min-height: 88px;
+    padding: 10px;
+  }
 
 </style>

@@ -6,7 +6,17 @@
 					v-model="examTitle"
 					class="editor-title"
 				>
+				<v-btn
+					class="ma-3"
+					color="red lighten-2"
+					dark
+					@click.stop="addQuestionDialog = true"
+				>
+					Add Question
+				</v-btn>
 				<AddQuestionDialog
+					:dialog="addQuestionDialog"
+					@change="addQuestionDialog = $event"
 					@submit-question="addLocalQuestion"
 				/>
 			</div>
@@ -54,6 +64,14 @@
 							</v-icon>
 						</v-btn>
 					</div>
+					<v-alert
+						v-if="notEnoughPoints"
+						type="error"
+						class="mt-3"
+					>
+						You don't have enough points to fetch new suggested questions. Earn points by sharing your questions.
+					</v-alert>
+
 					<div
 						v-for="item in suggestedQuestions"
 						:key="item.id"
@@ -85,10 +103,19 @@
 		</div>
 		<div class="exam-data-container">
 			<p class="label-data">
+				Your points
+			</p>
+			<v-chip
+				color="secondary"
+				class="my-3"
+			>
+				{{ user.points }}
+			</v-chip>
+			<p class="label-data">
 				Teacher's Name
 			</p>
 			<input
-				:value="getUser.firstName + ' ' + getUser.lastName"
+				:value="user.firstName + ' ' + user.lastName"
 				class="input-data"
 				disabled
 			>
@@ -105,12 +132,12 @@
 
 			<Button
 				text="Preview"
-				style="position: fixed;bottom: 30px;"
+				class="preview-btn"
 				@click="previewExam()"
 			/>
 			<Button
 				text="Save"
-				style="position: fixed;bottom: 30px;right: 40px"
+				class="save-btn"
 				@click="saveExam()"
 			/>
 		</div>
@@ -144,12 +171,12 @@ export default {
 		course: null,
 		error: '',
 		tab: null,
-		dialog: false
+		addQuestionDialog: false
 	}),
 	computed: {
-		...mapGetters('auth', ['getUser']),
 		...mapGetters('exam', ['getCurrentExam', 'getExamPreview']),
 		...mapGetters('course', ['getCourseList']),
+		...mapState('auth', ['user', 'notEnoughPoints']),
 		...mapState('question', ['suggestedQuestions']),
 		...mapState('exam', { examError: 'error' }),
 
@@ -178,15 +205,17 @@ export default {
 		this.fetchCourses()
 	},
 	methods: {
-		...mapActions('auth', ['userDetail']),
+		...mapActions('auth', ['userDetail', 'updateUserPoints']),
 		...mapActions('exam', {	createExamAction: 'createExam', selectExamAction: 'selectExam', previewExamAction: 'previewExam', addQuestionAction: 'addQuestion', compileExam: 'compileExam'
 		}),
 		...mapActions('course', ['getCourses', 'addExamToCourse']),
 		...mapActions('question', ['fetchSuggestedQuestions']),
 
 		fetchSuggestedQuestionsHandler (data) {
-			console.log('KEYWORDS: ', this.keywords)
-			this.fetchSuggestedQuestions({ 'keywords': this.keywords })
+			this.updateUserPoints({ points: this.user.points - 10 })
+			if (!this.notEnoughPoints) {
+				this.fetchSuggestedQuestions({ 'keywords': this.keywords })
+			}
 		},
 		fetchUser: async function () {
 			await this.userDetail()
@@ -217,7 +246,8 @@ export default {
 				})
 		},
 		previewExam: function () {
-			this.compileExam({ title: this.getCurrentExam.title, questions: this.getCurrentExam.questions, courseId: this.course.id })
+			let courseId = this.course ? this.course.id : null
+			this.compileExam({ title: this.getCurrentExam.title, questions: this.getCurrentExam.questions, courseId })
 				.then((data) => {
 					var file = new Blob([(this.getExamPreview)], { type: 'application/pdf' })
 					var fileURL = URL.createObjectURL(file)
@@ -400,5 +430,31 @@ export default {
 
 	.icons {
     float: left;
+  }
+
+  .preview-btn {
+    width: 90px;
+    position: fixed;
+    bottom: 30px;
+  }
+
+  .save-btn {
+    width: 90px;
+    padding-left: 27px;
+    position: fixed;
+    bottom: 30px;
+    right: 40px;
+  }
+
+  @media screen and (max-width: 1100px) {
+    .preview-btn {
+      bottom: 65px;
+      right: 6vw;
+    }
+
+    .save-btn {
+      bottom: 20px;
+      right: 6vw;
+    }
   }
 </style>

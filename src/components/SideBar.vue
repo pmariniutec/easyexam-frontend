@@ -57,9 +57,8 @@
 						<v-list-item>
 							<v-chip
 								color="secondary"
-								@click="$emit('change-tab-evemt', 'credits')"
 							>
-								{{ getUserObj.points }}
+								{{ user.points }}
 							</v-chip>
 						</v-list-item>
 						<v-list-item
@@ -75,8 +74,11 @@
 							@click="$emit('change-tab-event', 'logout')"
 						>
 							<v-list-item-icon style="margin:auto">
-								<v-icon size="30">
-									mdi-close
+								<v-icon
+									size="30"
+									color="purple darken-3"
+								>
+									mdi-logout
 								</v-icon>
 							</v-list-item-icon>
 						</v-list-item>
@@ -89,7 +91,7 @@
 
 <script>
 
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
 	name: 'SideBar',
@@ -118,15 +120,12 @@ export default {
 		this.fetchUser()
 	},
 	computed: {
-		...mapGetters('auth', ['getUser']),
-		getUserObj () {
-			return this.getUser
-		}
+		...mapState('auth', ['user'])
 	},
 	methods: {
 		...mapActions('auth', ['userDetail']),
 		fetchUser: async function () {
-			await this.userDetail
+			await this.userDetail()
 		}
 	}
 }

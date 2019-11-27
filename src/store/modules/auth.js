@@ -13,7 +13,9 @@ import {
 	REGISTRATION_FAILURE,
 	REGISTRATION_CLEAR,
 	SET_USER_DATA,
-	UNSET_USER_DATA
+	UNSET_USER_DATA,
+	UPDATE_USER_POINTS,
+	NOT_ENOUGH_POINTS
 } from './types'
 
 const TOKEN_STORAGE_KEY = 'easyexam_token'
@@ -32,8 +34,9 @@ const initialState = {
 	user: {
 		firstName: '',
 		lastName: '',
-		fullName: ''
-	}
+		points: 0
+	},
+	notEnoughPoints: false
 }
 
 const getters = {
@@ -50,12 +53,10 @@ const actions = {
 			.then(() => commit(LOGIN_SUCCESS))
 			.catch(() => commit(LOGIN_FAILURE))
 	},
-
 	logout ({ commit }) {
 		commit(LOGOUT)
 		commit(REMOVE_TOKEN)
 	},
-
 	checkAuthToken ({ commit }) {
 		const token = JSON.parse(localStorage.getItem(TOKEN_STORAGE_KEY))
 		const now = Date.now()
@@ -77,7 +78,6 @@ const actions = {
 				commit(REGISTRATION_FAILURE)
 			})
 	},
-
 	userDetail ({ commit }) {
 		return authService.getAccountDetails()
 			.then(({ data }) => {
@@ -87,11 +87,23 @@ const actions = {
 				console.log(error.response)
 			})
 	},
-
 	updateAccount ({ commit }, obj) {
 		return authService.updateAccountDetails(obj)
 			.then(({ data }) => {
 				commit(SET_USER_DATA, data)
+			})
+			.catch(error => {
+				console.log(error.response)
+			})
+	},
+	updateUserPoints ({ commit }, { points }) {
+		if (points < 0) {
+			commit(NOT_ENOUGH_POINTS)
+			return
+		}
+		return authService.updateAccountDetails({ points })
+			.then(({ data }) => {
+				commit(UPDATE_USER_POINTS, points)
 			})
 			.catch(error => {
 				console.log(error.response)
@@ -149,6 +161,13 @@ const mutations = {
 	},
 	[UNSET_USER_DATA] (state) {
 		state.user = {}
+	},
+	[UPDATE_USER_POINTS] (state, data) {
+		state.notEnoughPoints = false
+		state.user.points = data
+	},
+	[NOT_ENOUGH_POINTS] (state) {
+		state.notEnoughPoints = true
 	}
 }
 

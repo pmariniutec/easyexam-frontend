@@ -19,8 +19,10 @@ const requireAuth = (to, from, next) => {
 	store.dispatch('auth/checkAuthToken')
 		.then(() => {
 			if (!store.getters['auth/isAuthenticated']) {
+				console.log('Not authenticated')
 				next('/login')
 			} else {
+				console.log('Authenticated')
 				next()
 			}
 		})
