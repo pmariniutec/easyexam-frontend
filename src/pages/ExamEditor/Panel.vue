@@ -6,7 +6,17 @@
 					v-model="examTitle"
 					class="editor-title"
 				>
+				<v-btn
+					class="ma-3"
+					color="red lighten-2"
+					dark
+					@click.stop="addQuestionDialog = true"
+				>
+					Add Question
+				</v-btn>
 				<AddQuestionDialog
+					:dialog="addQuestionDialog"
+					@change="addQuestionDialog = $event"
 					@submit-question="addLocalQuestion"
 				/>
 			</div>
@@ -144,7 +154,7 @@ export default {
 		course: null,
 		error: '',
 		tab: null,
-		dialog: false
+		addQuestionDialog: false
 	}),
 	computed: {
 		...mapGetters('auth', ['getUser']),
@@ -217,7 +227,8 @@ export default {
 				})
 		},
 		previewExam: function () {
-			this.compileExam({ title: this.getCurrentExam.title, questions: this.getCurrentExam.questions, courseId: this.course.id })
+			let courseId = this.course ? this.course.id : null
+			this.compileExam({ title: this.getCurrentExam.title, questions: this.getCurrentExam.questions, courseId })
 				.then((data) => {
 					var file = new Blob([(this.getExamPreview)], { type: 'application/pdf' })
 					var fileURL = URL.createObjectURL(file)

@@ -49,13 +49,6 @@ export default {
 			this.selectExam(newExam)
 		}
 	},
-	destroyed: function () {
-		let nullExam = {
-		  title: '',
-		  questions: []
-	  }
-		this.selectExam(nullExam)
-	},
 	methods: {
 		...mapActions('exam', ['selectExam', 'fetchAndSelectExam'])
 	}
