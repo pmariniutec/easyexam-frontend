@@ -1,40 +1,17 @@
 <template>
-	<v-app>
-		<TopNav />
-
+	<v-app style="background-color: #F3F3F6">
 		<v-content>
 			<router-view />
 		</v-content>
-
-		<Footer />
 	</v-app>
 </template>
 
 <script>
-import TopNav from '@/components/TopNav'
-import Footer from '@/components/Footer'
-
 export default {
 	name: 'App',
-
-	components: {
-		TopNav,
-		Footer
-	},
-
-	data () {
-		return {
-
-		}
-	},
-
-	created () {
-
-	},
-
-	mounted () {
-
-	}
+	data () { return {} },
+	created () {},
+	mounted () {}
 }
 </script>
 
