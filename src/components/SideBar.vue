@@ -76,7 +76,7 @@
 							<v-list-item-icon style="margin:auto">
 								<v-icon
 									size="30"
-									color="red darken-3"
+									color="purple darken-3"
 								>
 									mdi-logout
 								</v-icon>
