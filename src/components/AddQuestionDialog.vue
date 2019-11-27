@@ -35,10 +35,26 @@
 						/>
 					</div>
 				</div>
-				<v-checkbox
-					v-model="isShareable"
-					label="Share?"
-				/>
+				<div style="display: flex;">
+					<v-checkbox
+						v-model="isShareable"
+						label="Share"
+					/>
+					<v-tooltip right>
+						<template v-slot:activator="{ on }">
+							<v-btn
+								icon
+								style="margin-top: 13px;"
+								v-on="on"
+							>
+								<v-icon color="grey">
+									mdi-help-circle-outline
+								</v-icon>
+							</v-btn>
+						</template>
+						<span>Earn 5 points by sharing one question, you must fill the question's keywords.</span>
+					</v-tooltip>
+				</div>
 				<v-combobox
 					v-if="isShareable"
 					v-model="question.keywords"
@@ -69,11 +85,10 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 import Button from '@/components/Button'
 import Input from '@/components/Input'
-import IconQuestion from '@/components/icons/IconQuestion'
 import TextArea from '@/components/TextArea'
 import LaTeXPreview from '@/components/LaTeXPreview'
 
@@ -89,23 +104,23 @@ function initialState () {
 }
 
 export default {
-  	name: 'AddQuestionDialog',
-  	components: {
-  		Button,
-		  IconQuestion,
-		  TextArea,
+	name: 'AddQuestionDialog',
+	components: {
+		Button,
+		TextArea,
 		LaTeXPreview
-  	},
+	},
 	props: {
 		dialog: {
 			type: Boolean,
 			default: false
 		}
 	},
-  	data: function () {
+	data: function () {
 		return initialState()
 	},
-  	computed: {
+	computed: {
+		...mapState('auth', ['user']),
 		model: {
 			get: function () {
 				return this.dialog
@@ -114,21 +129,23 @@ export default {
 				this.$emit('change', newValue)
 			}
 		}
+	},
+	methods: {
+		...mapActions('auth', ['updateUserPoints']),
+  	...mapActions('question', ['createQuestion']),
+  	addQuestion: async function (event) {
+  	  this.model = false
+		  if (this.isShareable) {
+			  await this.createQuestion(this.question)
+				this.updateUserPoints({ points: this.user.points + 5 })
+		  }
+		  this.$emit('submit-question', this.question)
+		  this.resetData()
   	},
-  	methods: {
-  		...mapActions('question', ['createQuestion']),
-  		addQuestion: async function (event) {
-  			this.model = false
-			if (this.isShareable) {
-				await this.createQuestion(this.question)
-			}
-			this.$emit('submit-question', this.question)
-			this.resetData()
-  		},
 		resetData: function () {
 			Object.assign(this.$data, initialState())
 		}
-  	}
+	}
 }
 </script>
 

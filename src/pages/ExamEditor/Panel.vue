@@ -64,6 +64,14 @@
 							</v-icon>
 						</v-btn>
 					</div>
+					<v-alert
+						v-if="notEnoughPoints"
+						type="error"
+						class="mt-3"
+					>
+						You don't have enough points to fetch new suggested questions. Earn points by sharing your questions.
+					</v-alert>
+
 					<div
 						v-for="item in suggestedQuestions"
 						:key="item.id"
@@ -94,6 +102,15 @@
 			</div>
 		</div>
 		<div class="exam-data-container">
+			<p class="label-data">
+				Your points
+			</p>
+			<v-chip
+				color="secondary"
+				class="my-3"
+			>
+				{{ getUser.points }}
+			</v-chip>
 			<p class="label-data">
 				Teacher's Name
 			</p>
@@ -154,7 +171,8 @@ export default {
 		course: null,
 		error: '',
 		tab: null,
-		addQuestionDialog: false
+		addQuestionDialog: false,
+		notEnoughPoints: false
 	}),
 	computed: {
 		...mapGetters('auth', ['getUser']),
@@ -188,14 +206,19 @@ export default {
 		this.fetchCourses()
 	},
 	methods: {
-		...mapActions('auth', ['userDetail']),
+		...mapActions('auth', ['userDetail', 'updateUserPoints']),
 		...mapActions('exam', {	createExamAction: 'createExam', selectExamAction: 'selectExam', previewExamAction: 'previewExam', addQuestionAction: 'addQuestion', compileExam: 'compileExam'
 		}),
 		...mapActions('course', ['getCourses', 'addExamToCourse']),
 		...mapActions('question', ['fetchSuggestedQuestions']),
 
 		fetchSuggestedQuestionsHandler (data) {
-			console.log('KEYWORDS: ', this.keywords)
+			if (this.getUser.points < 10) {
+				this.notEnoughPoints = true
+				return
+			}
+			this.notEnoughPoints = false
+			this.updateUserPoints({ points: this.getUser.points - 10 })
 			this.fetchSuggestedQuestions({ 'keywords': this.keywords })
 		},
 		fetchUser: async function () {
