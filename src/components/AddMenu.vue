@@ -22,16 +22,16 @@
 				</router-link>
 			</div>
 			<div class="btns">
-        <div
-          class="icon"
-          @click="questionDialog = true"
-        >
-          <IconQuestion />
-        </div> 
-				<AddQuestionDialog 
-          :dialog="questionDialog" 
-          @change="questionDialog = $event"
-        /> 
+				<div
+					class="icon"
+					@click="questionDialog = true"
+				>
+					<IconQuestion />
+				</div>
+				<AddQuestionDialog
+					:dialog="questionDialog"
+					@change="questionDialog = $event"
+				/>
 			</div>
 		</label>
 	</div>
@@ -53,9 +53,9 @@ export default {
 		IconEdit,
 		IconQuestion
 	},
-  data: () => ({
-    questionDialog: false,
-  }),
+	data: () => ({
+		questionDialog: false
+	})
 }
 </script>
 

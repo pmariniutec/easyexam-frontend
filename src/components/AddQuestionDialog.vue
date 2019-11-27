@@ -13,44 +13,44 @@
 			<div class="question-data">
 				<TextArea
 					title="Question"
-          :data="question.content"
+					:data="question.content"
 					:cols="68"
 					:rows="3"
-          @input="question.content = $event"
-          class="my-3"
+					class="my-3"
+					@input="question.content = $event"
 				/>
-        <div style="height: 22px;">
-          <Button
-            text="Generate"
-            @click="tex = question.content" 
-          />
-        </div>
-        <div>
-          <span class="latex-preview-label">
-            Preview
-          </span> 
-          <div class="latex-preview-container">
-            <LaTeXPreview
-				      :text="tex"
-				    />
-          </div>
-        </div>
-        <v-checkbox
-          v-model="isShareable"
-          label="Share?"
-        />
-	 			<v-combobox
-          v-if="isShareable"
+				<div style="height: 22px;">
+					<Button
+						text="Generate"
+						@click="tex = question.content"
+					/>
+				</div>
+				<div>
+					<span class="latex-preview-label">
+						Preview
+					</span>
+					<div class="latex-preview-container">
+						<LaTeXPreview
+							:text="tex"
+						/>
+					</div>
+				</div>
+				<v-checkbox
+					v-model="isShareable"
+					label="Share?"
+				/>
+				<v-combobox
+					v-if="isShareable"
 					v-model="question.keywords"
-          label="Keywords"
-          background-color="#FFF"
-          placeholder="Select"
-          hide-selected	
+					label="Keywords"
+					background-color="#FFF"
+					placeholder="Select"
+					hide-selected
 					multiple
 					outlined
 					small-chips
 					return-object
-        />
+				/>
 			</div>
 			<v-card-actions>
 				<v-spacer />
@@ -78,14 +78,14 @@ import TextArea from '@/components/TextArea'
 import LaTeXPreview from '@/components/LaTeXPreview'
 
 function initialState () {
-  return {
-    question: {
+	return {
+		question: {
 		  content: '',
-			keywords: [], 
+			keywords: []
 		},
-    tex: '',
-    isShareable: true,
-  }
+		tex: '',
+		isShareable: true
+	}
 }
 
 export default {
@@ -94,40 +94,40 @@ export default {
   		Button,
 		  IconQuestion,
 		  TextArea,
-      LaTeXPreview,
+		LaTeXPreview
   	},
+	props: {
+		dialog: {
+			type: Boolean,
+			default: false
+		}
+	},
   	data: function () {
-      return initialState()
-    },
-    props: {
-      dialog: {
-        type: Boolean,
-        default: false
-      }
-    },
+		return initialState()
+	},
   	computed: {
-      model: {
-        get: function () {
-          return this.dialog
-        },
-        set: function (newValue) {
-          this.$emit('change', newValue)
-        }
-      }
+		model: {
+			get: function () {
+				return this.dialog
+			},
+			set: function (newValue) {
+				this.$emit('change', newValue)
+			}
+		}
   	},
   	methods: {
   		...mapActions('question', ['createQuestion']),
   		addQuestion: async function (event) {
   			this.model = false
-        if (this.isShareable) {
-          await this.createQuestion(this.question)
-        }
-        this.$emit('submit-question', this.question)
-        this.resetData()
+			if (this.isShareable) {
+				await this.createQuestion(this.question)
+			}
+			this.$emit('submit-question', this.question)
+			this.resetData()
   		},
-      resetData: function () {
-        Object.assign(this.$data, initialState())
-      },
+		resetData: function () {
+			Object.assign(this.$data, initialState())
+		}
   	}
 }
 </script>
@@ -161,7 +161,7 @@ export default {
 
   .latex-preview-label {
     color: #5A667F;
-    font-size: 12px;     
+    font-size: 12px;
   }
 
   .latex-preview-container {

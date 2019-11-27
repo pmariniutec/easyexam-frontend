@@ -5,7 +5,7 @@
 				:cols="cols"
 				:rows="rows"
 				:name="name"
-        :value="data"
+				:value="data"
 				@input="update($event.target.value)"
 			/>
 			<span class="label">{{ title }}</span>
@@ -35,7 +35,7 @@ export default {
 			type: String
 		}
 	},
-  methods: {
+	methods: {
 		update: function (value) {
 			this.$emit('input', value)
 		}

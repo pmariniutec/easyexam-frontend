@@ -3,7 +3,7 @@
 		<label for="idt">
 			<input
 				type="text"
-        placeholder=""
+				placeholder=""
 				:value="data"
 				@input="update($event.target.value)"
 			>
@@ -27,7 +27,7 @@ export default {
 		data: {
 			type: String,
 			default: ''
-		},
+		}
 	},
 	methods: {
 		update: function (value) {
