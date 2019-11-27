@@ -18,7 +18,13 @@
 					:to="{name: 'examEditor'}"
 					style="height: 49%; text-decoration: none;"
 				>
-					<IconEdit />
+					<v-icon
+						color="white"
+						style="height: 110%"
+						size="32"
+					>
+						mdi-file-document-edit-outline
+					</v-icon>
 				</router-link>
 			</div>
 			<div class="btns">
@@ -26,7 +32,13 @@
 					class="icon"
 					@click="questionDialog = true"
 				>
-					<IconQuestion />
+					<v-icon
+						color="white"
+						style="height: 110%"
+						size="34"
+					>
+						mdi-comment-question-outline
+					</v-icon>
 				</div>
 				<AddQuestionDialog
 					:dialog="questionDialog"
