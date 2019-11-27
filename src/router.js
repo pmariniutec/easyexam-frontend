@@ -1,11 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from './store/store'
+import store from '@/store/store'
 
-import Home from './views/Home'
-import Login from './views/Login'
-import Register from './views/Register'
-import CreateExam from './views/CreateExam'
+import LandingPage from '@/pages/LandingPage'
+import Login from '@/pages/Login'
+import Register from '@/pages/Register'
+import ForgotPassword from '@/pages/ForgotPassword'
+import Home from '@/pages/Home'
+import Courses from '@/pages/Courses'
+import PageNotFound from '@/pages/PageNotFound'
+import ExamEditor from '@/pages/ExamEditor'
+import Profile from '@/pages/Profile'
+import Exams from '@/pages/Exams'
 
 Vue.use(Router)
 
@@ -13,8 +19,10 @@ const requireAuth = (to, from, next) => {
 	store.dispatch('auth/checkAuthToken')
 		.then(() => {
 			if (!store.getters['auth/isAuthenticated']) {
+				console.log('Not authenticated')
 				next('/login')
 			} else {
+				console.log('Authenticated')
 				next()
 			}
 		})
@@ -24,16 +32,11 @@ const requireNoAuth = (to, from, next) => {
 	store.dispatch('auth/checkAuthToken')
 		.then(() => {
 			if (store.getters['auth/isAuthenticated']) {
-				next('/')
+				next('/dashboard/courses')
 			} else {
 				next()
 			}
 		})
-}
-
-const redirectLogout = (to, from, next) => {
-	store.dispatch('auth/logout')
-		.then(() => next('/login'))
 }
 
 const router = new Router({
@@ -42,8 +45,8 @@ const router = new Router({
 	routes: [
 		{
 			path: '/',
-			name: 'home',
-			component: Home
+			name: 'landingPage',
+			component: LandingPage
 		},
 		{
 			path: '/login',
@@ -60,13 +63,64 @@ const router = new Router({
 		{
 			path: '/logout',
 			name: 'logout',
-			beforeEnter: redirectLogout
+			redirect: to => {
+				store.dispatch('auth/logout')
+				return '/'
+			}
 		},
 		{
-			path: '/create-exam',
-			name: 'create-exam',
-			component: CreateExam,
+			path: '/forgot-password',
+			name: 'forgotPassword',
+			component: ForgotPassword,
+			beforeEnter: requireNoAuth
+		},
+		{
+			path: '/dashboard',
+			name: 'home',
+			// component: Home,
+			component: Courses,
 			beforeEnter: requireAuth
+		},
+		{
+			path: '/dashboard/courses',
+			name: 'courses',
+			component: Courses,
+			beforeEnter: requireAuth
+		},
+		{
+			path: '/dashboard/exam-editor',
+			name: 'examEditor',
+			component: ExamEditor,
+			beforeEnter: requireAuth
+		},
+		{
+			path: '/dashboard/exam-editor/:id',
+			name: 'examEditorId',
+			component: ExamEditor,
+			beforeEnter: requireAuth
+		},
+		{
+			path: '/dashboard/exams',
+			name: 'exams',
+			component: Exams,
+			beforeEnter: requireAuth
+		},
+		{
+			path: '/dashboard/exams/:id',
+			name: 'examsCourseId',
+			component: Exams,
+			beforeEnter: requireAuth
+		},
+		{
+			path: '/dashboard/profile',
+			name: 'profile',
+			component: Profile,
+			beforeEnter: requireAuth
+		},
+		{
+			path: '*',
+			name: 'pageNotFound',
+			component: PageNotFound
 		}
 	]
 })
