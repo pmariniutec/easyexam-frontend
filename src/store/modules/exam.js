@@ -65,11 +65,13 @@ const actions = {
 		return examService.previewExam(latexString)
 			.then(({ data }) => commit(SET_EXAM_PREVIEW, data))
 			.then(() => commit(PREVIEW_EXAM_SUCCESS))
-			.catch(error => commit(PREVIEW_EXAM_FAILURE))
+			.catch(() => commit(PREVIEW_EXAM_FAILURE))
 	},
-	previewCurrentExam ({ commit }) {
-		commit(PREVIEW_EXAM_BEGIN)
-		commit(PREVIEW_CURRENT_EXAM)
+	compileExam ({ commit }, { title, questions, courseId }) {
+		return examService.compileExam(title, questions, courseId)
+			.then(({ data }) => commit(SET_EXAM_PREVIEW, data))
+			.then(() => commit(PREVIEW_EXAM_SUCCESS))
+			.catch(() => commit(PREVIEW_EXAM_FAILURE))
 	},
 	deleteExam ({ commit }, id) {
 		return examService.deleteExam(id)
