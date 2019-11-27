@@ -74,8 +74,11 @@
 							@click="$emit('change-tab-event', 'logout')"
 						>
 							<v-list-item-icon style="margin:auto">
-								<v-icon size="30">
-									mdi-close
+								<v-icon
+									size="30"
+									color="red darken-3"
+								>
+									mdi-logout
 								</v-icon>
 							</v-list-item-icon>
 						</v-list-item>

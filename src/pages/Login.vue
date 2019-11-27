@@ -78,7 +78,7 @@
 								@click="forgotPassword"
 							>
 								<router-link
-									:to="{name: 'forgot-password'}"
+									:to="{name: 'forgotPassword'}"
 									class="forgot-password"
 								>
 									Forgot your password?
