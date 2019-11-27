@@ -8,11 +8,12 @@
 				<v-card-title
 					class="headline grey lighten-2"
 					primary-title
+					style="word-break: break-word;"
 				>
 					{{ title }}
 				</v-card-title>
 
-				<v-card-text>
+				<v-card-text class="my-3">
 					Once you commit this action there's no going back.
 				</v-card-text>
 
@@ -25,14 +26,14 @@
 						text
 						@click="onAccept"
 					>
-						I accept
+						Accept
 					</v-btn>
 					<v-btn
 						color="primary"
 						text
 						@click="onDecline"
 					>
-						I decline
+						Decline
 					</v-btn>
 				</v-card-actions>
 			</v-card>
