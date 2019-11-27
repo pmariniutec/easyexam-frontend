@@ -13,9 +13,7 @@ import {
 	REGISTRATION_FAILURE,
 	REGISTRATION_CLEAR,
 	SET_USER_DATA,
-	UNSET_USER_DATA,
-	UPDATE_USER_POINTS,
-	NOT_ENOUGH_POINTS
+	UNSET_USER_DATA
 } from './types'
 
 const TOKEN_STORAGE_KEY = 'easyexam_token'
@@ -31,12 +29,7 @@ const initialState = {
 	registrationError: false,
 	registrationLoading: false,
 	isSocialLogin: '',
-	user: {
-		firstName: '',
-		lastName: '',
-		points: 0
-	},
-	notEnoughPoints: false
+	user: null
 }
 
 const getters = {
@@ -49,14 +42,17 @@ const actions = {
 	login ({ commit }, { email, password }) {
 		commit(LOGIN_BEGIN)
 		return authService.login(email, password)
-			.then(({ data }) => commit(SET_TOKEN, data.accessToken))
+			.then(({ data }) => commit(SET_TOKEN, data.key))
 			.then(() => commit(LOGIN_SUCCESS))
 			.catch(() => commit(LOGIN_FAILURE))
 	},
+
 	logout ({ commit }) {
-		commit(LOGOUT)
-		commit(REMOVE_TOKEN)
+		return authService.logout()
+			.then(() => commit(LOGOUT))
+			.finally(() => commit(REMOVE_TOKEN))
 	},
+
 	checkAuthToken ({ commit }) {
 		const token = JSON.parse(localStorage.getItem(TOKEN_STORAGE_KEY))
 		const now = Date.now()
@@ -65,48 +61,24 @@ const actions = {
 		}
 		if (token === null || token.expiration < now) {
 			commit(REMOVE_TOKEN)
-			commit(LOGOUT)
 		}
 	},
-	createAccount ({ commit }, { firstName, lastName, email, password, role }) {
+	createAccount ({ commit }, { firstName, lastName, email, password }) {
 		commit(REGISTRATION_BEGIN)
-		return authService.createAccount(firstName, lastName, email, password, role)
+		return authService.createAccount(firstName, lastName, email, password)
 			.then((response) => {
 				commit(REGISTRATION_SUCCESS)
+				commit(SET_TOKEN, response.data.key)
 			})
-			.catch((err) => {
+			.catch(() => {
 				commit(REGISTRATION_FAILURE)
 			})
 	},
+
 	userDetail ({ commit }) {
 		return authService.getAccountDetails()
 			.then(({ data }) => {
 				commit(SET_USER_DATA, data)
-			})
-			.catch(error => {
-				console.log(error.response)
-			})
-	},
-	updateAccount ({ commit }, obj) {
-		return authService.updateAccountDetails(obj)
-			.then(({ data }) => {
-				commit(SET_USER_DATA, data)
-			})
-			.catch(error => {
-				console.log(error.response)
-			})
-	},
-	updateUserPoints ({ commit }, { points }) {
-		if (points < 0) {
-			commit(NOT_ENOUGH_POINTS)
-			return
-		}
-		return authService.updateAccountDetails({ points })
-			.then(({ data }) => {
-				commit(UPDATE_USER_POINTS, points)
-			})
-			.catch(error => {
-				console.log(error.response)
 			})
 	}
 }
@@ -131,7 +103,7 @@ const mutations = {
 	[SET_TOKEN] (state, token) {
 		const obj = { token: token, expiration: Date.now() + 2 * 24 * 60 * 60 * 1000 } // Expires in 2 days
 		localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(obj))
-		session.defaults.headers.Authorization = `Bearer ${token}`
+		session.defaults.headers.Authorization = `Token ${token}`
 		state.token = token
 	},
 	[REMOVE_TOKEN] (state) {
@@ -161,13 +133,6 @@ const mutations = {
 	},
 	[UNSET_USER_DATA] (state) {
 		state.user = {}
-	},
-	[UPDATE_USER_POINTS] (state, data) {
-		state.notEnoughPoints = false
-		state.user.points = data
-	},
-	[NOT_ENOUGH_POINTS] (state) {
-		state.notEnoughPoints = true
 	}
 }
 

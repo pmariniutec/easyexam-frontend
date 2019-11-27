@@ -3,9 +3,21 @@
 		<router-link
 			:to="{ name: 'home' }"
 			class="main-logo"
-		/>
+		>
+			<img
+				:src="require('@/assets/images/logo.png')"
+				height="50"
+			>
+		</router-link>
 		<v-spacer />
 		<v-toolbar-items class="hidden-sm-and-down">
+			<v-btn
+				text
+				:to="{ name: 'create-exam' }"
+				rounded
+			>
+				Create Exam
+			</v-btn>
 			<v-btn
 				v-if="!isAuthenticated"
 				text
