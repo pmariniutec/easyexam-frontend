@@ -64,6 +64,14 @@
 							</v-icon>
 						</v-btn>
 					</div>
+					<v-alert
+						v-if="notEnoughPoints"
+						type="error"
+						class="mt-3"
+					>
+						You don't have enough points to fetch new suggested questions. Earn points by sharing your questions.
+					</v-alert>
+
 					<div
 						v-for="item in suggestedQuestions"
 						:key="item.id"
@@ -95,10 +103,19 @@
 		</div>
 		<div class="exam-data-container">
 			<p class="label-data">
+				Your points
+			</p>
+			<v-chip
+				color="secondary"
+				class="my-3"
+			>
+				{{ user.points }}
+			</v-chip>
+			<p class="label-data">
 				Teacher's Name
 			</p>
 			<input
-				:value="getUser.firstName + ' ' + getUser.lastName"
+				:value="user.firstName + ' ' + user.lastName"
 				class="input-data"
 				disabled
 			>
@@ -157,9 +174,9 @@ export default {
 		addQuestionDialog: false
 	}),
 	computed: {
-		...mapGetters('auth', ['getUser']),
 		...mapGetters('exam', ['getCurrentExam', 'getExamPreview']),
 		...mapGetters('course', ['getCourseList']),
+		...mapState('auth', ['user', 'notEnoughPoints']),
 		...mapState('question', ['suggestedQuestions']),
 		...mapState('exam', { examError: 'error' }),
 
@@ -188,15 +205,17 @@ export default {
 		this.fetchCourses()
 	},
 	methods: {
-		...mapActions('auth', ['userDetail']),
+		...mapActions('auth', ['userDetail', 'updateUserPoints']),
 		...mapActions('exam', {	createExamAction: 'createExam', selectExamAction: 'selectExam', previewExamAction: 'previewExam', addQuestionAction: 'addQuestion', compileExam: 'compileExam'
 		}),
 		...mapActions('course', ['getCourses', 'addExamToCourse']),
 		...mapActions('question', ['fetchSuggestedQuestions']),
 
 		fetchSuggestedQuestionsHandler (data) {
-			console.log('KEYWORDS: ', this.keywords)
-			this.fetchSuggestedQuestions({ 'keywords': this.keywords })
+			this.updateUserPoints({ points: this.user.points - 10 })
+			if (!this.notEnoughPoints) {
+				this.fetchSuggestedQuestions({ 'keywords': this.keywords })
+			}
 		},
 		fetchUser: async function () {
 			await this.userDetail()
