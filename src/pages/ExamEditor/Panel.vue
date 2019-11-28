@@ -72,12 +72,12 @@
 						You don't have enough points to fetch new suggested questions. Earn points by sharing your questions.
 					</v-alert>
 
-					<div
-						v-for="item in suggestedQuestions"
-						:key="item.id"
-						class="suggested-questions"
-					>
-						<div class="suggested-question-card">
+					<div class="suggested-questions">
+						<div
+							v-for="item in suggestedQuestions"
+							:key="item.id"
+							class="suggested-question-card"
+						>
 							<div class="icons">
 								<v-btn icon>
 									<v-icon
@@ -361,6 +361,8 @@ export default {
 
   .grid-container {
     display: flex;
+		height: 88%;
+		overflow: auto;
   }
 
 	.questions-container {
