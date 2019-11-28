@@ -76,6 +76,8 @@ const actions = {
 			})
 			.catch((err) => {
 				commit(REGISTRATION_FAILURE)
+				console.log('REGISTRATION_FAILURE')
+				throw err
 			})
 	},
 	userDetail ({ commit }) {
