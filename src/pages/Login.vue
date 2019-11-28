@@ -65,6 +65,7 @@
 								type="password"
 								:class="{ 'error--text': error }"
 								autocomplete="current-password"
+								:rules="[rules.password]"
 							/>
 							<h3
 								v-if="error"

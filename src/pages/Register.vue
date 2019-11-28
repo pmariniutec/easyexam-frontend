@@ -46,28 +46,35 @@
 					</v-toolbar>
 					<v-card-text class="register-card-input">
 						<v-form
-							:model="valid"
+							ref="form"
+							v-model="valid"
 							class="register-form"
 						>
 							<v-text-field
+								id="firstName"
 								v-model="inputData.firstName"
 								label="name"
 								name="first-name"
 								type="text"
 								required
+								:rules="[rules.firstName]"
 							/>
 							<v-text-field
+								id="lastName"
 								v-model="inputData.lastName"
 								label="last name"
 								name="last-name"
 								type="text"
 								required
+								:rules="[rules.lastName]"
 							/>
 							<v-text-field
+								id="email"
 								v-model="inputData.email"
 								label="email"
 								name="email"
 								type="email"
+								:rules="[rules.email]"
 								required
 							/>
 							<v-text-field
@@ -77,13 +84,21 @@
 								name="password"
 								type="password"
 								autocomplete="new-password"
+								required
 								:rules="[rules.password]"
 							/>
 						</v-form>
 					</v-card-text>
+					<v-alert
+						v-if="error"
+						type="error"
+					>
+						{{ error }}
+					</v-alert>
 					<v-card-actions>
 						<v-btn
 							class="register-btn"
+							:disabled="!valid"
 							@click="register"
 						>
 							Crear Cuenta
@@ -104,7 +119,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 import RegisterBackground from '@/components/RegisterBackground'
 import RegisterBookPile from '@/components/RegisterBookPile'
@@ -123,28 +138,37 @@ export default {
 				email: '',
 				password: ''
 			},
-			valid: null,
+			valid: true,
+			error: null,
 			role: ['ROLE_TEACHER'],
 			rules: {
-				password: value => value.length >= 6 || 'Min 6 characters'
+				required: value => !!value || 'Required',
+				firstName: value => value.length >= 1 || 'Min 1 character',
+				lastName: value => value.length >= 1 || 'Min 1 character',
+				password: value => value.length >= 6 || 'Min 6 characters',
+				email: value => {
+					const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+					return pattern.test(value) || 'Must be a valid email'
+				}
 			}
 		}
 	},
+	computed: {
+		...mapState('auth', ['registrationError'])
+	},
 	methods: {
 		...mapActions('auth', ['createAccount']),
-
-		// TODO: Validation
 		register () {
 			this.error = null
-			const { firstName, lastName, email, password } = this.inputData
 			const payload = { ...this.inputData, role: this.role }
 
 			this.createAccount(payload)
 				.then(() => {
+					console.log()
 					this.$router.push({ name: 'login' })
 				})
-				.catch(() => {
-					console.log('Error, lol.')
+				.catch((error) => {
+					this.error = error.response.data
 				})
 		}
 	}
