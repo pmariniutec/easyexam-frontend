@@ -277,12 +277,13 @@ export default {
 			this.selectExamAction(tmp_exam)
 		},
 		changeQuestion (quest) {
-			this.getCurrentExam.questions.map(function (q) {
-				if (quest.id == q.id) {
-					q.content = quest.content
-					q.mode = quest.mode
-				}
-			})
+            let modified_exam = this.getCurrentExam.questions.map(function(q) {
+                if(quest.id = q.id){
+                    q.content = quest.content
+                    q.mode = quest.mode
+                }
+            })
+            this.selectExamAction(modified_exam)
 		},
 		removeQuestion (quest) {
 			for (var i = 0; i < this.getCurrentExam.questions.length; i++) {
