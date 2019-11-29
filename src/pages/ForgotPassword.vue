@@ -45,7 +45,11 @@
 						</v-toolbar-title>
 						<div class="flex-grow-1" />
 					</v-toolbar>
-					<v-form @submit.prevent>
+					<v-form
+						ref="form"
+						v-model="valid"
+						@submit.prevent
+					>
 						<v-card-text class="login-card-input">
 							<v-text-field
 								id="email"
@@ -54,23 +58,38 @@
 								name="email"
 								type="email"
 								:class="{ 'error--text': error }"
-								:rules="[rules.required, rules.email]"
+								required
+								:rules="[rules.email]"
 							/>
 							<h3
-								v-if="error"
+								v-if="message && forgotPasswordError"
 								class="body-1 red--text"
 								align="center"
 							>
-								{{ error }}
+								{{ message }}
 							</h3>
+							<h3
+								v-if="message && !forgotPasswordError"
+								class="body-1"
+								align="center"
+							>
+								{{ message }}
+								Going back to Login.
+							</h3>
+							<v-progress-circular
+								v-if="inForgotPasswordRequest"
+								indeterminate
+								color="red"
+							/>
 						</v-card-text>
 						<v-card-actions>
 							<v-btn
 								class="login-btn"
+								:disabled="!valid"
 								type="submit"
-								@click="userLogin"
+								@click="resetPassword"
 							>
-								SEND EMAIL
+								Reset Password
 							</v-btn>
 						</v-card-actions>
 						<h3 class="go-to-register">
@@ -89,7 +108,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 import LoginBackground from '@/components/LoginBackground'
 import LoginBookPile from '@/components/LoginBookPile'
@@ -105,7 +124,8 @@ export default {
 			inputData: {
 				email: ''
 			},
-			error: null,
+			valid: true,
+			message: null,
 			rules: {
 				required: value => !!value || 'Required',
 				email: value => {
@@ -115,23 +135,26 @@ export default {
 			}
 		}
 	},
-
+	computed: {
+		...mapState('auth', ['forgotPasswordError', 'inForgotPasswordRequest'])
+	},
 	methods: {
-		...mapActions('auth', ['login']),
-
-		userLogin () {
-			this.error = null
-			this.login(this.inputData)
-				.then(() => this.$router.push({ name: 'login' }))
-				.catch(() => {
-					this.error = 'Invalid Credentials'
+		...mapActions('auth', ['login', 'sendAccountPasswordResetEmail']),
+		sleep (milliseconds) {
+			return new Promise(resolve => setTimeout(resolve, milliseconds))
+		},
+		resetPassword () {
+			this.sendAccountPasswordResetEmail(this.inputData)
+				.then((data) => {
+					this.message = data
+					this.sleep(3000).then(() => {
+						this.$router.push({ name: 'login' })
+					})
+				})
+				.catch((error) => {
+					this.message = error
 				})
 		}
-
-		// TODO
-		// forgotPassword () {
-		//
-		// }
 	}
 }
 </script>

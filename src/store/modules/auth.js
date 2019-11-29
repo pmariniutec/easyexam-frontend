@@ -15,7 +15,10 @@ import {
 	SET_USER_DATA,
 	UNSET_USER_DATA,
 	UPDATE_USER_POINTS,
-	NOT_ENOUGH_POINTS
+	NOT_ENOUGH_POINTS,
+	FORGOT_PASSWORD_SUCCESS,
+	FORGOT_PASSWORD_FAILURE,
+	FORGOT_PASSWORD_BEGIN
 } from './types'
 
 const TOKEN_STORAGE_KEY = 'easyexam_token'
@@ -30,7 +33,9 @@ const initialState = {
 	registrationCompleted: false,
 	registrationError: false,
 	registrationLoading: false,
+	forgotPasswordError: false,
 	isSocialLogin: '',
+	inForgotPasswordRequest: false,
 	user: {
 		firstName: '',
 		lastName: '',
@@ -110,6 +115,20 @@ const actions = {
 			.catch(error => {
 				console.log(error.response)
 			})
+	},
+	sendAccountPasswordResetEmail ({ commit }, { email }) {
+		commit(FORGOT_PASSWORD_BEGIN)
+		return authService.sendAccountPasswordResetEmail(email)
+			.then(({ data }) => {
+				console.log(data)
+				commit(FORGOT_PASSWORD_SUCCESS)
+				return data
+			})
+			.catch(error => {
+				console.log(error.response)
+				commit(FORGOT_PASSWORD_FAILURE)
+				throw error
+			})
 	}
 }
 
@@ -170,6 +189,17 @@ const mutations = {
 	},
 	[NOT_ENOUGH_POINTS] (state) {
 		state.notEnoughPoints = true
+	},
+	[FORGOT_PASSWORD_BEGIN] (state) {
+		state.inForgotPasswordRequest = true
+	},
+	[FORGOT_PASSWORD_SUCCESS] (state) {
+		state.forgotPasswordError = false
+		state.inForgotPasswordRequest = false
+	},
+	[FORGOT_PASSWORD_FAILURE] (state) {
+		state.forgotPasswordError = true
+		state.inForgotPasswordRequest = false
 	}
 }
 
