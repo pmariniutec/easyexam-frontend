@@ -91,25 +91,25 @@ const actions = {
 			})
 	},
 	userDetail ({ commit }) {
-		commit(USER_PATCH_BEGIN)
 		return authService.getAccountDetails()
 			.then(({ data }) => {
-				commit(USER_PATCH_SUCCESS)
 				commit(SET_USER_DATA, data)
 				return data
 			})
 			.catch(error => {
-				commit(USER_PATCH_ERROR)
-				return error
+				throw error
 			})
 	},
 	updateAccount ({ commit }, obj) {
+		commit(USER_PATCH_BEGIN)
 		return authService.updateAccountDetails(obj)
 			.then(({ data }) => {
-				commit(SET_USER_DATA, data)
+				commit(USER_PATCH_SUCCESS)
+				return data
 			})
 			.catch(error => {
-				console.log(error.response)
+				commit(USER_PATCH_ERROR)
+				throw error
 			})
 	},
 	updateUserPoints ({ commit }, { points }) {
@@ -206,7 +206,7 @@ const mutations = {
 		state.inUserPatch = false
 		state.userPatchError = false
 	},
-	[USER_PATCH_SUCCESS] (state) {
+	[USER_PATCH_ERROR] (state) {
 		state.inUserPatch = false
 		state.userPatchError = true
 	},

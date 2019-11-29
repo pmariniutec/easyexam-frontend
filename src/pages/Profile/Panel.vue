@@ -32,6 +32,24 @@
 				/>
 			</form>
 		</div>
+		<v-progress-circular
+			v-if="inUserPatch"
+			indeterminate
+			color="primary"
+		/>
+		<v-snackbar
+			v-model="snackbar"
+			:timeout="timeout"
+		>
+			{{ message }}
+			<v-btn
+				color="blue"
+				text
+				@click="message = null"
+			>
+				Close
+			</v-btn>
+		</v-snackbar>
 		<Button
 			text="Save"
 			@click="updateUser"
@@ -40,7 +58,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
 
@@ -56,12 +74,18 @@ export default {
 			lastName: '',
 			email: '',
 			password: ''
-		}
+		},
+		message: null,
+		timeout: 2000
 	}),
 	computed: {
 		...mapGetters('auth', ['getUser']),
+		...mapState('auth', ['inUserPatch', 'userPatchError']),
 		getUserObj () {
 			return this.getUser
+		},
+		snackbar () {
+			return this.message != null
 		}
 	},
 	beforeMount () {
@@ -85,9 +109,17 @@ export default {
 				obj.password = this.user.password
 			}
 			this.updateAccount(obj)
-				.then(() => {
+				.then((data) => {
 					this.user.password = ''
+					console.log('SUC:', data)
+					this.message = data
 					this.fetchUser()
+				})
+				.catch((error) => {
+					console.log('error: ', error.response)
+					this.user.password = ''
+					let errors = error.response.data.errors.map(x => x.defaultMessage)
+					this.message = errors.join('\r\n')
 				})
 		}
 	}
