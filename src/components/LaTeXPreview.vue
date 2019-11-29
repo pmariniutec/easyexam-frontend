@@ -18,9 +18,13 @@ export default {
 	},
 	computed: {
 		generateLaTeX: function () {
-			let generator = new HtmlGenerator({ hyphenate: false })
-			let doc = parse(this.text, { generator: generator }).htmlDocument()
-			return doc.documentElement.outerHTML
+      try {
+			  let generator = new HtmlGenerator({ hyphenate: false })
+			  let doc = parse(this.text, { generator: generator }).htmlDocument()
+			  return doc.documentElement.outerHTML
+      } catch (e) {
+        return "<html>Invalid LaTeX code</html>"
+      }
 		},
 		getText: function () {
 			return this.text

@@ -88,7 +88,7 @@ const router = new Router({
 			beforeEnter: requireAuth
 		},
 		{
-			path: '/dashboard/exam-editor',
+			path: '/dashboard/exam-editor/new',
 			name: 'examEditor',
 			component: ExamEditor,
 			beforeEnter: requireAuth
