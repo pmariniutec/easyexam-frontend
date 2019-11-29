@@ -14,7 +14,7 @@ const authService = {
 	},
 
 	sendAccountPasswordResetEmail (email) {
-		return session.post('/password/reset/', { email })
+		return session.post('/auth/password/reset/', { email })
 	},
 
 	resetAccountPassword (uid, token, newPass1, newPass2) {
