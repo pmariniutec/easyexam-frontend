@@ -15,7 +15,10 @@ import {
 	SET_USER_DATA,
 	UNSET_USER_DATA,
 	UPDATE_USER_POINTS,
-	NOT_ENOUGH_POINTS
+	NOT_ENOUGH_POINTS,
+	USER_PATCH_BEGIN,
+	USER_PATCH_SUCCESS,
+	USER_PATCH_ERROR
 } from './types'
 
 const TOKEN_STORAGE_KEY = 'easyexam_token'
@@ -36,7 +39,9 @@ const initialState = {
 		lastName: '',
 		points: 0
 	},
-	notEnoughPoints: false
+	notEnoughPoints: false,
+	inUserPatch: false,
+	userPatchError: false
 }
 
 const getters = {
@@ -81,12 +86,16 @@ const actions = {
 			})
 	},
 	userDetail ({ commit }) {
+		commit(USER_PATCH_BEGIN)
 		return authService.getAccountDetails()
 			.then(({ data }) => {
+				commit(USER_PATCH_SUCCESS)
 				commit(SET_USER_DATA, data)
+				return data
 			})
 			.catch(error => {
-				console.log(error.response)
+				commit(USER_PATCH_ERROR)
+				return error
 			})
 	},
 	updateAccount ({ commit }, obj) {
@@ -170,6 +179,17 @@ const mutations = {
 	},
 	[NOT_ENOUGH_POINTS] (state) {
 		state.notEnoughPoints = true
+	},
+	[USER_PATCH_BEGIN] (state) {
+		state.inUserPatch = true
+	},
+	[USER_PATCH_SUCCESS] (state) {
+		state.inUserPatch = false
+		state.userPatchError = false
+	},
+	[USER_PATCH_SUCCESS] (state) {
+		state.inUserPatch = false
+		state.userPatchError = true
 	}
 }
 

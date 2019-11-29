@@ -26,6 +26,10 @@
 						{{ getUserObj.email }}
 					</p>
 				</div>
+				<Input
+					v-model="user.password"
+					title="Password"
+				/>
 			</form>
 		</div>
 		<Button
@@ -50,7 +54,8 @@ export default {
 		user: {
 			firstName: '',
 			lastName: '',
-			email: ''
+			email: '',
+			password: ''
 		}
 	}),
 	computed: {
@@ -61,8 +66,12 @@ export default {
 	},
 	beforeMount () {
 		this.fetchUser()
-			.then(() => {
-				this.user = this.getUser
+			.then((data) => {
+				// I'm sorry for this unu
+				let tempUser = this.getUser
+				this.user.firstName = tempUser.firstName
+				this.user.lastName = tempUser.lastName
+				this.user.email = tempUser.email
 			})
 	},
 	methods: {
@@ -72,8 +81,12 @@ export default {
 		},
 		updateUser: function () {
 			let obj = { 'firstName': this.user.firstName, 'lastName': this.user.lastName }
+			if (this.user.password !== '') {
+				obj.password = this.user.password
+			}
 			this.updateAccount(obj)
 				.then(() => {
+					this.user.password = ''
 					this.fetchUser()
 				})
 		}
