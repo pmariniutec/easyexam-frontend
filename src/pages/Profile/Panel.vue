@@ -111,12 +111,10 @@ export default {
 			this.updateAccount(obj)
 				.then((data) => {
 					this.user.password = ''
-					console.log('SUC:', data)
 					this.message = data
 					this.fetchUser()
 				})
 				.catch((error) => {
-					console.log('error: ', error.response)
 					this.user.password = ''
 					let errors = error.response.data.errors.map(x => x.defaultMessage)
 					this.message = errors.join('\r\n')

@@ -7,7 +7,10 @@ import {
 	ADD_EXAM_COURSE,
 	SELECT_COURSE,
 	DELETE_COURSE,
-	SET_EXAMS
+	SET_EXAMS,
+	COURSE_CREATE_BEGIN,
+	COURSE_CREATE_SUCCESS,
+	COURSE_CREATE_FAILURE
 } from './types'
 
 const initialState = {
@@ -19,7 +22,9 @@ const initialState = {
 		created: '',
 		updated: ''
 	},
-	courseExams: []
+	courseExams: [],
+	onCourseCreate: false,
+	courseCreateError: false
 }
 
 const getters = {
@@ -30,10 +35,17 @@ const getters = {
 
 const actions = {
 	createCourse ({ commit }, { name, code, exams }) {
+		commit(COURSE_CREATE_BEGIN)
 		return courseService.createCourse(name, code, exams)
-			.then(({ data }) => commit(CREATE_COURSE, data))
+			.then(({ data }) => {
+				commit(COURSE_CREATE_SUCCESS)
+				commit(CREATE_COURSE, data)
+				return data
+			})
 			.catch(error => {
+				commit(COURSE_CREATE_FAILURE)
 				console.log(error.response)
+				throw error
 			})
 	},
 	selectCourse ({ commit }, { id }) {
@@ -100,6 +112,17 @@ const mutations = {
 	},
 	[SET_EXAMS] (state, data) {
 		state.courseExams = data
+	},
+	[COURSE_CREATE_BEGIN] (state) {
+		state.onCourseCreate = true
+	},
+	[COURSE_CREATE_SUCCESS] (state) {
+		state.onCourseCreate = false
+		state.courseCreateError = false
+	},
+	[COURSE_CREATE_FAILURE] (state) {
+		state.onCourseCreate = false
+		state.courseCreateError = true
 	}
 }
 
