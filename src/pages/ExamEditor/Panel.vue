@@ -5,7 +5,7 @@
 				<input
 					v-model="examTitle"
 					class="editor-title"
-          placeholder="Exam title"
+					placeholder="Exam title"
 				>
 				<v-btn
 					class="ma-3"
