@@ -16,6 +16,9 @@ import {
 	UNSET_USER_DATA,
 	UPDATE_USER_POINTS,
 	NOT_ENOUGH_POINTS,
+	USER_PATCH_BEGIN,
+	USER_PATCH_SUCCESS,
+	USER_PATCH_ERROR,
 	FORGOT_PASSWORD_SUCCESS,
 	FORGOT_PASSWORD_FAILURE,
 	FORGOT_PASSWORD_BEGIN
@@ -41,7 +44,9 @@ const initialState = {
 		lastName: '',
 		points: 0
 	},
-	notEnoughPoints: false
+	notEnoughPoints: false,
+	inUserPatch: false,
+	userPatchError: false
 }
 
 const getters = {
@@ -89,18 +94,22 @@ const actions = {
 		return authService.getAccountDetails()
 			.then(({ data }) => {
 				commit(SET_USER_DATA, data)
+				return data
 			})
 			.catch(error => {
-				console.log(error.response)
+				throw error
 			})
 	},
 	updateAccount ({ commit }, obj) {
+		commit(USER_PATCH_BEGIN)
 		return authService.updateAccountDetails(obj)
 			.then(({ data }) => {
-				commit(SET_USER_DATA, data)
+				commit(USER_PATCH_SUCCESS)
+				return data
 			})
 			.catch(error => {
-				console.log(error.response)
+				commit(USER_PATCH_ERROR)
+				throw error
 			})
 	},
 	updateUserPoints ({ commit }, { points }) {
@@ -189,6 +198,17 @@ const mutations = {
 	},
 	[NOT_ENOUGH_POINTS] (state) {
 		state.notEnoughPoints = true
+	},
+	[USER_PATCH_BEGIN] (state) {
+		state.inUserPatch = true
+	},
+	[USER_PATCH_SUCCESS] (state) {
+		state.inUserPatch = false
+		state.userPatchError = false
+	},
+	[USER_PATCH_ERROR] (state) {
+		state.inUserPatch = false
+		state.userPatchError = true
 	},
 	[FORGOT_PASSWORD_BEGIN] (state) {
 		state.inForgotPasswordRequest = true
