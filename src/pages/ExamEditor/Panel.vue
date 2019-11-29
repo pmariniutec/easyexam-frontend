@@ -49,7 +49,7 @@
 							:items="possibleKeywords"
 							:search-input.sync="search"
 							hide-selected
-							placeholder="Search"
+							placeholder="Search by tags"
 							multiple
 							outlined
 							small-chips
